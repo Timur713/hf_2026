@@ -1,0 +1,31 @@
+{
+  "repository": "Timur713/hack_falcon_2026",
+  "release_tag": "fusion-oof-v0",
+  "release_url": "https://github.com/Timur713/hack_falcon_2026/releases/tag/fusion-oof-v0",
+  "checked_date_moscow": "2026-09-26",
+  "verification": "Every downloaded asset SHA-256 equals GitHub API assets[].digest; tar/YAML additionally equal the downloaded SHA256SUMS.txt. No weights downloaded in this audit.",
+  "downloaded_assets": [
+    {"name": "c4_dumps_fold01.tar.gz", "bytes": 44583269, "api_asset_id": 588546849, "sha256": "2254462ff4fb684d245e96d9fe4ebcd75855e09009335cc2ed6d640079ad981f"},
+    {"name": "SHA256SUMS.txt", "bytes": 694, "api_asset_id": 588546896, "sha256": "66931c43c569fe2b4b07364d61c910b7452b034a6b6b2037554fde8de2adbf8a"},
+    {"name": "hires392_f0.yaml", "bytes": 869, "api_asset_id": 588507360, "sha256": "d2621d2b775c90ba0aee77c636023dc89f67854b29c965f0b8ceed37c3c31632"},
+    {"name": "div_clip_f0.yaml", "bytes": 867, "api_asset_id": 588507270, "sha256": "78773e0c9960c10857137b44c0ac76dc2ad51ebf88527cf64190cfe5879bd0bd"},
+    {"name": "div_siglip_f0.yaml", "bytes": 867, "api_asset_id": 588507276, "sha256": "6f99c36993261a6007ad2bf5b7d6dbe0233df8a789f29b0dfad78c4b99c3555c"}
+  ],
+  "archive_regular_files": [
+    "hires392_f0_cls_top16/fold0.npz",
+    "div_clip_f0_cls_top16/fold0.npz",
+    "div_siglip_f0_top16/fold0.npz",
+    "div_clip_f1_cls_top16/fold1.npz",
+    "div_dinov2_f1_cls_top16/fold1.npz"
+  ],
+  "archive_symlinks_not_extracted": [
+    {"path": "div_siglip_f1_top16", "target": "siglip2_f1_full_avg", "target_present_in_archive": false}
+  ],
+  "extracted_regular_files_only": [
+    "hires392_f0_cls_top16/fold0.npz",
+    "div_clip_f0_cls_top16/fold0.npz",
+    "div_siglip_f0_top16/fold0.npz"
+  ],
+  "fold1_replay_possible_from_this_archive": false,
+  "trained_fold0_metadata": "All three YAMLs declare train.folds: all except 0; this audit does not independently certify training provenance."
+}

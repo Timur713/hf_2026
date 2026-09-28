@@ -1,0 +1,13 @@
+# Experimental toolchain only: not a production target or automatic promotion.
+# Parent must be the verified local runtime image from this session.
+ARG PROBE_BASE=falcon-runtime:20260927
+FROM ${PROBE_BASE}
+USER root
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends \
+        g++=4:11.2.0-1ubuntu1 python3-dev=3.10.6-1~22.04.1 \
+    && dpkg-query -W > /compile-probe-packages.tsv \
+    && rm -rf /var/lib/apt/lists/*
+# Record exact installed transitive versions in the experimental receipt.
+# Network is needed only for this build; every probe runs --network none.
+WORKDIR /app

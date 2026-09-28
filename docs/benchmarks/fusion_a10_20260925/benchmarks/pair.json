@@ -1,0 +1,54 @@
+{
+  "run_label": "A10-DINO392-CLIP288",
+  "commit": null,
+  "model": "/artifacts/fusion_oof_pair",
+  "weights_mb": 752.1164817810059,
+  "input_csv": "/app/splits/fold0_query.csv",
+  "model_load_seconds": 2.1975130820010236,
+  "preprocess_workers": 8,
+  "device": {
+    "requested": "cuda:0",
+    "name": "NVIDIA A10",
+    "driver": "615.71.09",
+    "torch": "2.5.1+cu121",
+    "cuda_runtime": "12.1"
+  },
+  "latency_batch1": {
+    "warmup": 50,
+    "iterations": 300,
+    "p50_ms": 26.45583299909049,
+    "p90_ms": 28.93117500025255,
+    "mean_ms": 27.090398346632963
+  },
+  "throughput": [
+    {
+      "batch_size": 1,
+      "seconds": 10.0188360989996,
+      "batches": 375,
+      "images": 375,
+      "fps": 37.42949742809392
+    },
+    {
+      "batch_size": 8,
+      "seconds": 10.133244045999163,
+      "batches": 116,
+      "images": 928,
+      "fps": 91.5797543005387
+    },
+    {
+      "batch_size": 16,
+      "seconds": 10.076662310999382,
+      "batches": 61,
+      "images": 976,
+      "fps": 96.85746826452919
+    },
+    {
+      "batch_size": 32,
+      "seconds": 10.429189189000681,
+      "batches": 32,
+      "images": 1024,
+      "fps": 98.18596455033904
+    }
+  ],
+  "peak_vram_mb": 1312.958984375
+}

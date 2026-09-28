@@ -1,0 +1,213 @@
+{
+  "kind": "delivery_evidence_check",
+  "code_commit": "4df16a8ffc56113eeddf3046582c9b32a3ec9bf2",
+  "checks": [
+    {
+      "id": "default_runtime",
+      "status": "pass",
+      "evidence": {
+        "docker_last_stage": "final",
+        "compose_target": "fusion",
+        "compose_model": "${MODEL_DIR:-/app/artifacts/models/fusion}",
+        "offline": true,
+        "uses_fusion": true
+      }
+    },
+    {
+      "id": "submission_c6_and_dimension",
+      "status": "blocked",
+      "evidence": {
+        "audit": "submission_format_and_integrity",
+        "validated": true,
+        "query_count": 1110,
+        "gallery_count": 750,
+        "candidate_rows": 2952,
+        "answered_queries": 984,
+        "rejected_queries": 126,
+        "embedding_shape": [
+          1860,
+          1536
+        ],
+        "embedding_dtype": "float32",
+        "files": {
+          "submission.csv": {
+            "bytes": 404040,
+            "sha256": "5ee774389fe6fb31225143269138ce83a892060e86477cca70ab8ce4342a8f4d"
+          },
+          "embeddings.npy": {
+            "bytes": 11427968,
+            "sha256": "7f3eaf578b0f5e7d4a6dd60e9f75115191676e8d905c1f551a120b877fa367c3"
+          },
+          "candidates.csv": {
+            "bytes": 230288,
+            "sha256": "deae8bea80eaf9fe9c36eec21d19dc63de23464bca5e8fc7bb91de49b7fa66a5"
+          }
+        },
+        "inputs": {
+          "query": {
+            "bytes": 54288,
+            "sha256": "97e1ed21942bae9c95b1ce2e5d339d9f635bf49fa484367e6b19349789bb9b4c"
+          },
+          "gallery": {
+            "bytes": 36693,
+            "sha256": "a64ed21fa39bbfd8c7a172468d043415800500b6ed695cdb8162188cf9005496"
+          }
+        },
+        "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified",
+        "expected_embedding_dim": 3072
+      }
+    },
+    {
+      "id": "submission_matches_acceptance",
+      "status": "missing",
+      "evidence": "Pass final full-run audit_release c6.json via --acceptance-c6"
+    },
+    {
+      "id": "component_provenance",
+      "status": "pass",
+      "evidence": {
+        "components": [
+          {
+            "path": "components/0",
+            "arch": "dinov2_vitb14",
+            "pool": "cls_top16",
+            "input_size": [
+              392,
+              392
+            ],
+            "embed_dim": 1536,
+            "trained_on": "all",
+            "missing_upstream_metadata": []
+          },
+          {
+            "path": "components/1",
+            "arch": "clip_vitb16",
+            "pool": "cls_top16",
+            "input_size": [
+              288,
+              288
+            ],
+            "embed_dim": 1536,
+            "trained_on": "all",
+            "missing_upstream_metadata": []
+          }
+        ],
+        "config": {
+          "bytes": 379,
+          "sha256": "eace9e6e59699b168e2d2ae6cef5d8d063f0cbe01241e4e8f311d21255e90fe6"
+        }
+      }
+    },
+    {
+      "id": "verifier_provenance",
+      "status": "pass",
+      "evidence": {
+        "sidecar": "verifier.provenance.yaml",
+        "checkpoint": "verifier.pt",
+        "missing_upstream_metadata": [],
+        "missing_artifact_metadata": [],
+        "checkpoint_sha256_matches": true,
+        "all_data_training_declared": true,
+        "scope": "local metadata and checkpoint SHA binding only; not proof of training or online source verification",
+        "sidecar_integrity": {
+          "bytes": 823,
+          "sha256": "3ca9e9b1e31cbde8a1c5d0c19812a7b5c4b8ecbb8c771631daf2983f9e4c8757"
+        },
+        "checkpoint_integrity": {
+          "bytes": 100452048,
+          "sha256": "aa254e396ac0be78d29f32641e83f8d18e165d76eb3345c18c1054d105b9abf5"
+        }
+      }
+    },
+    {
+      "id": "a104_fold0_evidence",
+      "status": "review",
+      "evidence": {
+        "report": "docs/benchmarks/fusion_pair_exact_20260927/raw/f0_w015_t660/report.json",
+        "dumps": [
+          {
+            "path": "artifacts/emb/hires392_f0_cls_top16/fold0.npz",
+            "bytes": 11127558,
+            "sha256": "8bee73371a5227450a19d1840e9295e06a156b74a146222bab875f9de9992d5a"
+          },
+          {
+            "path": "artifacts/emb/div_clip_f0_cls_top16/fold0.npz",
+            "bytes": 11127558,
+            "sha256": "e07ba0b327152f86c65a5343eaba63f0b6e31a5af0e8db921feb7781b5e9f7c2"
+          }
+        ],
+        "logits": {
+          "path": "outputs/pair_calibration_20260927/pair_logits_f0.npz",
+          "bytes": 237906,
+          "sha256": "cbeeb0e8323a02227f31c08fd4382a0ad38accb880a6940b3f02d3503ab8176a"
+        },
+        "policy": {
+          "candidate_policy": "gallery_z",
+          "rerank_mode": "standardized",
+          "rerank_weight": 0.15,
+          "candidate_threshold": 6.6,
+          "hub_k": 3,
+          "hub_weight": 0.5,
+          "top_k": 10
+        },
+        "training_provenance_verified": false,
+        "scope": "A104 matched C4 train-fold evidence for DINO392 + CLIP288; not an automated OOF training certificate or full-frame/GPU acceptance"
+      }
+    },
+    {
+      "id": "a104_fold1_evidence",
+      "status": "review",
+      "evidence": {
+        "report": "docs/benchmarks/fusion_pair_exact_20260927/raw/f1_w015_t660/report.json",
+        "dumps": [
+          {
+            "path": "artifacts/emb/hires392_f1_cls_top16/fold1.npz",
+            "bytes": 11052294,
+            "sha256": "49dfaa917e2acfbb09cdc15eb2ddaaa171de4cc92f7b7f76ef373156455153eb"
+          },
+          {
+            "path": "artifacts/emb/div_clip_f1_cls_top16/fold1.npz",
+            "bytes": 11052294,
+            "sha256": "f05651dcc9438fe4ac7d19d0397739c47682b12afb5ea68ecbc3ab9b41174110"
+          }
+        ],
+        "logits": {
+          "path": "outputs/pair_calibration_20260927/pair_logits_f1.npz",
+          "bytes": 238613,
+          "sha256": "0ef47451b574d932e78ef7a34264fd41fa07671691beaf198f108c8f706458a7"
+        },
+        "policy": {
+          "candidate_policy": "gallery_z",
+          "rerank_mode": "standardized",
+          "rerank_weight": 0.15,
+          "candidate_threshold": 6.6,
+          "hub_k": 3,
+          "hub_weight": 0.5,
+          "top_k": 10
+        },
+        "training_provenance_verified": false,
+        "scope": "A104 matched C4 train-fold evidence for DINO392 + CLIP288; not an automated OOF training certificate or full-frame/GPU acceptance"
+      }
+    },
+    {
+      "id": "public_repo_credentials",
+      "status": "missing",
+      "evidence": {
+        "findings": [],
+        "history_scanned": false,
+        "skipped_paths": [
+          "submission/embeddings.npy"
+        ],
+        "scope": "heuristic tracked text scan; binaries, files >2MB, remote-only refs, release assets, untracked files and license permissions require separate review"
+      }
+    },
+    {
+      "id": "official_extractor",
+      "status": "missing",
+      "evidence": "Organizers must confirm official Extractor contract; file presence alone does not certify compatibility"
+    }
+  ],
+  "automated_checks_pass": false,
+  "final_acceptance": false,
+  "scope": "CPU integrity evidence only. No GPU measurements, OOF training verification, license/legal clearance, public access check, or human submission. See docs/final_delivery_checklist.md."
+}

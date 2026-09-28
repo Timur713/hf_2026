@@ -1,0 +1,32 @@
+services:
+  reid:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: fusion
+    image: falcon-reid:local
+    network_mode: none
+    gpus: all
+    volumes:
+      - type: bind
+        source: ${DATA_ROOT:-./dataset}
+        target: /data
+        read_only: true
+      - type: bind
+        source: ${OUTPUT_ROOT:-./outputs}
+        target: /out
+    command:
+      - --images
+      - ${IMAGES_DIR:-/data/images}
+      - --query
+      - ${QUERY_CSV:-/data/test_query.csv}
+      - --gallery
+      - ${GALLERY_CSV:-/data/test_gallery.csv}
+      - --out
+      - ${OUT_DIR:-/out}
+      - --model
+      - ${MODEL_DIR:-/app/artifacts/models/fusion}
+      - --verifier
+      - ${VERIFIER_PATH:-/app/artifacts/models/fusion/verifier.pt}
+      - --twins
+      - ${TWINS:-off}

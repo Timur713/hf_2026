@@ -1,0 +1,40 @@
+# Данные организаторов: 7 ГБ, распространяются по лицензии (DECISIONS D-012)
+dataset/
+# Документы организаторов: в Q&A есть ФИО участников других команд (D-012)
+org_rdocs/
+
+# Артефакты: веса, кэши, дампы, логи. Веса для сдачи выкладываются в GitHub Release
+artifacts/
+outputs/
+logs/
+runs/
+wandb/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.engine
+*.plan
+*.trt
+*.bin
+# Финальные файлы сдачи коммитятся в submission/ (задача B7.1)
+!submission/
+
+# Python и окружение
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+.pytest_cache/
+.env
+
+# ОС и IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Внешние датасеты: качаются отдельно, в git не место (D-043)
+VehicleID_V1.0/
+vehicleid_small/

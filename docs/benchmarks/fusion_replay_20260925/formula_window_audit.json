@@ -1,0 +1,176 @@
+{
+  "kind": "A091_formula_and_window_audit_train_only",
+  "fold": 0,
+  "code_commit": "f3b88ca6be0ab34a77c02b24bc00174726f0824b",
+  "audit_script": {
+    "bytes": 6500,
+    "sha256": "efd8014c88fcc8dd75b6577987ac0dad9557a43609ccf141fefde86b98213dce"
+  },
+  "source_functions": {
+    "scripts/analysis/hub_penalty.py": {
+      "bytes": 6078,
+      "sha256": "ca858623f3e906e9f42604a59ac07310e1a2e2aaf8cb9aaeedc0ce18d863161b"
+    },
+    "scripts/analysis/rank_causes.py": {
+      "bytes": 7827,
+      "sha256": "9371c57160004026e53e0333a349a3e434bbe2bdc085f2fb5671682bb2e71f36"
+    },
+    "scripts/analysis/calibrate_fusion_threshold.py": {
+      "bytes": 6117,
+      "sha256": "53172981c835e4afef3076370b5e535b2d3a15fd001b7e1fd86dc93769885f74"
+    },
+    "reid/post/gallery_policy.py": {
+      "bytes": 7153,
+      "sha256": "c42cb69610db235895e09bede4d194fd0a23726b23d595d5e2c779735f6babce"
+    },
+    "reid/eval/eval_local.py": {
+      "bytes": 10996,
+      "sha256": "444454de2bfcdd46c63de74a580ef1f2bf353e1d13a1b48ea6cfa352f4d226be"
+    }
+  },
+  "dumps": [
+    {
+      "path": "artifacts/release-cache/fusion-oof-v0/extracted/hires392_f0_cls_top16/fold0.npz",
+      "bytes": 11127558,
+      "sha256": "8bee73371a5227450a19d1840e9295e06a156b74a146222bab875f9de9992d5a"
+    },
+    {
+      "path": "artifacts/release-cache/fusion-oof-v0/extracted/div_clip_f0_cls_top16/fold0.npz",
+      "bytes": 11127558,
+      "sha256": "e07ba0b327152f86c65a5343eaba63f0b6e31a5af0e8db921feb7781b5e9f7c2"
+    },
+    {
+      "path": "artifacts/release-cache/fusion-oof-v0/extracted/div_siglip_f0_top16/fold0.npz",
+      "bytes": 5677830,
+      "sha256": "23affa4cd30ad3f6dfbaeafa3b218cf09c1b882041b71da6170864dfdea2ece9"
+    }
+  ],
+  "replay_report": {
+    "bytes": 5208,
+    "sha256": "b1c73d32c97a51538adce7188059c28086d9231e74fda13e1e5c4c5aa07350ca"
+  },
+  "similarity_std": [
+    0.05278994738068494,
+    0.071447179416519,
+    0.0025107673209643746
+  ],
+  "formula": "per-component fixed gallery std; concat+L2; per-query z; one gallery-only hub, k=3, lambda=0.5",
+  "matrix_max_abs_A_vs_B": 0.00015819072723388672,
+  "top1_differing_queries_A_vs_B": 0,
+  "top10_differing_queries_A_vs_B": 1,
+  "production_C6": {
+    "metrics": {
+      "fold": 0,
+      "n_query": 1138,
+      "n_query_openset": 228,
+      "map10": 0.8628516556195127,
+      "rank1": 0.8296703296703297,
+      "rank5": 0.9593406593406594,
+      "n_query_eval": 910
+    },
+    "oracle_reordering_only": {
+      "fold": 0,
+      "n_query": 1138,
+      "n_query_openset": 228,
+      "map10": 0.9732417582417582,
+      "rank1": 0.9835164835164835,
+      "rank5": 0.9835164835164835,
+      "n_query_eval": 910
+    },
+    "n_evaluable": 910,
+    "n_with_positive_in_window": 895,
+    "positive_window_coverage": 0.9835164835164835
+  },
+  "A_concat_strict_C6": {
+    "metrics": {
+      "fold": 0,
+      "n_query": 1138,
+      "n_query_openset": 228,
+      "map10": 0.8628516556195127,
+      "rank1": 0.8296703296703297,
+      "rank5": 0.9593406593406594,
+      "n_query_eval": 910
+    },
+    "oracle_reordering_only": {
+      "fold": 0,
+      "n_query": 1138,
+      "n_query_openset": 228,
+      "map10": 0.9732417582417582,
+      "rank1": 0.9835164835164835,
+      "rank5": 0.9835164835164835,
+      "n_query_eval": 910
+    },
+    "n_evaluable": 910,
+    "n_with_positive_in_window": 895,
+    "positive_window_coverage": 0.9835164835164835
+  },
+  "A_rank_causes_refilled_window_NOT_C6": {
+    "metrics": {
+      "fold": 0,
+      "n_query": 1138,
+      "n_query_openset": 228,
+      "map10": 0.8635000072678645,
+      "rank1": 0.8296703296703297,
+      "rank5": 0.9593406593406594,
+      "n_query_eval": 910
+    },
+    "oracle_reordering_only": {
+      "fold": 0,
+      "n_query": 1138,
+      "n_query_openset": 228,
+      "map10": 0.9773992673992674,
+      "rank1": 0.9868131868131869,
+      "rank5": 0.9868131868131869,
+      "n_query_eval": 910
+    },
+    "n_evaluable": 910,
+    "n_with_positive_in_window": 898,
+    "positive_window_coverage": 0.9868131868131869
+  },
+  "A_fixed_threshold_6_no_search": {
+    "fold": 0,
+    "n_query": 1138,
+    "n_query_openset": 228,
+    "map10": 0.8628516556195127,
+    "rank1": 0.8296703296703297,
+    "rank5": 0.9593406593406594,
+    "n_query_eval": 910,
+    "official": {
+      "f1": 0.9692565679150363,
+      "tnr": 0.9473684210526315,
+      "candidate_score": 0.9626901238563149,
+      "precision": 0.9829931972789115,
+      "recall": 0.9558985667034179,
+      "pr_auc": 0.9942521027448953,
+      "tp": 867,
+      "fp": 15,
+      "fn": 40,
+      "tn": 216
+    },
+    "cross_cam": {
+      "f1": 0.032017075773746,
+      "tnr": 0.9473684210526315,
+      "candidate_score": 0.30662247935741166,
+      "precision": 0.017006802721088437,
+      "recall": 0.2727272727272727,
+      "pr_auc": 0.9942521027448953,
+      "tp": 15,
+      "fp": 867,
+      "fn": 40,
+      "tn": 216
+    },
+    "candidate_score": 0.9626901238563149
+  },
+  "failure_population": {
+    "strict_C6": 140,
+    "rank_causes_refilled": 143,
+    "added_by_refill": 3
+  },
+  "limitations": [
+    "No verifier logits were supplied or evaluated.",
+    "No BBox correction was implemented, selected, or evaluated.",
+    "Coverage/oracle use train labels only and are not deployable rankings.",
+    "This is not independent certification of C4 training/extraction provenance.",
+    "No test analysis, full-frame embedding extraction, plate control, or GPU benchmark."
+  ]
+}

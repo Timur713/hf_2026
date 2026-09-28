@@ -1,0 +1,44 @@
+{
+  "audit": "weights_size_integrity_and_training_metadata",
+  "validated": true,
+  "require_all_data": true,
+  "total_weight_bytes": 788647632,
+  "limit_bytes": 2000000000,
+  "files": {
+    "components/0/weights.safetensors": {
+      "bytes": 344564312,
+      "sha256": "f69eb2283c03a2748ac44cb4e1a4902bbc6f3129440cf3799edafa0f0ea0aaeb"
+    },
+    "components/1/weights.safetensors": {
+      "bytes": 343631272,
+      "sha256": "6157e1eb862a0c88f637ed2a163bf6bbbe52459a88d41f3b623e83e69180548f"
+    },
+    "verifier.pt": {
+      "bytes": 100452048,
+      "sha256": "aa254e396ac0be78d29f32641e83f8d18e165d76eb3345c18c1054d105b9abf5"
+    }
+  },
+  "model_config": {
+    "bytes": 379,
+    "sha256": "eace9e6e59699b168e2d2ae6cef5d8d063f0cbe01241e4e8f311d21255e90fe6"
+  },
+  "component_configs": {
+    "components/0": {
+      "bytes": 1149,
+      "sha256": "c3ff3f06e3cb15c4f996e92214d9dc9ca5a6f938b496cfcaed1dd546c9374312"
+    },
+    "components/1": {
+      "bytes": 1149,
+      "sha256": "14324f0834f6b4f3a2703639e38f51c1b4bbc3d94b5b29158d471c4e36835a9d"
+    }
+  },
+  "model_name": "fusion_pair_d065_all",
+  "model_trained_on": [
+    "all",
+    "all"
+  ],
+  "verifier_trained_on": "folds [0, 1, 2, 3, 4]",
+  "verifier_arch": "dinov2_vits14",
+  "verifier_input": 392,
+  "scope": "file/metadata checks only; GPU VRAM and runtime must be measured separately"
+}

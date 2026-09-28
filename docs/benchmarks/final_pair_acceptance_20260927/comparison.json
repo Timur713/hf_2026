@@ -1,0 +1,39 @@
+{
+  "kind": "two_fresh_containers_default_entrypoint",
+  "files": {
+    "submission.csv": {
+      "run_1_sha256": "726ccb2b4a4f77d1f0e47d32baa365f4ea631ce1cf186586f66a1100a1914d79",
+      "run_2_sha256": "726ccb2b4a4f77d1f0e47d32baa365f4ea631ce1cf186586f66a1100a1914d79",
+      "identical": true
+    },
+    "embeddings.npy": {
+      "run_1_sha256": "33dec6f02f7ac94a1b9e37a65ef0fb156a566123b02877c07f8181b95038626c",
+      "run_2_sha256": "33dec6f02f7ac94a1b9e37a65ef0fb156a566123b02877c07f8181b95038626c",
+      "identical": true
+    },
+    "candidates.csv": {
+      "run_1_sha256": "90e1b19bba4e067bd7bb9867a1be3421eaea11e89fe3a3fe7be5172877ac064c",
+      "run_2_sha256": "90e1b19bba4e067bd7bb9867a1be3421eaea11e89fe3a3fe7be5172877ac064c",
+      "identical": true
+    }
+  },
+  "byte_identical": true,
+  "vs_deterministic_harness": {
+    "submission.csv": {
+      "run_1_sha256": "726ccb2b4a4f77d1f0e47d32baa365f4ea631ce1cf186586f66a1100a1914d79",
+      "run_2_sha256": "726ccb2b4a4f77d1f0e47d32baa365f4ea631ce1cf186586f66a1100a1914d79",
+      "identical": true
+    },
+    "embeddings.npy": {
+      "run_1_sha256": "33dec6f02f7ac94a1b9e37a65ef0fb156a566123b02877c07f8181b95038626c",
+      "run_2_sha256": "33dec6f02f7ac94a1b9e37a65ef0fb156a566123b02877c07f8181b95038626c",
+      "identical": true
+    },
+    "candidates.csv": {
+      "run_1_sha256": "90e1b19bba4e067bd7bb9867a1be3421eaea11e89fe3a3fe7be5172877ac064c",
+      "run_2_sha256": "90e1b19bba4e067bd7bb9867a1be3421eaea11e89fe3a3fe7be5172877ac064c",
+      "identical": true
+    }
+  },
+  "identical_to_harness": true
+}

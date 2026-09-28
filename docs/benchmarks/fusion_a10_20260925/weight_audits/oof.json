@@ -1,0 +1,53 @@
+{
+  "audit": "weights_size_integrity_and_training_metadata",
+  "validated": true,
+  "require_all_data": false,
+  "total_weight_bytes": 1160606944,
+  "limit_bytes": 2000000000,
+  "files": {
+    "components/0/weights.safetensors": {
+      "bytes": 344564312,
+      "sha256": "02e3f62100ba9764d93333a5f5c0ee79a1e63c110104989fcd4fca3d78c06047"
+    },
+    "components/1/weights.safetensors": {
+      "bytes": 343631272,
+      "sha256": "4087ff19c1f9acc1e9416fa9294acf633d67215ce4b86c5b0a3311bbc8a3e99b"
+    },
+    "components/2/weights.safetensors": {
+      "bytes": 371959312,
+      "sha256": "6be8e34a2ccd00077cfcc650413b6c74fd0deba9cf388ccc31010c1b0deb0a3c"
+    },
+    "verifier.pt": {
+      "bytes": 100452048,
+      "sha256": "0f9085822a50d83e1c8405013e2d40e0028617da79d9eb0b38a55f3c21ac2d17"
+    }
+  },
+  "model_config": {
+    "bytes": 477,
+    "sha256": "fb285589e25182ea62f38b941fa4951573dcde6e03920ba8e7d3cc5a08ef5449"
+  },
+  "component_configs": {
+    "components/0": {
+      "bytes": 869,
+      "sha256": "d2621d2b775c90ba0aee77c636023dc89f67854b29c965f0b8ceed37c3c31632"
+    },
+    "components/1": {
+      "bytes": 867,
+      "sha256": "78773e0c9960c10857137b44c0ac76dc2ad51ebf88527cf64190cfe5879bd0bd"
+    },
+    "components/2": {
+      "bytes": 867,
+      "sha256": "6f99c36993261a6007ad2bf5b7d6dbe0233df8a789f29b0dfad78c4b99c3555c"
+    }
+  },
+  "model_name": "fusion-oof-technical-20260925",
+  "model_trained_on": [
+    "all except 0",
+    "all except 0",
+    "all except 0"
+  ],
+  "verifier_trained_on": "folds [1]",
+  "verifier_arch": "dinov2_vits14",
+  "verifier_input": 392,
+  "scope": "file/metadata checks only; GPU VRAM and runtime must be measured separately"
+}

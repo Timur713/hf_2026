@@ -1,0 +1,21 @@
+{
+  "mode": "plate_mask_control",
+  "model": "artifacts/models/final",
+  "verifier": "artifacts/models/verifier_f0/verifier.pt",
+  "device": "cpu",
+  "query_count": 5,
+  "gallery_count": 10,
+  "candidate_threshold": 0.6,
+  "mask": {
+    "width_ratio": 0.26,
+    "aspect_ratio": 4.0,
+    "center_x": 0.5,
+    "center_y": 0.72,
+    "fill": 127
+  },
+  "sha256": {
+    "submission.csv": "8d6d1276255ad038d6e5e53f691539953ff8ffabcaeaacbcade0b4eae70b8366",
+    "embeddings.npy": "2d1867109d37c3ba4286d21cd9664b17a040e8f92f26f8a79120e32e4a61186d",
+    "candidates.csv": "fd1f94808ee4ed5f8d5fbb4d97e6f573ad260ca0aeb68a9ce40dcc2f605f722d"
+  }
+}

@@ -1,0 +1,2 @@
+AUDIT FAILED: final embedder must be trained on all folds: components/0
+exit_code=1

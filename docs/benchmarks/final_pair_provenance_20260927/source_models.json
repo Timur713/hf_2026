@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "verified_date": "2026-09-27",
+  "training_stack": {
+    "timm": "1.0.15",
+    "huggingface_hub": "0.30.2",
+    "safetensors": "0.5.3",
+    "registry_commit": "b2823b0",
+    "registry_path": "reid/model/__init__.py"
+  },
+  "sources": [
+    {
+      "arch": "dinov2_vitb14",
+      "role": "hires392_all embedder initialization",
+      "author": "Meta AI (DINOv2); timm/Hugging Face conversion",
+      "model_id": "timm/vit_base_patch14_dinov2.lvd142m",
+      "timm_name": "vit_base_patch14_dinov2.lvd142m",
+      "tag": "lvd142m",
+      "revision": "4685c99dabffe5affac90bd99dbffd25801ae58d",
+      "source_url": "https://huggingface.co/timm/vit_base_patch14_dinov2.lvd142m/tree/4685c99dabffe5affac90bd99dbffd25801ae58d",
+      "weights_url": "https://huggingface.co/timm/vit_base_patch14_dinov2.lvd142m/resolve/4685c99dabffe5affac90bd99dbffd25801ae58d/model.safetensors",
+      "filename": "model.safetensors",
+      "bytes": 346334872,
+      "sha256": "55cbb5d887b336d430e649c277b85a1429e724871f9d02ac16203235886d8c7b",
+      "license": "Apache-2.0",
+      "upstream": "https://github.com/facebookresearch/dinov2"
+    },
+    {
+      "arch": "clip_vitb16",
+      "role": "div_clip_all embedder initialization",
+      "author": "LAION/OpenCLIP; timm/Hugging Face conversion",
+      "model_id": "timm/vit_base_patch16_clip_224.laion2b",
+      "timm_name": "vit_base_patch16_clip_224.laion2b",
+      "tag": "laion2b",
+      "revision": "fbadfdd1c0e903c58855b70ae04740b22da9d305",
+      "source_url": "https://huggingface.co/timm/vit_base_patch16_clip_224.laion2b/tree/fbadfdd1c0e903c58855b70ae04740b22da9d305",
+      "weights_url": "https://huggingface.co/timm/vit_base_patch16_clip_224.laion2b/resolve/fbadfdd1c0e903c58855b70ae04740b22da9d305/model.safetensors",
+      "filename": "model.safetensors",
+      "bytes": 344786776,
+      "sha256": "35fcf20089626ce1534aa3d4d8d97a02ca79e171a1735d0c8d58e150eded9ad5",
+      "license": "Apache-2.0",
+      "upstream": "https://huggingface.co/laion/CLIP-ViT-B-16-laion2B-s34B-b88K"
+    },
+    {
+      "arch": "dinov2_vits14",
+      "role": "v_fus_all_frz_input392 verifier initialization",
+      "author": "Meta AI (DINOv2); timm/Hugging Face conversion",
+      "model_id": "timm/vit_small_patch14_dinov2.lvd142m",
+      "timm_name": "vit_small_patch14_dinov2.lvd142m",
+      "tag": "lvd142m",
+      "revision": "4610ca143709d58a633b6397a74412c2c3842454",
+      "source_url": "https://huggingface.co/timm/vit_small_patch14_dinov2.lvd142m/tree/4610ca143709d58a633b6397a74412c2c3842454",
+      "weights_url": "https://huggingface.co/timm/vit_small_patch14_dinov2.lvd142m/resolve/4610ca143709d58a633b6397a74412c2c3842454/model.safetensors",
+      "filename": "model.safetensors",
+      "bytes": 88240510,
+      "sha256": "04d27f3400d059fc0cfd7d17dd1909a75bf3ea8fb3eeb48b97cb99e57ee20081",
+      "license": "Apache-2.0",
+      "upstream": "https://github.com/facebookresearch/dinov2"
+    }
+  ],
+  "final_artifacts": [
+    {
+      "name": "hires392_all.safetensors",
+      "release": "fusion-all-v1",
+      "url": "https://github.com/Timur713/hack_falcon_2026/releases/download/fusion-all-v1/hires392_all.safetensors",
+      "sha256": "f69eb2283c03a2748ac44cb4e1a4902bbc6f3129440cf3799edafa0f0ea0aaeb"
+    },
+    {
+      "name": "div_clip_all.safetensors",
+      "release": "fusion-all-v1",
+      "url": "https://github.com/Timur713/hack_falcon_2026/releases/download/fusion-all-v1/div_clip_all.safetensors",
+      "sha256": "6157e1eb862a0c88f637ed2a163bf6bbbe52459a88d41f3b623e83e69180548f"
+    },
+    {
+      "name": "v_fus_all_frz_input392.pt",
+      "release": "fusion-all-v1",
+      "url": "https://github.com/Timur713/hack_falcon_2026/releases/download/fusion-all-v1/v_fus_all_frz_input392.pt",
+      "sha256": "aa254e396ac0be78d29f32641e83f8d18e165d76eb3345c18c1054d105b9abf5"
+    }
+  ]
+}

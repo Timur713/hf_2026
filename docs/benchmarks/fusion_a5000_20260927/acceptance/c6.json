@@ -1,0 +1,39 @@
+{
+  "audit": "submission_format_and_integrity",
+  "validated": true,
+  "query_count": 1110,
+  "gallery_count": 750,
+  "candidate_rows": 3093,
+  "answered_queries": 1031,
+  "rejected_queries": 79,
+  "embedding_shape": [
+    1860,
+    3840
+  ],
+  "embedding_dtype": "float32",
+  "files": {
+    "submission.csv": {
+      "bytes": 404040,
+      "sha256": "9ed62e1a270daac8f61fa762c04c3b7a080035228499cbab68adc81d89fce7bc"
+    },
+    "embeddings.npy": {
+      "bytes": 28569728,
+      "sha256": "66760947b2dc7a8daf23342e086b0267aa34e7f128082c1b13aeeaacdcc140cf"
+    },
+    "candidates.csv": {
+      "bytes": 241724,
+      "sha256": "17e6ddef2ad79515198999d4a908ba54ebee17934cd9cc8504e7bda7c1913905"
+    }
+  },
+  "inputs": {
+    "query": {
+      "bytes": 54288,
+      "sha256": "97e1ed21942bae9c95b1ce2e5d339d9f635bf49fa484367e6b19349789bb9b4c"
+    },
+    "gallery": {
+      "bytes": 36693,
+      "sha256": "a64ed21fa39bbfd8c7a172468d043415800500b6ed695cdb8162188cf9005496"
+    }
+  },
+  "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified"
+}

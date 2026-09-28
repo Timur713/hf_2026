@@ -1,0 +1,39 @@
+{
+  "audit": "submission_format_and_integrity",
+  "validated": true,
+  "query_count": 1110,
+  "gallery_count": 750,
+  "candidate_rows": 3090,
+  "answered_queries": 1030,
+  "rejected_queries": 80,
+  "embedding_shape": [
+    1860,
+    3840
+  ],
+  "embedding_dtype": "float32",
+  "files": {
+    "submission.csv": {
+      "bytes": 404040,
+      "sha256": "a92f28789150c1b3faa6de79ed08da5240951cef0404c6163a6e4c79f39d147a"
+    },
+    "embeddings.npy": {
+      "bytes": 28569728,
+      "sha256": "4df057a10cb31781f2938b58c29805efb8274c99b7caeae20b28e21d93d78cc3"
+    },
+    "candidates.csv": {
+      "bytes": 241052,
+      "sha256": "359f0c5f7bf3651587c458787022214409d236cf9c175223c07aef70eb4e55a5"
+    }
+  },
+  "inputs": {
+    "query": {
+      "bytes": 54288,
+      "sha256": "97e1ed21942bae9c95b1ce2e5d339d9f635bf49fa484367e6b19349789bb9b4c"
+    },
+    "gallery": {
+      "bytes": 36693,
+      "sha256": "a64ed21fa39bbfd8c7a172468d043415800500b6ed695cdb8162188cf9005496"
+    }
+  },
+  "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified"
+}

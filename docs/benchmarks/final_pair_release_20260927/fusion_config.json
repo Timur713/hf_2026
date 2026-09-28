@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "name": "fusion_pair_d065_all",
+  "components": [
+    {
+      "path": "components/0",
+      "similarity_std": 0.05045982709670803
+    },
+    {
+      "path": "components/1",
+      "similarity_std": 0.06659743137636251
+    }
+  ],
+  "candidate_policy": "gallery_z",
+  "candidate_threshold": 6.6,
+  "rerank_mode": "standardized",
+  "rerank_weight": 0.15
+}

@@ -1,0 +1,54 @@
+arch: siglip2_vitb16
+input_size:
+- 288
+- 288
+bbox_pad: 0.0
+resize: stretch
+mean:
+- 0.485
+- 0.456
+- 0.406
+std:
+- 0.229
+- 0.224
+- 0.225
+pool: top16
+neck: bnneck
+infer_dtype: fp16
+tta_flip: false
+name: div_siglip_f0
+embed_dim: 768
+train:
+  commit: f303b67
+  config: configs/vitb14_224.yaml
+  folds: all except 0
+  init_from: null
+  recipe:
+    val_fold: 0
+    epochs: 100
+    p: 16
+    k: 4
+    lr_backbone: 1.0e-05
+    lr_head: 0.001
+    llrd: 0.75
+    weight_decay: 0.05
+    warmup_epochs: 3
+    label_smoothing: 0.1
+    triplet_margin: 0.3
+    triplet_weight: 1.0
+    box_jitter: 0.05
+    pad_jitter: 0.05
+    color: 0.2
+    erasing_p: 0.7
+    plate_band_p: 0.5
+    workers: 8
+    amp: bf16
+    pretrained: true
+    seed: 2026
+    eval_every: 5
+val:
+  fold0:
+    epoch: 100
+    map10: 0.7284942002442002
+    rank1: 0.6857142857142857
+    full_map: 0.7354164932056736

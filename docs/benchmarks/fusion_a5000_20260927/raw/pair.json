@@ -1,0 +1,58 @@
+{
+  "run_label": "A5000-fusion2-speed-probe",
+  "commit": null,
+  "model": "/artifacts/fusion_all_pair_probe",
+  "weights_mb": 752.1162347793579,
+  "input_csv": "/app/splits/fold0_query.csv",
+  "model_load_seconds": 2.661064084999907,
+  "preprocess_workers": 8,
+  "cpu_count": 8,
+  "torch_threads_requested": null,
+  "torch_num_threads": 8,
+  "torch_num_interop_threads": 8,
+  "device": {
+    "requested": "cuda:0",
+    "name": "NVIDIA RTX A5000",
+    "driver": "535.54.03",
+    "torch": "2.5.1+cu121",
+    "cuda_runtime": "12.1"
+  },
+  "latency_batch1": {
+    "warmup": 50,
+    "iterations": 300,
+    "p50_ms": 24.88399499998195,
+    "p90_ms": 26.985088000174073,
+    "mean_ms": 25.05212294667217
+  },
+  "throughput": [
+    {
+      "batch_size": 1,
+      "seconds": 10.006823392999877,
+      "batches": 400,
+      "images": 400,
+      "fps": 39.97272503877844
+    },
+    {
+      "batch_size": 8,
+      "seconds": 10.034626267000021,
+      "batches": 118,
+      "images": 944,
+      "fps": 94.07425596949719
+    },
+    {
+      "batch_size": 16,
+      "seconds": 10.106605028000104,
+      "batches": 63,
+      "images": 1008,
+      "fps": 99.73675603304576
+    },
+    {
+      "batch_size": 32,
+      "seconds": 10.285015503000068,
+      "batches": 33,
+      "images": 1056,
+      "fps": 102.67364202727474
+    }
+  ],
+  "peak_vram_mb": 1312.958984375
+}

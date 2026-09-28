@@ -1,0 +1,69 @@
+{
+  "commit": null,
+  "seed": 2026,
+  "deterministic_algorithms": true,
+  "device": {
+    "requested": "cuda:0",
+    "name": "NVIDIA A10",
+    "torch": "2.5.1+cu121",
+    "cuda_runtime": "12.1"
+  },
+  "model": "/app/artifacts/models/fusion",
+  "verifier": "/app/artifacts/models/fusion/verifier.pt",
+  "query_count": 1110,
+  "gallery_count": 750,
+  "runs": [
+    {
+      "run": 1,
+      "cuda_initialization_seconds": 0.09610904800001663,
+      "model_load_seconds": 1.8522622130000173,
+      "verifier_load_seconds": 0.2867076549999865,
+      "pipeline_seconds": 127.76824184099996,
+      "cuda_memory": {
+        "peak_allocated_bytes": 1506480640,
+        "peak_reserved_bytes": 1839202304,
+        "scope": "embedder + verifier + full pipeline; Torch allocator, not total process VRAM"
+      },
+      "sha256": {
+        "submission.csv": "726ccb2b4a4f77d1f0e47d32baa365f4ea631ce1cf186586f66a1100a1914d79",
+        "embeddings.npy": "33dec6f02f7ac94a1b9e37a65ef0fb156a566123b02877c07f8181b95038626c",
+        "candidates.csv": "90e1b19bba4e067bd7bb9867a1be3421eaea11e89fe3a3fe7be5172877ac064c"
+      }
+    },
+    {
+      "run": 2,
+      "cuda_initialization_seconds": 5.5560999953740975e-05,
+      "model_load_seconds": 1.869760197000005,
+      "verifier_load_seconds": 0.29792049400009546,
+      "pipeline_seconds": 121.61879377100001,
+      "cuda_memory": {
+        "peak_allocated_bytes": 1505694208,
+        "peak_reserved_bytes": 1816133632,
+        "scope": "embedder + verifier + full pipeline; Torch allocator, not total process VRAM"
+      },
+      "sha256": {
+        "submission.csv": "726ccb2b4a4f77d1f0e47d32baa365f4ea631ce1cf186586f66a1100a1914d79",
+        "embeddings.npy": "33dec6f02f7ac94a1b9e37a65ef0fb156a566123b02877c07f8181b95038626c",
+        "candidates.csv": "90e1b19bba4e067bd7bb9867a1be3421eaea11e89fe3a3fe7be5172877ac064c"
+      }
+    }
+  ],
+  "files": {
+    "submission.csv": {
+      "run_1_sha256": "726ccb2b4a4f77d1f0e47d32baa365f4ea631ce1cf186586f66a1100a1914d79",
+      "run_2_sha256": "726ccb2b4a4f77d1f0e47d32baa365f4ea631ce1cf186586f66a1100a1914d79",
+      "identical": true
+    },
+    "embeddings.npy": {
+      "run_1_sha256": "33dec6f02f7ac94a1b9e37a65ef0fb156a566123b02877c07f8181b95038626c",
+      "run_2_sha256": "33dec6f02f7ac94a1b9e37a65ef0fb156a566123b02877c07f8181b95038626c",
+      "identical": true
+    },
+    "candidates.csv": {
+      "run_1_sha256": "90e1b19bba4e067bd7bb9867a1be3421eaea11e89fe3a3fe7be5172877ac064c",
+      "run_2_sha256": "90e1b19bba4e067bd7bb9867a1be3421eaea11e89fe3a3fe7be5172877ac064c",
+      "identical": true
+    }
+  },
+  "byte_identical": true
+}

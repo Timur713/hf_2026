@@ -1,0 +1,52 @@
+{
+  "kind": "fusion_artifact_preparation",
+  "artifacts": {
+    "components/0/model_config.yaml": {
+      "bytes": 869,
+      "sha256": "d2621d2b775c90ba0aee77c636023dc89f67854b29c965f0b8ceed37c3c31632"
+    },
+    "components/0/weights.safetensors": {
+      "bytes": 344564312,
+      "sha256": "02e3f62100ba9764d93333a5f5c0ee79a1e63c110104989fcd4fca3d78c06047"
+    },
+    "components/1/model_config.yaml": {
+      "bytes": 867,
+      "sha256": "78773e0c9960c10857137b44c0ac76dc2ad51ebf88527cf64190cfe5879bd0bd"
+    },
+    "components/1/weights.safetensors": {
+      "bytes": 343631272,
+      "sha256": "4087ff19c1f9acc1e9416fa9294acf633d67215ce4b86c5b0a3311bbc8a3e99b"
+    },
+    "components/2/model_config.yaml": {
+      "bytes": 867,
+      "sha256": "6f99c36993261a6007ad2bf5b7d6dbe0233df8a789f29b0dfad78c4b99c3555c"
+    },
+    "components/2/weights.safetensors": {
+      "bytes": 371959312,
+      "sha256": "6be8e34a2ccd00077cfcc650413b6c74fd0deba9cf388ccc31010c1b0deb0a3c"
+    },
+    "verifier.pt": {
+      "bytes": 100452048,
+      "sha256": "0f9085822a50d83e1c8405013e2d40e0028617da79d9eb0b38a55f3c21ac2d17"
+    },
+    "fusion_config.json": {
+      "bytes": 477,
+      "sha256": "fb285589e25182ea62f38b941fa4951573dcde6e03920ba8e7d3cc5a08ef5449"
+    }
+  },
+  "total_weight_bytes": 1160606944,
+  "require_all_data": false,
+  "component_training_folds": [
+    "all except 0",
+    "all except 0",
+    "all except 0"
+  ],
+  "gallery_csv": {
+    "bytes": 31137,
+    "sha256": "66d1f7da17494c67ce03d7277915744756baa574aea1111dc302d21d41ab365c"
+  },
+  "gallery_count": 636,
+  "scale_definition": "std of normalized gallery-gallery cosine, ddof=0, including diagonal",
+  "candidate_threshold_source": "D-057, two-fold provisional calibration; not retuned here",
+  "scope": "gallery statistics and packaging only; no query, metric, GPU acceptance or final release claim"
+}

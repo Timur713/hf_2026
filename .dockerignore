@@ -1,0 +1,40 @@
+.git
+.github
+.env
+.venv
+venv
+__pycache__
+*.py[cod]
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.DS_Store
+
+# Organizer data and generated output are bind-mounted, never baked in.
+dataset
+outputs
+output
+tmp
+logs
+runs
+wandb
+submission
+org_rdocs
+
+# Only the selected inference artifacts enter the build context.
+artifacts/*
+!artifacts/models
+artifacts/models/*
+!artifacts/models/final
+!artifacts/models/verifier_f0
+artifacts/models/final/*
+!artifacts/models/final/weights.safetensors
+!artifacts/models/final/model_config.yaml
+artifacts/models/verifier_f0/*
+!artifacts/models/verifier_f0/verifier.pt
+
+# Only the staging directory for the default fusion image enters context.
+# install_fusion_bundle.py rejects extra files and copies the strict allowlist.
+!artifacts/fusion_bundle
+!artifacts/fusion_bundle/**
+!artifacts/fusion_bundle.tar.gz

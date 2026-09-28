@@ -1,0 +1,512 @@
+{
+  "passed": false,
+  "gallery_extracted_once_batch": 32,
+  "gallery_count": 636,
+  "fixed_query_ids": [
+    "dceea955fdad4d9c9b816acecf3485e5",
+    "80d7334a8a7a426f9b18620ab7004ff1",
+    "2bfa3c99576d40f3867bd2e1888a46ca",
+    "bb8f0fc87c364f0fa4a56015a1a553b2",
+    "ab2ff23a2775424ab6d6da282956e28b",
+    "b0e73b3c0f7442178c16808f5a653584",
+    "2d77125a046b4c6facd797edce174521",
+    "590a155d640a4e9eb39021dd3b3483eb",
+    "772784a0a35d47d8a856adb077e862ab",
+    "6164de44fe634f41930c5944f25798fc",
+    "140c8b2091544f7f94b2c22666a08f17",
+    "632e769740dc41a7bf87d5bfd88afd4d",
+    "607647c47e674e9a966d3099af6cf9ab",
+    "b663d04cbba1459e91f485521d7b9582",
+    "542fa4f51dda476bad6b0f77cdf03be3",
+    "3d37812f45754ac8ba8bd0683fb87f91",
+    "d7a43b23e3144a2abf6d6ad8ed983156",
+    "9bc3be73861e4ed3915f0f3e16226332",
+    "feb1a25607784aa582f65f04cb2710ea",
+    "11eddc1c3c3741688332c6c9a65bb4e1",
+    "4964513c6c5946858e2c844b5b4a9c8b",
+    "00dc933848c24d9f83daf1659bd42ede",
+    "e26dc343130e4e7a8b87a3aee549e0d7",
+    "735865fda883408cbf1b2803060b4ee8"
+  ],
+  "extra_query_ids": [
+    "c0d8965199b0401391207273a2e08f24",
+    "297937288c4a49c8a80380a1cb412282",
+    "fb132dc3d17e4ab2a10bd6517059232c",
+    "9d9e7cde7a29431aad5d375cb7a6a88c",
+    "d8e33c27fabb430f8f5bb6956f446c61",
+    "10f9784e2e584929b87b25d8f206495a",
+    "ef1721efc50346e3b81c5d5d869261cc",
+    "e5a908986ad646588ce474f19debba2c"
+  ],
+  "policy": {
+    "candidate_policy": "gallery_z",
+    "candidate_threshold": 6.6,
+    "rerank_mode": "standardized",
+    "rerank_weight": 0.15
+  },
+  "variants": {
+    "batch1": {
+      "batch_size": 1,
+      "query_ids": [
+        "dceea955fdad4d9c9b816acecf3485e5",
+        "80d7334a8a7a426f9b18620ab7004ff1",
+        "2bfa3c99576d40f3867bd2e1888a46ca",
+        "bb8f0fc87c364f0fa4a56015a1a553b2",
+        "ab2ff23a2775424ab6d6da282956e28b",
+        "b0e73b3c0f7442178c16808f5a653584",
+        "2d77125a046b4c6facd797edce174521",
+        "590a155d640a4e9eb39021dd3b3483eb",
+        "772784a0a35d47d8a856adb077e862ab",
+        "6164de44fe634f41930c5944f25798fc",
+        "140c8b2091544f7f94b2c22666a08f17",
+        "632e769740dc41a7bf87d5bfd88afd4d",
+        "607647c47e674e9a966d3099af6cf9ab",
+        "b663d04cbba1459e91f485521d7b9582",
+        "542fa4f51dda476bad6b0f77cdf03be3",
+        "3d37812f45754ac8ba8bd0683fb87f91",
+        "d7a43b23e3144a2abf6d6ad8ed983156",
+        "9bc3be73861e4ed3915f0f3e16226332",
+        "feb1a25607784aa582f65f04cb2710ea",
+        "11eddc1c3c3741688332c6c9a65bb4e1",
+        "4964513c6c5946858e2c844b5b4a9c8b",
+        "00dc933848c24d9f83daf1659bd42ede",
+        "e26dc343130e4e7a8b87a3aee549e0d7",
+        "735865fda883408cbf1b2803060b4ee8"
+      ],
+      "c6": {
+        "audit": "submission_format_and_integrity",
+        "validated": true,
+        "query_count": 24,
+        "gallery_count": 636,
+        "candidate_rows": 51,
+        "answered_queries": 17,
+        "rejected_queries": 7,
+        "embedding_shape": [
+          660,
+          3072
+        ],
+        "embedding_dtype": "float32",
+        "files": {
+          "submission.csv": {
+            "bytes": 8736,
+            "sha256": "efbe7aadf1f7ef4420a2a4ae7710291a92db771014ddf17c0724729302483cb4"
+          },
+          "embeddings.npy": {
+            "bytes": 8110208,
+            "sha256": "94fd39fa040d4aa8ea19cce6ba42ff9c9f753e9e828aa49e957a2885edea7930"
+          },
+          "candidates.csv": {
+            "bytes": 4019,
+            "sha256": "cd8bc9c3f13a170abe1b430c7cd05cd2234411a58e9862659d3efa3da44c674d"
+          }
+        },
+        "inputs": {
+          "query": {
+            "bytes": 1406,
+            "sha256": "246dda01431f89f465bafd65ca213469fe1831dac8d19515011f91f207ea6a1f"
+          },
+          "gallery": {
+            "bytes": 36862,
+            "sha256": "267623a92113dd36a1239e5cc6910a915a09fdf930c5a112c3cfdd2762fff048"
+          }
+        },
+        "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified"
+      },
+      "comparison": {
+        "passed": true,
+        "strict_byte_equivalence": true,
+        "strict_byte_equivalence_scope": "query-ID-aligned ranking/candidate fields; not raw file order or embeddings",
+        "semantic_ranked_ids_equal": true,
+        "semantic_candidate_ids_equal": true,
+        "semantic_acceptance_equal": true,
+        "compared_queries": 24,
+        "changed_top10_query_ids": [],
+        "changed_candidate_rows_query_ids": [],
+        "changed_candidate_ids_or_acceptance_query_ids": [],
+        "changed_acceptance_query_ids": [],
+        "max_abs_embedding_drift": 0.0,
+        "max_abs_confidence_drift_for_same_candidates": 0.0,
+        "criterion": "exact top10 and candidate rows by query ID; embedding equality is not required",
+        "interpretation": "Confidence-only ULP drift can result from FP16 batch-shape rounding; a strict failure alone is not evidence of prohibited query statistics"
+      }
+    },
+    "batch32": {
+      "batch_size": 32,
+      "query_ids": [
+        "dceea955fdad4d9c9b816acecf3485e5",
+        "80d7334a8a7a426f9b18620ab7004ff1",
+        "2bfa3c99576d40f3867bd2e1888a46ca",
+        "bb8f0fc87c364f0fa4a56015a1a553b2",
+        "ab2ff23a2775424ab6d6da282956e28b",
+        "b0e73b3c0f7442178c16808f5a653584",
+        "2d77125a046b4c6facd797edce174521",
+        "590a155d640a4e9eb39021dd3b3483eb",
+        "772784a0a35d47d8a856adb077e862ab",
+        "6164de44fe634f41930c5944f25798fc",
+        "140c8b2091544f7f94b2c22666a08f17",
+        "632e769740dc41a7bf87d5bfd88afd4d",
+        "607647c47e674e9a966d3099af6cf9ab",
+        "b663d04cbba1459e91f485521d7b9582",
+        "542fa4f51dda476bad6b0f77cdf03be3",
+        "3d37812f45754ac8ba8bd0683fb87f91",
+        "d7a43b23e3144a2abf6d6ad8ed983156",
+        "9bc3be73861e4ed3915f0f3e16226332",
+        "feb1a25607784aa582f65f04cb2710ea",
+        "11eddc1c3c3741688332c6c9a65bb4e1",
+        "4964513c6c5946858e2c844b5b4a9c8b",
+        "00dc933848c24d9f83daf1659bd42ede",
+        "e26dc343130e4e7a8b87a3aee549e0d7",
+        "735865fda883408cbf1b2803060b4ee8"
+      ],
+      "c6": {
+        "audit": "submission_format_and_integrity",
+        "validated": true,
+        "query_count": 24,
+        "gallery_count": 636,
+        "candidate_rows": 51,
+        "answered_queries": 17,
+        "rejected_queries": 7,
+        "embedding_shape": [
+          660,
+          3072
+        ],
+        "embedding_dtype": "float32",
+        "files": {
+          "submission.csv": {
+            "bytes": 8736,
+            "sha256": "efbe7aadf1f7ef4420a2a4ae7710291a92db771014ddf17c0724729302483cb4"
+          },
+          "embeddings.npy": {
+            "bytes": 8110208,
+            "sha256": "8c0949b96dbec15483bac1e59227e14f6e3650f18e58ae2c3599176d708a3b04"
+          },
+          "candidates.csv": {
+            "bytes": 4019,
+            "sha256": "5271e840dcfc96d14c27ca3f03369f10bac9a0bb08dd9cc660129b10bfafecbb"
+          }
+        },
+        "inputs": {
+          "query": {
+            "bytes": 1406,
+            "sha256": "246dda01431f89f465bafd65ca213469fe1831dac8d19515011f91f207ea6a1f"
+          },
+          "gallery": {
+            "bytes": 36862,
+            "sha256": "267623a92113dd36a1239e5cc6910a915a09fdf930c5a112c3cfdd2762fff048"
+          }
+        },
+        "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified"
+      },
+      "comparison": {
+        "passed": false,
+        "strict_byte_equivalence": false,
+        "strict_byte_equivalence_scope": "query-ID-aligned ranking/candidate fields; not raw file order or embeddings",
+        "semantic_ranked_ids_equal": true,
+        "semantic_candidate_ids_equal": true,
+        "semantic_acceptance_equal": true,
+        "compared_queries": 24,
+        "changed_top10_query_ids": [],
+        "changed_candidate_rows_query_ids": [
+          "ab2ff23a2775424ab6d6da282956e28b",
+          "b0e73b3c0f7442178c16808f5a653584",
+          "2d77125a046b4c6facd797edce174521",
+          "590a155d640a4e9eb39021dd3b3483eb",
+          "772784a0a35d47d8a856adb077e862ab",
+          "6164de44fe634f41930c5944f25798fc",
+          "140c8b2091544f7f94b2c22666a08f17",
+          "632e769740dc41a7bf87d5bfd88afd4d",
+          "607647c47e674e9a966d3099af6cf9ab",
+          "b663d04cbba1459e91f485521d7b9582",
+          "542fa4f51dda476bad6b0f77cdf03be3",
+          "3d37812f45754ac8ba8bd0683fb87f91",
+          "d7a43b23e3144a2abf6d6ad8ed983156",
+          "4964513c6c5946858e2c844b5b4a9c8b",
+          "00dc933848c24d9f83daf1659bd42ede",
+          "e26dc343130e4e7a8b87a3aee549e0d7",
+          "735865fda883408cbf1b2803060b4ee8"
+        ],
+        "changed_candidate_ids_or_acceptance_query_ids": [],
+        "changed_acceptance_query_ids": [],
+        "max_abs_embedding_drift": 0.0001313658431172371,
+        "max_abs_confidence_drift_for_same_candidates": 0.00039291000000041265,
+        "criterion": "exact top10 and candidate rows by query ID; embedding equality is not required",
+        "interpretation": "Confidence-only ULP drift can result from FP16 batch-shape rounding; a strict failure alone is not evidence of prohibited query statistics"
+      }
+    },
+    "reverse": {
+      "batch_size": 32,
+      "query_ids": [
+        "735865fda883408cbf1b2803060b4ee8",
+        "e26dc343130e4e7a8b87a3aee549e0d7",
+        "00dc933848c24d9f83daf1659bd42ede",
+        "4964513c6c5946858e2c844b5b4a9c8b",
+        "11eddc1c3c3741688332c6c9a65bb4e1",
+        "feb1a25607784aa582f65f04cb2710ea",
+        "9bc3be73861e4ed3915f0f3e16226332",
+        "d7a43b23e3144a2abf6d6ad8ed983156",
+        "3d37812f45754ac8ba8bd0683fb87f91",
+        "542fa4f51dda476bad6b0f77cdf03be3",
+        "b663d04cbba1459e91f485521d7b9582",
+        "607647c47e674e9a966d3099af6cf9ab",
+        "632e769740dc41a7bf87d5bfd88afd4d",
+        "140c8b2091544f7f94b2c22666a08f17",
+        "6164de44fe634f41930c5944f25798fc",
+        "772784a0a35d47d8a856adb077e862ab",
+        "590a155d640a4e9eb39021dd3b3483eb",
+        "2d77125a046b4c6facd797edce174521",
+        "b0e73b3c0f7442178c16808f5a653584",
+        "ab2ff23a2775424ab6d6da282956e28b",
+        "bb8f0fc87c364f0fa4a56015a1a553b2",
+        "2bfa3c99576d40f3867bd2e1888a46ca",
+        "80d7334a8a7a426f9b18620ab7004ff1",
+        "dceea955fdad4d9c9b816acecf3485e5"
+      ],
+      "c6": {
+        "audit": "submission_format_and_integrity",
+        "validated": true,
+        "query_count": 24,
+        "gallery_count": 636,
+        "candidate_rows": 51,
+        "answered_queries": 17,
+        "rejected_queries": 7,
+        "embedding_shape": [
+          660,
+          3072
+        ],
+        "embedding_dtype": "float32",
+        "files": {
+          "submission.csv": {
+            "bytes": 8736,
+            "sha256": "798ed90c37a45a9aa83c5bd6f28aa2c400287340a7a75b7dffc69a9e60e2b954"
+          },
+          "embeddings.npy": {
+            "bytes": 8110208,
+            "sha256": "53a16044360b417999dcbbb05b59f9ff200fa62a7fc1c53fd3b25ab46ad20aae"
+          },
+          "candidates.csv": {
+            "bytes": 4019,
+            "sha256": "8224edf06216aa4b2bb273216e235f5989e105fa1bbb0391e017cfa32ff7150f"
+          }
+        },
+        "inputs": {
+          "query": {
+            "bytes": 1406,
+            "sha256": "c9deb5a3cbcb4161b42d7b21fcdb478623dbf75195a2066199af50ab57f86af0"
+          },
+          "gallery": {
+            "bytes": 36862,
+            "sha256": "267623a92113dd36a1239e5cc6910a915a09fdf930c5a112c3cfdd2762fff048"
+          }
+        },
+        "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified"
+      },
+      "comparison": {
+        "passed": false,
+        "strict_byte_equivalence": false,
+        "strict_byte_equivalence_scope": "query-ID-aligned ranking/candidate fields; not raw file order or embeddings",
+        "semantic_ranked_ids_equal": true,
+        "semantic_candidate_ids_equal": true,
+        "semantic_acceptance_equal": true,
+        "compared_queries": 24,
+        "changed_top10_query_ids": [],
+        "changed_candidate_rows_query_ids": [
+          "ab2ff23a2775424ab6d6da282956e28b",
+          "b0e73b3c0f7442178c16808f5a653584",
+          "2d77125a046b4c6facd797edce174521",
+          "590a155d640a4e9eb39021dd3b3483eb",
+          "772784a0a35d47d8a856adb077e862ab",
+          "6164de44fe634f41930c5944f25798fc",
+          "140c8b2091544f7f94b2c22666a08f17",
+          "632e769740dc41a7bf87d5bfd88afd4d",
+          "607647c47e674e9a966d3099af6cf9ab",
+          "b663d04cbba1459e91f485521d7b9582",
+          "542fa4f51dda476bad6b0f77cdf03be3",
+          "3d37812f45754ac8ba8bd0683fb87f91",
+          "d7a43b23e3144a2abf6d6ad8ed983156",
+          "4964513c6c5946858e2c844b5b4a9c8b",
+          "00dc933848c24d9f83daf1659bd42ede",
+          "e26dc343130e4e7a8b87a3aee549e0d7",
+          "735865fda883408cbf1b2803060b4ee8"
+        ],
+        "changed_candidate_ids_or_acceptance_query_ids": [],
+        "changed_acceptance_query_ids": [],
+        "max_abs_embedding_drift": 0.0001313658431172371,
+        "max_abs_confidence_drift_for_same_candidates": 0.00039291000000041265,
+        "criterion": "exact top10 and candidate rows by query ID; embedding equality is not required",
+        "interpretation": "Confidence-only ULP drift can result from FP16 batch-shape rounding; a strict failure alone is not evidence of prohibited query statistics"
+      }
+    },
+    "with_extra_queries": {
+      "batch_size": 32,
+      "query_ids": [
+        "c0d8965199b0401391207273a2e08f24",
+        "dceea955fdad4d9c9b816acecf3485e5",
+        "297937288c4a49c8a80380a1cb412282",
+        "80d7334a8a7a426f9b18620ab7004ff1",
+        "fb132dc3d17e4ab2a10bd6517059232c",
+        "2bfa3c99576d40f3867bd2e1888a46ca",
+        "9d9e7cde7a29431aad5d375cb7a6a88c",
+        "bb8f0fc87c364f0fa4a56015a1a553b2",
+        "d8e33c27fabb430f8f5bb6956f446c61",
+        "ab2ff23a2775424ab6d6da282956e28b",
+        "10f9784e2e584929b87b25d8f206495a",
+        "b0e73b3c0f7442178c16808f5a653584",
+        "ef1721efc50346e3b81c5d5d869261cc",
+        "2d77125a046b4c6facd797edce174521",
+        "e5a908986ad646588ce474f19debba2c",
+        "590a155d640a4e9eb39021dd3b3483eb",
+        "772784a0a35d47d8a856adb077e862ab",
+        "6164de44fe634f41930c5944f25798fc",
+        "140c8b2091544f7f94b2c22666a08f17",
+        "632e769740dc41a7bf87d5bfd88afd4d",
+        "607647c47e674e9a966d3099af6cf9ab",
+        "b663d04cbba1459e91f485521d7b9582",
+        "542fa4f51dda476bad6b0f77cdf03be3",
+        "3d37812f45754ac8ba8bd0683fb87f91",
+        "d7a43b23e3144a2abf6d6ad8ed983156",
+        "9bc3be73861e4ed3915f0f3e16226332",
+        "feb1a25607784aa582f65f04cb2710ea",
+        "11eddc1c3c3741688332c6c9a65bb4e1",
+        "4964513c6c5946858e2c844b5b4a9c8b",
+        "00dc933848c24d9f83daf1659bd42ede",
+        "e26dc343130e4e7a8b87a3aee549e0d7",
+        "735865fda883408cbf1b2803060b4ee8"
+      ],
+      "c6": {
+        "audit": "submission_format_and_integrity",
+        "validated": true,
+        "query_count": 32,
+        "gallery_count": 636,
+        "candidate_rows": 75,
+        "answered_queries": 25,
+        "rejected_queries": 7,
+        "embedding_shape": [
+          668,
+          3072
+        ],
+        "embedding_dtype": "float32",
+        "files": {
+          "submission.csv": {
+            "bytes": 11648,
+            "sha256": "8fb77e01b1dad629910f1ff1009efe6bfab5f66c4e6eed2bd471d0e278ccf6d3"
+          },
+          "embeddings.npy": {
+            "bytes": 8208512,
+            "sha256": "d5cfc79f2fb7ac1aeae250996c6d5354cb7807c9c2376c95c418b3091978da08"
+          },
+          "candidates.csv": {
+            "bytes": 5891,
+            "sha256": "7a47d0a53628fa883181611b69d0168b03002bdc87cdd06ca3a1ef5285d5c553"
+          }
+        },
+        "inputs": {
+          "query": {
+            "bytes": 1869,
+            "sha256": "f37c39b955188db753d355857c17d8c47f9c379cd7822fa5a6183e0e505bb4ea"
+          },
+          "gallery": {
+            "bytes": 36862,
+            "sha256": "267623a92113dd36a1239e5cc6910a915a09fdf930c5a112c3cfdd2762fff048"
+          }
+        },
+        "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified"
+      },
+      "comparison": {
+        "passed": false,
+        "strict_byte_equivalence": false,
+        "strict_byte_equivalence_scope": "query-ID-aligned ranking/candidate fields; not raw file order or embeddings",
+        "semantic_ranked_ids_equal": true,
+        "semantic_candidate_ids_equal": true,
+        "semantic_acceptance_equal": true,
+        "compared_queries": 24,
+        "changed_top10_query_ids": [],
+        "changed_candidate_rows_query_ids": [
+          "ab2ff23a2775424ab6d6da282956e28b",
+          "b0e73b3c0f7442178c16808f5a653584",
+          "2d77125a046b4c6facd797edce174521",
+          "590a155d640a4e9eb39021dd3b3483eb",
+          "772784a0a35d47d8a856adb077e862ab",
+          "6164de44fe634f41930c5944f25798fc",
+          "140c8b2091544f7f94b2c22666a08f17",
+          "632e769740dc41a7bf87d5bfd88afd4d",
+          "607647c47e674e9a966d3099af6cf9ab",
+          "b663d04cbba1459e91f485521d7b9582",
+          "542fa4f51dda476bad6b0f77cdf03be3",
+          "3d37812f45754ac8ba8bd0683fb87f91",
+          "d7a43b23e3144a2abf6d6ad8ed983156",
+          "4964513c6c5946858e2c844b5b4a9c8b",
+          "00dc933848c24d9f83daf1659bd42ede",
+          "e26dc343130e4e7a8b87a3aee549e0d7",
+          "735865fda883408cbf1b2803060b4ee8"
+        ],
+        "changed_candidate_ids_or_acceptance_query_ids": [],
+        "changed_acceptance_query_ids": [],
+        "max_abs_embedding_drift": 0.0001313658431172371,
+        "max_abs_confidence_drift_for_same_candidates": 0.00039291000000041265,
+        "criterion": "exact top10 and candidate rows by query ID; embedding equality is not required",
+        "interpretation": "Confidence-only ULP drift can result from FP16 batch-shape rounding; a strict failure alone is not evidence of prohibited query statistics"
+      }
+    }
+  },
+  "kind": "train_query_independence_acceptance",
+  "fold": 0,
+  "code_commit": null,
+  "sources": [
+    {
+      "path": "/app/artifacts/models/fusion/fusion_config.json",
+      "bytes": 379,
+      "sha256": "eace9e6e59699b168e2d2ae6cef5d8d063f0cbe01241e4e8f311d21255e90fe6"
+    },
+    {
+      "path": "/app/artifacts/models/fusion/verifier.pt",
+      "bytes": 100452048,
+      "sha256": "aa254e396ac0be78d29f32641e83f8d18e165d76eb3345c18c1054d105b9abf5"
+    },
+    {
+      "path": "/app/artifacts/models/fusion/components/0/model_config.yaml",
+      "bytes": 1149,
+      "sha256": "c3ff3f06e3cb15c4f996e92214d9dc9ca5a6f938b496cfcaed1dd546c9374312"
+    },
+    {
+      "path": "/app/artifacts/models/fusion/components/0/weights.safetensors",
+      "bytes": 344564312,
+      "sha256": "f69eb2283c03a2748ac44cb4e1a4902bbc6f3129440cf3799edafa0f0ea0aaeb"
+    },
+    {
+      "path": "/app/artifacts/models/fusion/components/1/model_config.yaml",
+      "bytes": 1149,
+      "sha256": "14324f0834f6b4f3a2703639e38f51c1b4bbc3d94b5b29158d471c4e36835a9d"
+    },
+    {
+      "path": "/app/artifacts/models/fusion/components/1/weights.safetensors",
+      "bytes": 343631272,
+      "sha256": "6157e1eb862a0c88f637ed2a163bf6bbbe52459a88d41f3b623e83e69180548f"
+    }
+  ],
+  "device": "cuda:0",
+  "torch_version": "2.5.1+cu121",
+  "deterministic_algorithms": true,
+  "script": {
+    "bytes": 11102,
+    "sha256": "e6381d39b953eec2e8b0a90d5f407f60ed11e7fe6a434c8f650340e2c4228a6f"
+  },
+  "inputs": {
+    "/data/train.csv": {
+      "bytes": 536677,
+      "sha256": "bd1df45b052ae9aabb7fd356898e244875f8cad2f111a3f76977c1b90bce9268"
+    },
+    "splits/folds.csv": {
+      "bytes": 466292,
+      "sha256": "e4ff7a7d98f02dc7d63ae2f0496ad73369dec5ba582b07eb55ad83d5a1846a67"
+    },
+    "splits/fold0_query.csv": {
+      "bytes": 55710,
+      "sha256": "8670a17e5c235d26adfba91dadbb050df6c43bafb3dd61cf7921e1d37796bde8"
+    },
+    "splits/fold0_gallery.csv": {
+      "bytes": 31137,
+      "sha256": "66d1f7da17494c67ce03d7277915744756baa574aea1111dc302d21d41ab365c"
+    }
+  },
+  "scope": "Fixed train-fold prefix; structural independence check, NOT quality evaluation, calibration, proof for all possible inputs or test-set use. GPU floating-point drift is reported, not hidden."
+}

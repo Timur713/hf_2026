@@ -1,0 +1,212 @@
+{
+  "kind": "train_fold_production_postprocessing_replay",
+  "fold": 1,
+  "code_commit": "ca280203a2351843f63b9d403658d8f37de03231",
+  "tracked_worktree_dirty": false,
+  "numpy_version": "1.26.4",
+  "replay_script": {
+    "bytes": 10699,
+    "sha256": "a4880eb345573504d1f758d9ccf6a6bd35b6781c25fa236f02048aae1935c4f6"
+  },
+  "dumps": [
+    {
+      "path": "artifacts/emb/hires392_f1_cls_top16/fold1.npz",
+      "bytes": 11052294,
+      "sha256": "49dfaa917e2acfbb09cdc15eb2ddaaa171de4cc92f7b7f76ef373156455153eb"
+    },
+    {
+      "path": "artifacts/emb/div_clip_f1_cls_top16/fold1.npz",
+      "bytes": 11052294,
+      "sha256": "f05651dcc9438fe4ac7d19d0397739c47682b12afb5ea68ecbc3ab9b41174110"
+    }
+  ],
+  "logits": {
+    "path": "outputs/pair_calibration_20260927/pair_logits_f1.npz",
+    "bytes": 238613,
+    "sha256": "0ef47451b574d932e78ef7a34264fd41fa07671691beaf198f108c8f706458a7"
+  },
+  "inputs": {
+    "fold1_query.csv": {
+      "bytes": 55626,
+      "sha256": "3fce1caabd6a7f9eb04a947727f3d72269627b857c92bcf456cf5f81b8e072ab"
+    },
+    "fold1_gallery.csv": {
+      "bytes": 30706,
+      "sha256": "61abd1fd3bdb56ef7b5c3822e6a5c59da8e3eab9a8375a19d2df446cb77833a3"
+    },
+    "folds.csv": {
+      "bytes": 466292,
+      "sha256": "e4ff7a7d98f02dc7d63ae2f0496ad73369dec5ba582b07eb55ad83d5a1846a67"
+    }
+  },
+  "policy": {
+    "candidate_policy": "gallery_z",
+    "rerank_mode": "standardized",
+    "rerank_weight": 0.15,
+    "candidate_threshold": 6.65,
+    "hub_k": 3,
+    "hub_weight": 0.5,
+    "top_k": 10
+  },
+  "similarity_std": [
+    0.05313010819429965,
+    0.07106138184937556
+  ],
+  "scale_source": "this static fold gallery, diagonal included",
+  "confidence_statistics": "gallery off-diagonal, ddof=0, epsilon=1e-12",
+  "ranking_statistics": "per-query only, ddof=0, epsilon=1e-9; stable gallery-order ties",
+  "training_provenance_verified": false,
+  "scope": "C4 postprocessing replay only; OOF training provenance, full-frame FP16 embeddings, GPU speed and plate invariance NOT verified",
+  "stages": {
+    "fusion": {
+      "metrics": {
+        "fold": 1,
+        "n_query": 1135,
+        "n_query_openset": 229,
+        "map10": 0.8085772831330226,
+        "rank1": 0.7615894039735099,
+        "rank5": 0.934878587196468,
+        "n_query_eval": 906,
+        "official": {
+          "f1": 0.9524355300859599,
+          "tnr": 0.9650655021834061,
+          "candidate_score": 0.9562245217151938,
+          "precision": 0.9904648390941597,
+          "recall": 0.9172185430463576,
+          "pr_auc": 0.990481676521841,
+          "tp": 831,
+          "fp": 8,
+          "fn": 75,
+          "tn": 221
+        },
+        "cross_cam": {
+          "f1": 0.04700854700854701,
+          "tnr": 0.9650655021834061,
+          "candidate_score": 0.32242563356100473,
+          "precision": 0.026221692491060787,
+          "recall": 0.2268041237113402,
+          "pr_auc": 0.990481676521841,
+          "tp": 22,
+          "fp": 817,
+          "fn": 75,
+          "tn": 221
+        },
+        "candidate_score": 0.9562245217151938
+      },
+      "files": {
+        "submission.csv": {
+          "bytes": 413140,
+          "sha256": "886ba9e7462e16651fb0b79299e2bbbc548b13f0ac551dfbbd693730cb06d0ee"
+        },
+        "embeddings.npy": {
+          "bytes": 21651584,
+          "sha256": "9084bd3cc6b7dc3418e79a1aa1c8aabf2b4c5d52845362462f23fe1338716fa9"
+        },
+        "candidates.csv": {
+          "bytes": 196358,
+          "sha256": "fa3dc41d4b21f6a749ce62d811f0044a6fd58db194d8eebaa0cd603430cfada0"
+        }
+      }
+    },
+    "hub": {
+      "metrics": {
+        "fold": 1,
+        "n_query": 1135,
+        "n_query_openset": 229,
+        "map10": 0.8374667560180805,
+        "rank1": 0.7980132450331126,
+        "rank5": 0.9448123620309051,
+        "n_query_eval": 906,
+        "official": {
+          "f1": 0.9512335054503729,
+          "tnr": 0.9650655021834061,
+          "candidate_score": 0.9553831044702829,
+          "precision": 0.9904420549581839,
+          "recall": 0.9150110375275938,
+          "pr_auc": 0.9901668781254307,
+          "tp": 829,
+          "fp": 8,
+          "fn": 77,
+          "tn": 221
+        },
+        "cross_cam": {
+          "f1": 0.042826552462526764,
+          "tnr": 0.9650655021834061,
+          "candidate_score": 0.3194982373787906,
+          "precision": 0.023894862604540025,
+          "recall": 0.20618556701030927,
+          "pr_auc": 0.9901668781254307,
+          "tp": 20,
+          "fp": 817,
+          "fn": 77,
+          "tn": 221
+        },
+        "candidate_score": 0.9553831044702829
+      },
+      "files": {
+        "submission.csv": {
+          "bytes": 413140,
+          "sha256": "ffb17198207a25f94fff039dfe718154a8bafc4cf983b3183ff4ede658fcbfd6"
+        },
+        "embeddings.npy": {
+          "bytes": 21651584,
+          "sha256": "9084bd3cc6b7dc3418e79a1aa1c8aabf2b4c5d52845362462f23fe1338716fa9"
+        },
+        "candidates.csv": {
+          "bytes": 195890,
+          "sha256": "1bc4e8cf60efd336bde6c78039970f10c228e5cce3dff08faa5eb3f3f19eb7ec"
+        }
+      }
+    },
+    "verifier": {
+      "metrics": {
+        "fold": 1,
+        "n_query": 1135,
+        "n_query_openset": 229,
+        "map10": 0.8375812922667227,
+        "rank1": 0.7958057395143487,
+        "rank5": 0.9514348785871964,
+        "n_query_eval": 906,
+        "official": {
+          "f1": 0.9506314580941446,
+          "tnr": 0.9650655021834061,
+          "candidate_score": 0.954961671320923,
+          "precision": 0.9904306220095693,
+          "recall": 0.9139072847682119,
+          "pr_auc": 0.990091233025058,
+          "tp": 828,
+          "fp": 8,
+          "fn": 78,
+          "tn": 221
+        },
+        "cross_cam": {
+          "f1": 0.044919786096256686,
+          "tnr": 0.9650655021834061,
+          "candidate_score": 0.3209635009224015,
+          "precision": 0.025119617224880382,
+          "recall": 0.21212121212121213,
+          "pr_auc": 0.990091233025058,
+          "tp": 21,
+          "fp": 815,
+          "fn": 78,
+          "tn": 221
+        },
+        "candidate_score": 0.954961671320923
+      },
+      "files": {
+        "submission.csv": {
+          "bytes": 413140,
+          "sha256": "fc4f286f6caecd6d443f15ca3989c407ffd90757eaab8561b496b1cb8fc29826"
+        },
+        "embeddings.npy": {
+          "bytes": 21651584,
+          "sha256": "9084bd3cc6b7dc3418e79a1aa1c8aabf2b4c5d52845362462f23fe1338716fa9"
+        },
+        "candidates.csv": {
+          "bytes": 195656,
+          "sha256": "6a5b175d617adc68abdafc2e8a0574eaae99dc25d888a848331e22105b4f8b86"
+        }
+      }
+    }
+  }
+}

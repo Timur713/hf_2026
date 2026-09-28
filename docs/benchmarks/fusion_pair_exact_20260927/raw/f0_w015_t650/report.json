@@ -1,0 +1,212 @@
+{
+  "kind": "train_fold_production_postprocessing_replay",
+  "fold": 0,
+  "code_commit": "ca280203a2351843f63b9d403658d8f37de03231",
+  "tracked_worktree_dirty": false,
+  "numpy_version": "1.26.4",
+  "replay_script": {
+    "bytes": 10699,
+    "sha256": "a4880eb345573504d1f758d9ccf6a6bd35b6781c25fa236f02048aae1935c4f6"
+  },
+  "dumps": [
+    {
+      "path": "artifacts/emb/hires392_f0_cls_top16/fold0.npz",
+      "bytes": 11127558,
+      "sha256": "8bee73371a5227450a19d1840e9295e06a156b74a146222bab875f9de9992d5a"
+    },
+    {
+      "path": "artifacts/emb/div_clip_f0_cls_top16/fold0.npz",
+      "bytes": 11127558,
+      "sha256": "e07ba0b327152f86c65a5343eaba63f0b6e31a5af0e8db921feb7781b5e9f7c2"
+    }
+  ],
+  "logits": {
+    "path": "outputs/pair_calibration_20260927/pair_logits_f0.npz",
+    "bytes": 237906,
+    "sha256": "cbeeb0e8323a02227f31c08fd4382a0ad38accb880a6940b3f02d3503ab8176a"
+  },
+  "inputs": {
+    "fold0_query.csv": {
+      "bytes": 55710,
+      "sha256": "8670a17e5c235d26adfba91dadbb050df6c43bafb3dd61cf7921e1d37796bde8"
+    },
+    "fold0_gallery.csv": {
+      "bytes": 31137,
+      "sha256": "66d1f7da17494c67ce03d7277915744756baa574aea1111dc302d21d41ab365c"
+    },
+    "folds.csv": {
+      "bytes": 466292,
+      "sha256": "e4ff7a7d98f02dc7d63ae2f0496ad73369dec5ba582b07eb55ad83d5a1846a67"
+    }
+  },
+  "policy": {
+    "candidate_policy": "gallery_z",
+    "rerank_mode": "standardized",
+    "rerank_weight": 0.15,
+    "candidate_threshold": 6.5,
+    "hub_k": 3,
+    "hub_weight": 0.5,
+    "top_k": 10
+  },
+  "similarity_std": [
+    0.0527899473633434,
+    0.07144717959843336
+  ],
+  "scale_source": "this static fold gallery, diagonal included",
+  "confidence_statistics": "gallery off-diagonal, ddof=0, epsilon=1e-12",
+  "ranking_statistics": "per-query only, ddof=0, epsilon=1e-9; stable gallery-order ties",
+  "training_provenance_verified": false,
+  "scope": "C4 postprocessing replay only; OOF training provenance, full-frame FP16 embeddings, GPU speed and plate invariance NOT verified",
+  "stages": {
+    "fusion": {
+      "metrics": {
+        "fold": 0,
+        "n_query": 1138,
+        "n_query_openset": 228,
+        "map10": 0.8391962468748183,
+        "rank1": 0.8131868131868132,
+        "rank5": 0.9483516483516483,
+        "n_query_eval": 910,
+        "official": {
+          "f1": 0.9614949037372593,
+          "tnr": 0.9692982456140351,
+          "candidate_score": 0.9638359063002919,
+          "precision": 0.9872093023255814,
+          "recall": 0.9370860927152318,
+          "pr_auc": 0.9926962854970112,
+          "tp": 849,
+          "fp": 11,
+          "fn": 57,
+          "tn": 221
+        },
+        "cross_cam": {
+          "f1": 0.04477611940298507,
+          "tnr": 0.9692982456140351,
+          "candidate_score": 0.3221327572663001,
+          "precision": 0.02441860465116279,
+          "recall": 0.2692307692307692,
+          "pr_auc": 0.9926962854970112,
+          "tp": 21,
+          "fp": 839,
+          "fn": 57,
+          "tn": 221
+        },
+        "candidate_score": 0.9638359063002919
+      },
+      "files": {
+        "submission.csv": {
+          "bytes": 414232,
+          "sha256": "2101a779d59e491aebc5af317b95c8dc41ee31e7b7196ddaad721593870dfb72"
+        },
+        "embeddings.npy": {
+          "bytes": 21799040,
+          "sha256": "61b28f99e053464fb77cd28a246a03ff3b33131ab1bcf223feb3402266a9abaa"
+        },
+        "candidates.csv": {
+          "bytes": 201272,
+          "sha256": "44d8c2fae7bf9a4534c8f7d30356d3f2814fa83b06e10ff754e4c060217ced29"
+        }
+      }
+    },
+    "hub": {
+      "metrics": {
+        "fold": 0,
+        "n_query": 1138,
+        "n_query_openset": 228,
+        "map10": 0.8611911302982732,
+        "rank1": 0.8351648351648352,
+        "rank5": 0.9571428571428572,
+        "n_query_eval": 910,
+        "official": {
+          "f1": 0.9614949037372593,
+          "tnr": 0.9692982456140351,
+          "candidate_score": 0.9638359063002919,
+          "precision": 0.9883585564610011,
+          "recall": 0.9360529217199559,
+          "pr_auc": 0.9924783750035401,
+          "tp": 849,
+          "fp": 10,
+          "fn": 58,
+          "tn": 221
+        },
+        "cross_cam": {
+          "f1": 0.032188841201716736,
+          "tnr": 0.9692982456140351,
+          "candidate_score": 0.31332166252541227,
+          "precision": 0.017462165308498253,
+          "recall": 0.2054794520547945,
+          "pr_auc": 0.9924783750035401,
+          "tp": 15,
+          "fp": 844,
+          "fn": 58,
+          "tn": 221
+        },
+        "candidate_score": 0.9638359063002919
+      },
+      "files": {
+        "submission.csv": {
+          "bytes": 414232,
+          "sha256": "225c1dcdd79adff4a4aef8362fc9313b72f4f986f0e33ee5cbbd372bdc4f858a"
+        },
+        "embeddings.npy": {
+          "bytes": 21799040,
+          "sha256": "61b28f99e053464fb77cd28a246a03ff3b33131ab1bcf223feb3402266a9abaa"
+        },
+        "candidates.csv": {
+          "bytes": 201038,
+          "sha256": "fa27ab1dce9f577f5cce8c9bed56fcf418c07ea949083626d8b945f66539f1ad"
+        }
+      }
+    },
+    "verifier": {
+      "metrics": {
+        "fold": 0,
+        "n_query": 1138,
+        "n_query_openset": 228,
+        "map10": 0.8675007703936275,
+        "rank1": 0.8461538461538461,
+        "rank5": 0.9637362637362638,
+        "n_query_eval": 910,
+        "official": {
+          "f1": 0.9614949037372593,
+          "tnr": 0.9692982456140351,
+          "candidate_score": 0.9638359063002919,
+          "precision": 0.9883585564610011,
+          "recall": 0.9360529217199559,
+          "pr_auc": 0.9924783750035401,
+          "tp": 849,
+          "fp": 10,
+          "fn": 58,
+          "tn": 221
+        },
+        "cross_cam": {
+          "f1": 0.03640256959314775,
+          "tnr": 0.9692982456140351,
+          "candidate_score": 0.316271272399414,
+          "precision": 0.01979045401629802,
+          "recall": 0.22666666666666666,
+          "pr_auc": 0.9924783750035401,
+          "tp": 17,
+          "fp": 842,
+          "fn": 58,
+          "tn": 221
+        },
+        "candidate_score": 0.9638359063002919
+      },
+      "files": {
+        "submission.csv": {
+          "bytes": 414232,
+          "sha256": "df103580114507ffdc67972cf396b7388a99e8e8dde2b47ae79fd98454cb6a54"
+        },
+        "embeddings.npy": {
+          "bytes": 21799040,
+          "sha256": "61b28f99e053464fb77cd28a246a03ff3b33131ab1bcf223feb3402266a9abaa"
+        },
+        "candidates.csv": {
+          "bytes": 201038,
+          "sha256": "da49548e77f24fa6e91b8d04d64b685d46fca1874907e4ac9089202d2a98333a"
+        }
+      }
+    }
+  }
+}

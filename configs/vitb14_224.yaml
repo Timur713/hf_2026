@@ -1,0 +1,35 @@
+# Базовый рецепт дообучения (задача A2.1). Поля model попадают в model_config.yaml артефакта.
+model:
+  arch: dinov2_vitb14
+  input_size: [224, 224]
+  bbox_pad: 0.0
+  resize: stretch
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+  pool: cls
+  neck: bnneck
+  infer_dtype: fp16
+  tta_flip: false
+train:
+  val_fold: 0
+  epochs: 30
+  p: 16                 # личностей в батче
+  k: 4                  # кадров на личность; батч = p * k
+  lr_backbone: 1.0e-5
+  lr_head: 1.0e-3
+  llrd: 0.75            # послойное уменьшение lr от последнего блока к первому
+  weight_decay: 0.05
+  warmup_epochs: 3
+  label_smoothing: 0.1
+  triplet_margin: 0.3
+  triplet_weight: 1.0
+  box_jitter: 0.05
+  pad_jitter: 0.05
+  color: 0.2
+  erasing_p: 0.5
+  plate_band_p: 0.5     # заливка номерной зоны: +0,014 и защита от контрольного прогона (D-041)
+  workers: 8
+  amp: bf16             # bf16 | fp16 | off
+  pretrained: true      # false — только для smoke-теста механики
+  seed: 2026
+  eval_every: 5

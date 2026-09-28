@@ -1,0 +1,21 @@
+name: v_fus_all_frz_input392
+artifact:
+  release_url: https://github.com/Timur713/hack_falcon_2026/releases/download/fusion-all-v1/v_fus_all_frz_input392.pt
+  sha256: aa254e396ac0be78d29f32641e83f8d18e165d76eb3345c18c1054d105b9abf5
+arch: dinov2_vits14
+input_size: [392, 392]
+pretrained:
+  author: Meta AI (DINOv2); timm/Hugging Face conversion
+  model_id: timm/vit_small_patch14_dinov2.lvd142m
+  tag: lvd142m
+  url: https://huggingface.co/timm/vit_small_patch14_dinov2.lvd142m/tree/4610ca143709d58a633b6397a74412c2c3842454
+  revision: 4610ca143709d58a633b6397a74412c2c3842454
+  filename: model.safetensors
+  sha256: 04d27f3400d059fc0cfd7d17dd1909a75bf3ea8fb3eeb48b97cb99e57ee20081
+train:
+  data: all five train folds
+  steps: 4000
+  freeze_backbone: true
+  plate_band_p: 0.5
+  result: train loss 0.6093
+  experiment: A-102
