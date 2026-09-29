@@ -230,7 +230,7 @@ def build_report(root, *, query=None, gallery=None, submission_dir=None, expecte
         add("component_provenance", "missing", "Need --bundle; run audit_release weights --require-all-data separately")
         add("verifier_provenance", "missing", "Need --bundle with verifier.pt and verifier.provenance.yaml")
     for fold in (0, 1):
-        path = root / f"docs/benchmarks/fusion_pair_exact_20260927/raw/f{fold}_w015_t660/report.json"
+        path = root / f"docs/evidence/quality_fold{fold}.json"
         if not path.exists():
             add(f"a104_fold{fold}_evidence", "missing", str(path.relative_to(root)))
             continue
@@ -251,7 +251,7 @@ def build_report(root, *, query=None, gallery=None, submission_dir=None, expecte
             "checks": checks, "automated_checks_pass": not any(c["status"] in ("blocked", "missing") for c in checks),
             "final_acceptance": False,
             "scope": "CPU integrity evidence only. No GPU measurements, OOF training verification, license/legal clearance, "
-                     "public access check, or human submission. See docs/final_delivery_checklist.md."}
+                     "public access check, or human submission. See docs/results.md."}
 
 
 def main():

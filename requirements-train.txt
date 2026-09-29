@@ -1,7 +1,5 @@
-# Окружение трека A: фолды, оценка, кэш кропов, эмбеддинги, обучение.
-# Проверено на ноутбуке (Intel macOS, CPU, Python 3.11). torch 2.2.2 — последняя сборка под Intel-Mac.
-# На GPU-сервере torch/torchvision ставятся из индекса cu121 той же или более новой версии;
-# выбор версии для сервера фиксируется в DECISIONS.md перед задачей A2.1.
+# CPU development environment: Intel macOS, Python 3.11.
+# Use requirements.txt and requirements-lock-cu121.txt for Linux/CUDA.
 torch==2.2.2
 torchvision==0.17.2
 numpy==1.26.4
@@ -14,7 +12,5 @@ pyyaml==6.0.2
 tqdm==4.67.1
 pytest==8.3.5
 
-# Только для демонстрации масштабирования поиска на 10^6 (§12 ТЗ,
-# scripts/analysis/ann_scale.py). В инференс-образ не входит: в задаче gallery
-# из 750 кадров, там используется точный перебор.
+# Optional synthetic ANN benchmark; not used at inference.
 faiss-cpu==1.9.0

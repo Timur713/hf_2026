@@ -184,8 +184,8 @@ def test_readiness_uses_pair_a104_and_preserves_cpu_limits(tmp_path):
     (bundle / "fusion_config.json").write_text(json.dumps({"components": [{"path": "components/0"}]}))
     verifier_sidecar(bundle)
     for fold in (0, 1):
-        path = root / f"docs/benchmarks/fusion_pair_exact_20260927/raw/f{fold}_w015_t660/report.json"
-        path.parent.mkdir(parents=True)
+        path = root / f"docs/evidence/quality_fold{fold}.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps({
             "dumps": [{"path": "hires392"}, {"path": "div_clip"}],
             "logits": {"path": f"pair_logits_f{fold}.npz"},

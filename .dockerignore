@@ -38,3 +38,7 @@ artifacts/models/verifier_f0/*
 !artifacts/fusion_bundle
 !artifacts/fusion_bundle/**
 !artifacts/fusion_bundle.tar.gz
+
+# Documentation and presentation assets are not part of the runtime image.
+docs
+presentation

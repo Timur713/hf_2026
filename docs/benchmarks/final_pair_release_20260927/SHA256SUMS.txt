@@ -1,3 +1,0 @@
-9eeb99fae8bdcb228265ee83ac51da60da9896199d4746d843b30f3976fa49a8  fusion-pair-d065-bundle.tar.gz
-4e3eacd2431ae634369b8e34689cb48d579f034207d1fd72bdff29661ad71e22  manifest.json
-eace9e6e59699b168e2d2ae6cef5d8d063f0cbe01241e4e8f311d21255e90fe6  fusion_config.json
