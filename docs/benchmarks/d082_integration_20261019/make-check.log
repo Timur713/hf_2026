@@ -1,0 +1,39 @@
+/Library/Developer/CommandLineTools/usr/bin/make validate PYTHON="/private/tmp/falcon-pr-py310/bin/python"
+/private/tmp/falcon-pr-py310/bin/python -m reid.eval.validate_outputs --self-test
+VALID: built-in output fixture satisfies contract C6
+/Library/Developer/CommandLineTools/usr/bin/make test PYTHON="/private/tmp/falcon-pr-py310/bin/python"
+/private/tmp/falcon-pr-py310/bin/python -m pytest -q
+........................................................................ [ 10%]
+........................................................................ [ 20%]
+........................................................................ [ 30%]
+................................................s....................... [ 41%]
+........................................................................ [ 51%]
+........................................................................ [ 61%]
+........................................................................ [ 72%]
+.............ssss....................................................... [ 82%]
+........................................................................ [ 92%]
+..................................................                       [100%]
+693 passed, 5 skipped in 10.44s
+/Library/Developer/CommandLineTools/usr/bin/make smoke PYTHON="/private/tmp/falcon-pr-py310/bin/python" DATA_ROOT="/private/tmp/falcon-pr-smoke50"
+/private/tmp/falcon-pr-py310/bin/python -m reid.infer.smoke --data-root "/private/tmp/falcon-pr-smoke50" --n-images 50
+2026-10-19 09:48:51,994 INFO reid.infer.run stage_done stage=read_inputs elapsed_s=0.000804
+2026-10-19 09:48:51,994 INFO reid.infer.run inputs query_count=25 gallery_count=25
+2026-10-19 09:48:52,292 INFO reid.infer.run stage_done stage=load_d082_runtime elapsed_s=0.297732
+2026-10-19 09:48:52,292 INFO reid.infer.run d082_identity {"files": {"components/0/model_config.yaml": {"bytes": 1389, "sha256": "334f5bf5dccc0cff0fbf494eb8119b55b1c926920570541a509b5466e7ab49d0"}, "components/0/training_receipt.json": {"bytes": 4814, "sha256": "db938d3c48e569d3aca22bec9297d5b73877e6670f366b5ca602fc3a23d3bcec"}, "components/0/weights.safetensors": {"bytes": 344564312, "sha256": "c96604025d1e5a8a4f0b2e7b8f05ea1039b466203eacb8d20f6851f895283463"}, "components/1/model_config.yaml": {"bytes": 1333, "sha256": "4b94dca416435e41ca57874f60f35780d523d65a9d45259a950acac1bb3763ac"}, "components/1/training_receipt.json": {"bytes": 4812, "sha256": "e1b9144924ab13154e289d2844c52a02de46255fc488e5f2c5f4a129aec24ccf"}, "components/1/weights.safetensors": {"bytes": 343631272, "sha256": "a694bd4509c91d13ee444d91e8ab5d734fed241c541b8bca3d329c99aad57c46"}, "fusion_config.json": {"bytes": 387, "sha256": "e93555a014894f679beab16f0735b6c4f6880704d2dc174209d933948cbaa488"}, "head/model_config.json": {"bytes": 163, "sha256": "d80b12985be48a6068e4b8ff28e9513922991eff64d05c43a2fb78aa8b40d659"}, "head/training_receipt.json": {"bytes": 269077, "sha256": "15f2b6aa967b738daa56c6c7cab6966f19b7e2326b779c11ef06040dfa6723d1"}, "head/weights.safetensors": {"bytes": 224860, "sha256": "895663d191822ab9ca0c17ff82e89e6d48d9b957c160597ec0fe50913cb34536"}, "recipe_receipt.json": {"bytes": 1162, "sha256": "86640d89a42ba2d73f8443e37ebe3d3c5db5e3445272a68e1d81713aad024212"}, "verifier.pt": {"bytes": 100453072, "sha256": "2017f6ce493800bfb60e5847a4b861f4b5f6d0e288e242c941e68f8c8345c659"}, "verifier_config.json": {"bytes": 107, "sha256": "441651adfda288cc3f11414a62529042209a91555c629aa60f1ee02f5cdc6638"}, "verifier_training_receipt.json": {"bytes": 14513, "sha256": "1e9eb0c787ad0dba313a2bc525635a2bfdf73b714c12c3731b1365a1ed6fc676"}}, "final_acceptance": false, "gpu_acceptance": "pending", "historical_training_verified": false, "kind": "d082_production_candidate", "manifest_sha256": "94125e2665558df43fb6701f7f0ca6b5c1cf5289cbfd48c83c03d1ee0180305c", "provenance_statements_verified": true, "quality_acceptance": "pending", "recipe": {"candidate_threshold": 6.6, "residual_weight": 0.5, "verifier_weight": 0.15}, "scales": [0.0440379795337213, 0.06169926231643144], "verifier_gallery_cache": false, "weight_bytes": 788873516}
+2026-10-19 09:48:54,024 INFO reid.infer.run stage_done stage=load_extractor elapsed_s=1.732699
+2026-10-19 09:48:54,024 INFO reid.infer.run effective_config {"batch_size": 32, "candidate_policy": "gallery_z", "candidate_threshold": 6.6, "device": "cpu", "fusion_internal_batch_size": 4, "rerank_mode": "standardized", "rerank_weight": 0.15, "threshold_source": "artifact", "verifier_enabled": true, "verifier_gallery_cache": false}
+2026-10-19 09:48:54,025 INFO reid.infer.run d082_plate_mask_control enabled=False
+2026-10-19 09:48:54,061 INFO reid.infer.run artifact_identity {"metadata_sha256": {"fusion_config.json": "e93555a014894f679beab16f0735b6c4f6880704d2dc174209d933948cbaa488"}, "model_path": "artifacts/models/d082/bundle", "verifier_path": "/private/tmp/hf_2026-unified-pr-20261019/artifacts/models/d082/bundle/verifier.pt", "verifier_sha256": "2017f6ce493800bfb60e5847a4b861f4b5f6d0e288e242c941e68f8c8345c659", "weight_integrity": "not_checked_by_logger"}
+2026-10-19 09:49:00,563 INFO reid.infer.run stage_done stage=extract_query elapsed_s=6.501339
+2026-10-19 09:49:07,039 INFO reid.infer.run stage_done stage=extract_gallery elapsed_s=6.475803
+/private/tmp/falcon-pr-py310/lib/python3.10/site-packages/torch/nn/modules/transformer.py:379: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  warnings.warn(
+2026-10-19 09:49:07,284 INFO reid.infer.run stage_done stage=load_verifier elapsed_s=0.244806
+2026-10-19 09:49:07,284 INFO reid.infer.run stage_done stage=prepare_d082_gallery elapsed_s=0.000713
+2026-10-19 09:50:10,464 INFO reid.infer.run stage_done stage=d082_graph_verifier_confidence elapsed_s=63.179414
+2026-10-19 09:50:10,464 INFO reid.infer.run stage_done stage=rank elapsed_s=63.180393
+2026-10-19 09:50:10,465 INFO reid.infer.run stage_done stage=write_outputs elapsed_s=0.000674
+2026-10-19 09:50:10,466 INFO reid.infer.run stage_done stage=validate_c6 elapsed_s=0.001389
+2026-10-19 09:50:10,466 INFO reid.infer.run pipeline_done queries=25 accepted=0 rejected=25 embedding_dim=3072 out=/var/folders/nw/gt1842b537n9fr3kf88l_q1r0000gn/T/reid-e2e-smoke-rndhinw_/outputs
+2026-10-19 09:50:10,482 INFO reid.infer.run wrote and validated submission.csv, embeddings.npy, candidates.csv in /var/folders/nw/gt1842b537n9fr3kf88l_q1r0000gn/T/reid-e2e-smoke-rndhinw_/outputs
+PASS: end-to-end inference and C6 validation passed for 50 images

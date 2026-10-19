@@ -1,0 +1,75 @@
+{
+  "upstream_commit": "4f1bd6de87ac6dfd0b9cfa481142433fdedcabf3",
+  "scope": "AST equality excludes formatting; does not prove GPU numerical equality",
+  "unchanged_semantics_modules": {
+    "reid/infer/d082.py": {
+      "upstream_sha256": "6c321dc5822ab43206dc47c8ee8dfcb8a1d1cd925d1e280d3b47f786fc39ba9d",
+      "integration_sha256": "b3a79ede6f319538fedb5862e1fb67e662bb0b609abe4a329d7566bc9ac797bc",
+      "ast_equal": true
+    },
+    "reid/infer/d082_entrypoint.py": {
+      "upstream_sha256": "1547d633102e9f5fa4139a95d735dd92fb045d2ec6896a424e48d8c0f7c3f8de",
+      "integration_sha256": "b98312d7f99b42a04235d81668af2253a46e5365a6e914cd4fd1f647f6fd9d91",
+      "ast_equal": true
+    },
+    "reid/infer/d082_production.py": {
+      "upstream_sha256": "7330cd473c95a2ec8ff7a10571cdaab83475307f405ba4d87d987dda1d777929",
+      "integration_sha256": "578c93f18e37ffb0308e271df0b82bd8e6f35bae208b54c92f56bf056dd82b98",
+      "ast_equal": true
+    },
+    "reid/infer/extractor.py": {
+      "upstream_sha256": "95a241d8812e9674c39fbeb5e930484e9a0ee6cb42836050709c861f7444c6a5",
+      "integration_sha256": "3b2d7a39a798d303a72ad861a75f56b5a32f9d4b81627c24d6853e23c3c086c3",
+      "ast_equal": true
+    },
+    "reid/infer/list_ranker.py": {
+      "upstream_sha256": "57168275f973e6885d9168d741797b7ad42e4d66cb331156fe953291b7c8848d",
+      "integration_sha256": "a5fe9fd109a4301961a0d831c352222667ba0a37355445b01bf9c931bbd69f26",
+      "ast_equal": true
+    },
+    "reid/infer/observability.py": {
+      "upstream_sha256": "5b8ff4797ed08eb1c70d07d0a1ccad1e58ab94848c2e858ea600c5b8589a1d7c",
+      "integration_sha256": "e5bbc3c64c0227c88feee9f2d4b834ab8b870abc283fabbba100981389088767",
+      "ast_equal": true
+    },
+    "reid/infer/plate_mask.py": {
+      "upstream_sha256": "d80bde46f40cc704a5316ef52270c3a2a6108273a6ca714f37be6138eb55876b",
+      "integration_sha256": "503bfe70843814f5124abb19a530c00330e9a55f719cabfcd85ccf0243b8b791",
+      "ast_equal": true
+    },
+    "reid/infer/verifier.py": {
+      "upstream_sha256": "0fd905804edc21e0726f0821f8b27dd0b2c988581a2d271f07996928b01004b9",
+      "integration_sha256": "5ae5c868b5c104e60ae7761dc81e90a911cdf15161e0d8b0deac27a3910e4665",
+      "ast_equal": true
+    },
+    "reid/infer/verifier_cache.py": {
+      "upstream_sha256": "b27c2d7cae8f625dc5d8496a061f4eec524d4f7ba7343d3c694727d15a0ba597",
+      "integration_sha256": "ba01f3c1c892795e71baa2a5c4cf7fa405ff59b29d9a3b14f5dc8a0606ce4b39",
+      "ast_equal": true
+    },
+    "reid/model/list_ranker.py": {
+      "upstream_sha256": "b5d853a7ec509916df97a0820d8b627c63d60a404597e91cd884b0fac319db57",
+      "integration_sha256": "e1d4eea8c01c30767fe3f3a87157bdad3705f69bb332e6d6b968eb441286eb3b",
+      "ast_equal": true
+    },
+    "reid/post/pipeline.py": {
+      "upstream_sha256": "cc33f30667ee157ae2b0084faa0e7926dc043577aa20330de06089c49f146e63",
+      "integration_sha256": "0f5c9dbcdb8775c1775616ed49b7a54b75f414408bec6fba5cbd030f689d6380",
+      "ast_equal": true
+    },
+    "reid/post/ranker.py": {
+      "upstream_sha256": "624a791d8ef6b1b18e1b7e8768933d559f03500ca97e2a5eb7aa7ab77e8ba79f",
+      "integration_sha256": "1312b86a501f7c28e8ea34907e4d061dce96c9059e700872c206d787c7576a07",
+      "ast_equal": true
+    },
+    "reid/post/verifier.py": {
+      "upstream_sha256": "9eaf61fe6d657c584af830cf15e89e7d1d509e732768c233797b5d5f32de7bcd",
+      "integration_sha256": "3217988fe811236a989d8f7b1c84f6aa7f62db69bb95e6cdc2b4a84a2e8b6100",
+      "ast_equal": true
+    }
+  },
+  "intentional_runtime_changes": {
+    "reid/infer/run.py": "unused rerank_topk import removed; rest AST equal to upstream",
+    "reid/infer/smoke.py": "prefer and validate baked production bundle; forward manifest pin"
+  }
+}

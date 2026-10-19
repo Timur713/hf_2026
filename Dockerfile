@@ -121,6 +121,41 @@ ENV HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1
 ENTRYPOINT ["python3", "-m", "reid.infer.run"]
 CMD ["--images", "/data/images", "--query", "/data/test_query.csv", "--gallery", "/data/test_gallery.csv", "--out", "/out", "--model", "/app/artifacts/models/final", "--verifier", "/app/artifacts/models/verifier_f0/verifier.pt", "--twins", "off"]
 
-# Unqualified `docker build .` selects the exact same self-contained fusion
-# image as --target fusion. This stage does not inherit legacy checkpoints.
-FROM fusion AS final
+# All-data D082 candidate, pinned to the immutable team release.
+# Installation verifies the manifest, provenance and exact weight budget.
+FROM runtime-base AS d082-production
+ARG D082_ARCHIVE_URL=https://github.com/Timur713/hf_2026/releases/download/d082-candidate-20261019-r2/falcon-D082-legacy66-base-bundle.tar.gz
+ARG D082_ARCHIVE_SHA256=0920e24524e9b32215323bbe3f8e47ae6e19d1f036b14eacfa596507b83d95d5
+ARG D082_MANIFEST_SHA256=94125e2665558df43fb6701f7f0ca6b5c1cf5289cbfd48c83c03d1ee0180305c
+ARG D082_RELEASE_URL=https://github.com/Timur713/hf_2026/releases/tag/d082-candidate-20261019-r2
+LABEL ai.deeptech.artifact.kind="d082_production_candidate" \
+      ai.deeptech.artifact.final_acceptance="false" \
+      ai.deeptech.d082.source_release="${D082_RELEASE_URL}" \
+      ai.deeptech.d082.archive_url="${D082_ARCHIVE_URL}" \
+      ai.deeptech.d082.archive_sha256="${D082_ARCHIVE_SHA256}" \
+      ai.deeptech.d082.manifest_sha256="${D082_MANIFEST_SHA256}" \
+      ai.deeptech.model.url="" ai.deeptech.model.sha256="" \
+      ai.deeptech.model.config_url="" ai.deeptech.model.config_sha256="" \
+      ai.deeptech.verifier.url="" ai.deeptech.verifier.sha256=""
+RUN --mount=type=bind,target=/build-context \
+    PYTHONPATH=. python3 scripts/stage_d082_production.py \
+      --cache-root /build-context \
+      --destination /app/artifacts/models/d082 \
+      --archive-url "${D082_ARCHIVE_URL}" \
+      --archive-sha256 "${D082_ARCHIVE_SHA256}" \
+      --manifest-sha256 "${D082_MANIFEST_SHA256}" \
+      --source-release-url "${D082_RELEASE_URL}"
+ENV HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1
+ENTRYPOINT ["python3", "-m", "reid.infer.d082_entrypoint"]
+CMD ["--images", "/data/images", "--query", "/data/test_query.csv", "--gallery", "/data/test_gallery.csv", "--out", "/out", "--device", "cuda"]
+
+# Development tests create temporary Git repositories. Keep their Git dependency
+# in a dedicated QA target; inference remains independent of Git and network.
+FROM d082-production AS qa
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Return to the documented D082 gallery-z6.6 default after D141 rejection.
+# This selects a prepared candidate; actual A5000/Docker acceptance is separate.
+FROM d082-production AS final

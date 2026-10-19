@@ -1,4 +1,4 @@
-"""Pair-verifier inference and deterministic top-k reranking (D-039).
+"""Deterministic top-k reranking, independent of model and image I/O (D-039).
 
 The verifier only sees one query and its own embedding top-k gallery candidates.
 It never consumes another query, camera_id, batch statistics, or test labels.
@@ -6,17 +6,10 @@ It never consumes another query, camera_id, batch statistics, or test labels.
 
 from __future__ import annotations
 
-import os
-from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Protocol, Sequence
 
 import numpy as np
-import torch
-from torchvision.io import ImageReadMode, read_image
-
-from reid.data.preprocess import preprocess_frame
-from reid.model.verifier import PairVerifier as VerifierNetwork
 from reid.post.search import SearchResult
 
 
@@ -27,84 +20,14 @@ class PairScorer(Protocol):
     def score_pairs(self, query: Item, candidates: Sequence[Item]) -> np.ndarray: ...
 
 
-class PairVerifier:
-    """Load A3.3 ``verifier.pt`` and score one query against its top-k."""
+def __getattr__(name: str):
+    # Compatibility for published callers. Production imports the adapter from
+    # infer directly; importing the ranking functions alone never loads torch.
+    if name == "PairVerifier":
+        from reid.infer.verifier import PairVerifier
 
-    def __init__(
-        self,
-        checkpoint: str | Path,
-        device: str = "cuda",
-        preprocess_workers: int | None = None,
-    ) -> None:
-        checkpoint_path = Path(checkpoint)
-        if checkpoint_path.is_dir():
-            checkpoint_path = checkpoint_path / "verifier.pt"
-        if not checkpoint_path.is_file():
-            raise FileNotFoundError(f"verifier checkpoint not found: {checkpoint_path}")
-
-        self.device = torch.device(device)
-        if self.device.type == "cuda" and not torch.cuda.is_available():
-            raise RuntimeError("CUDA was requested for verifier but is unavailable")
-        payload = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
-        arch = str(payload["arch"])
-        input_side = int(payload["input"])
-        head = payload.get("head", "concat")
-        if head == "concat":
-            network = VerifierNetwork
-        elif head == "corr":
-            from reid.model.corr_verifier import CorrVerifier
-
-            network = CorrVerifier
-        else:
-            raise ValueError(f"unsupported verifier head: {head!r}; expected 'concat' or 'corr'")
-        # Use the training-side architecture directly so a future model change
-        # cannot silently make the inference copy incompatible with its state.
-        self.model = network(arch, (input_side, input_side), pretrained=False)
-        self.model.load_state_dict(payload["state"], strict=True)
-        self.model.to(self.device).eval()
-        self.cfg = {
-            "input_size": [input_side, input_side],
-            "mean": [0.485, 0.456, 0.406],
-            "std": [0.229, 0.224, 0.225],
-            "resize": "stretch",
-            "bbox_pad": 0.0,
-        }
-        if preprocess_workers is None:
-            default_workers = min(8, os.cpu_count() or 1) if self.device.type == "cuda" else 1
-            preprocess_workers = int(os.environ.get("REID_VERIFIER_WORKERS", default_workers))
-        if preprocess_workers <= 0:
-            raise ValueError("preprocess_workers must be positive")
-        self._pool = (
-            ThreadPoolExecutor(max_workers=preprocess_workers, thread_name_prefix="reid-verifier")
-            if preprocess_workers > 1
-            else None
-        )
-
-    def _decode_preprocess(self, item: Item) -> torch.Tensor:
-        image_path, bbox = item
-        frame = read_image(str(image_path), mode=ImageReadMode.RGB)
-        return preprocess_frame(frame, bbox, self.cfg)
-
-    def score_pairs(self, query: Item, candidates: Sequence[Item]) -> np.ndarray:
-        if not candidates:
-            return np.empty(0, dtype=np.float32)
-        items = [query, *candidates]
-        if self._pool is None:
-            prepared = [self._decode_preprocess(item) for item in items]
-        else:
-            prepared = list(self._pool.map(self._decode_preprocess, items))
-        query_tensor = prepared[0].unsqueeze(0).expand(len(candidates), -1, -1, -1)
-        candidate_tensor = torch.stack(prepared[1:])
-        with torch.inference_mode(), torch.autocast(
-            device_type=self.device.type,
-            dtype=torch.float16,
-            enabled=self.device.type == "cuda",
-        ):
-            logits = self.model(query_tensor.to(self.device), candidate_tensor.to(self.device))
-        result = logits.float().cpu().numpy().astype(np.float32, copy=False)
-        if result.shape != (len(candidates),) or not np.isfinite(result).all():
-            raise RuntimeError("verifier returned invalid logits")
-        return result
+        return PairVerifier
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
 def rerank_topk(
@@ -169,13 +92,20 @@ def rerank_topk(
     selected_indices = []
     for candidate_ids in base.ranking:
         if not candidate_ids or len(set(candidate_ids)) != len(candidate_ids):
-            raise ValueError("base ranking must contain nonempty lists of unique gallery ids")
+            raise ValueError(
+                "base ranking must contain nonempty lists of unique gallery ids"
+            )
         try:
             selected_indices.append(
-                np.asarray([gallery_index[image_id] for image_id in candidate_ids], dtype=np.intp)
+                np.asarray(
+                    [gallery_index[image_id] for image_id in candidate_ids],
+                    dtype=np.intp,
+                )
             )
         except KeyError as exc:
-            raise ValueError(f"base ranking contains unknown gallery id: {exc.args[0]}") from exc
+            raise ValueError(
+                f"base ranking contains unknown gallery id: {exc.args[0]}"
+            ) from exc
 
     ranking: list[list[str]] = []
     top_ids: list[str] = []
@@ -188,14 +118,21 @@ def rerank_topk(
             order = np.arange(len(candidate_ids))
         else:
             candidate_items = [gallery_items[index] for index in candidate_indices]
-            logits = np.asarray(verifier.score_pairs(query_item, candidate_items), dtype=np.float32)
+            logits = np.asarray(
+                verifier.score_pairs(query_item, candidate_items), dtype=np.float32
+            )
             if logits.shape != (len(candidate_ids),) or not np.isfinite(logits).all():
-                raise ValueError("verifier scores must be one finite logit per candidate")
+                raise ValueError(
+                    "verifier scores must be one finite logit per candidate"
+                )
 
             if score_mode == "standardized":
                 base_scores = (
-                    cosine if ranking_scores is None else ranking_scores[query_index, candidate_indices]
+                    cosine
+                    if ranking_scores is None
+                    else ranking_scores[query_index, candidate_indices]
                 )
+
                 # Float64 avoids overflow/underflow of variance for finite
                 # float32 scores. No statistic contains another query.
                 def z(values: np.ndarray) -> np.ndarray:

@@ -1,0 +1,34 @@
+{
+  "status": "PUBLISHED_CANDIDATE_NOT_ACCEPTED",
+  "release_url": "https://github.com/Timur713/hf_2026/releases/tag/d082-candidate-20261019-r2",
+  "release_tag": "d082-candidate-20261019-r2",
+  "tag_object": {
+    "sha": "5a21593a93d44dbe1c7de4ebfbdcb2246abe5d4d",
+    "type": "commit",
+    "url": "https://api.github.com/repos/Timur713/hf_2026/git/commits/5a21593a93d44dbe1c7de4ebfbdcb2246abe5d4d"
+  },
+  "verified_assets": [
+    {
+      "name": "d082_production.json",
+      "size": 2388,
+      "digest": "sha256:94125e2665558df43fb6701f7f0ca6b5c1cf5289cbfd48c83c03d1ee0180305c",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/Timur713/hf_2026/releases/download/d082-candidate-20261019-r2/d082_production.json"
+    },
+    {
+      "name": "falcon-D082-legacy66-base-bundle.tar.gz",
+      "size": 732784145,
+      "digest": "sha256:0920e24524e9b32215323bbe3f8e47ae6e19d1f036b14eacfa596507b83d95d5",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/Timur713/hf_2026/releases/download/d082-candidate-20261019-r2/falcon-D082-legacy66-base-bundle.tar.gz"
+    },
+    {
+      "name": "falcon-D082-legacy66-base-bundle.tar.gz.sha256",
+      "size": 106,
+      "digest": "sha256:7b76c796e7ac22a458ca01f1e56a144755da109b5e7570d5a061ec12ebb96fc8",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/Timur713/hf_2026/releases/download/d082-candidate-20261019-r2/falcon-D082-legacy66-base-bundle.tar.gz.sha256"
+    }
+  ],
+  "final_acceptance": false
+}

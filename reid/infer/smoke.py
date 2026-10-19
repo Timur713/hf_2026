@@ -59,6 +59,14 @@ def _preflight_images(images_dir: Path, rows: Sequence[Dict[str, str]]) -> None:
 
 
 def _resolve_model(model_dir: Path | None) -> Path | None:
+    production = Path("artifacts/models/d082")
+    if model_dir is None and (production.exists() or production.is_symlink()):
+        model_dir = production / "bundle"
+        from reid.infer.d082_production import inspect_bundle
+
+        pin = (production / "manifest.sha256").read_text().strip()
+        inspect_bundle(model_dir, pin)
+        return model_dir
     # Prefer the shipped fusion image. A partially installed default bundle is
     # an error, never a reason to smoke a different, historical model instead.
     fusion = Path("artifacts/models/fusion")
@@ -71,14 +79,20 @@ def _resolve_model(model_dir: Path | None) -> Path | None:
 
         load_fusion_config(model_dir)
         return model_dir
-    candidates = [model_dir] if model_dir is not None else [
-        Path("artifacts/models/final"),
-        Path("artifacts/models/dinov2_vitb14_zeroshot_224_cls"),
-    ]
+    candidates = (
+        [model_dir]
+        if model_dir is not None
+        else [
+            Path("artifacts/models/final"),
+            Path("artifacts/models/dinov2_vitb14_zeroshot_224_cls"),
+        ]
+    )
     for candidate in candidates:
-        if candidate is not None and (candidate / "model_config.yaml").is_file() and (
-            candidate / "weights.safetensors"
-        ).is_file():
+        if (
+            candidate is not None
+            and (candidate / "model_config.yaml").is_file()
+            and (candidate / "weights.safetensors").is_file()
+        ):
             return candidate
     return None
 
@@ -119,7 +133,9 @@ def run_smoke(
 
     resolved_model = _resolve_model(model_dir)
     if resolved_model is None:
-        message = "B2.1 runner is present, but no complete smoke model artifact was found"
+        message = (
+            "B2.1 runner is present, but no complete smoke model artifact was found"
+        )
         if require_runner:
             print("FAIL: {}".format(message), file=sys.stderr)
             return 2
@@ -151,6 +167,13 @@ def run_smoke(
             "--model",
             str(resolved_model),
         ]
+        if (resolved_model / "d082_production.json").exists():
+            from reid.infer.d082_production import digest
+
+            pin = digest(
+                (resolved_model.parent / "manifest.sha256").read_text().strip()
+            )
+            command.extend(("--d082-production-manifest-sha256", pin))
         if resolved_verifier is not None:
             command.extend(("--verifier", str(resolved_verifier)))
         subprocess.run(command, check=True)
@@ -162,7 +185,11 @@ def run_smoke(
             out_dir / "candidates.csv",
         )
 
-    print("PASS: end-to-end inference and C6 validation passed for {} images".format(n_images))
+    print(
+        "PASS: end-to-end inference and C6 validation passed for {} images".format(
+            n_images
+        )
+    )
     return 0
 
 
@@ -171,8 +198,11 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--data-root", type=Path, default=Path("dataset"))
     parser.add_argument("--n-images", type=int, default=50)
     parser.add_argument("--model", type=Path)
-    parser.add_argument("--verifier", type=Path,
-                        help="override verifier; fusion defaults to its bundled verifier.pt")
+    parser.add_argument(
+        "--verifier",
+        type=Path,
+        help="override verifier; fusion defaults to its bundled verifier.pt",
+    )
     parser.add_argument(
         "--require-runner",
         action="store_true",
@@ -184,8 +214,13 @@ def _build_parser() -> argparse.ArgumentParser:
 def main(argv: Sequence[str] | None = None) -> int:
     args = _build_parser().parse_args(argv)
     try:
-        return run_smoke(args.data_root, args.n_images, args.require_runner, args.model,
-                         args.verifier)
+        return run_smoke(
+            args.data_root,
+            args.n_images,
+            args.require_runner,
+            args.model,
+            args.verifier,
+        )
     except (OSError, ValueError, ValidationError, subprocess.CalledProcessError) as exc:
         print("FAIL: {}".format(exc), file=sys.stderr)
         return 1

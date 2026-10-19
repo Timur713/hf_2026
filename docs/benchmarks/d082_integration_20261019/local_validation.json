@@ -1,0 +1,29 @@
+{
+  "status": "LOCAL_CHECKS_PASS_GPU_ACCEPTANCE_PENDING",
+  "python": "3.10.22",
+  "platform": "macOS ARM64 CPU",
+  "command": "OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 PYTHONPATH=. make check PYTHON=<python3.10> DATA_ROOT=<synthetic-smoke50>",
+  "make_check_exit": 0,
+  "pytest": {
+    "passed": 693,
+    "skipped": 5,
+    "failed": 0
+  },
+  "smoke": {
+    "images": 50,
+    "query": 25,
+    "gallery": 25,
+    "input_kind": "seed20261019 synthetic JPEG; no real/test/fold2 data",
+    "real_d082_weights": true,
+    "embedding_dim": 3072,
+    "c6": "PASS",
+    "accepted_queries": 0,
+    "quality_evaluated": false
+  },
+  "weight_bytes": 788873516,
+  "manifest_sha256": "94125e2665558df43fb6701f7f0ca6b5c1cf5289cbfd48c83c03d1ee0180305c",
+  "ruff": "format + F/E9 checks PASS on changed Python files",
+  "linux_docker_rebuilt": false,
+  "a5000_remeasured": false,
+  "final_acceptance": false
+}

@@ -11,7 +11,7 @@ from torchvision.io import ImageReadMode, read_image
 from reid.data.preprocess import clip_bbox, preprocess_frame
 from reid.infer.extractor import Extractor, Item as ExtractorItem
 from reid.post.verifier import Item as VerifierItem
-from reid.post.verifier import PairVerifier
+from reid.infer.verifier import PairVerifier
 
 
 @dataclass(frozen=True)
@@ -60,7 +60,9 @@ def plate_mask_box(
     center_x = vehicle_x0 + config.center_x * vehicle_width
     center_y = vehicle_y0 + config.center_y * vehicle_height
     x0 = min(max(round(center_x - mask_width / 2), vehicle_x0), vehicle_x1 - mask_width)
-    y0 = min(max(round(center_y - mask_height / 2), vehicle_y0), vehicle_y1 - mask_height)
+    y0 = min(
+        max(round(center_y - mask_height / 2), vehicle_y0), vehicle_y1 - mask_height
+    )
     return int(x0), int(y0), int(x0 + mask_width), int(y0 + mask_height)
 
 
@@ -72,7 +74,9 @@ def apply_plate_mask(
     """Clone a CHW frame and fill a deterministic plate-shaped region."""
 
     if frame.ndim != 3 or frame.shape[0] != 3 or min(frame.shape[-2:]) <= 0:
-        raise ValueError(f"plate masking expects a non-empty CHW RGB frame, got {tuple(frame.shape)}")
+        raise ValueError(
+            f"plate masking expects a non-empty CHW RGB frame, got {tuple(frame.shape)}"
+        )
     masked = frame.clone()
     height, width = masked.shape[-2:]
     x0, y0, x1, y1 = plate_mask_box(bbox, width, height, config)
@@ -103,9 +107,15 @@ class PlateMaskedExtractor(Extractor):
         device: str = "cuda",
         preprocess_workers: int | None = None,
         mask: PlateMaskConfig = DEFAULT_PLATE_MASK,
+        fusion_internal_batch_size: int | None = None,
     ) -> None:
         self.plate_mask = mask
-        super().__init__(model_dir, device, preprocess_workers)
+        super().__init__(
+            model_dir,
+            device,
+            preprocess_workers,
+            fusion_internal_batch_size=fusion_internal_batch_size,
+        )
 
     def _decode_frame(self, item: ExtractorItem) -> torch.Tensor:
         # The base extractor reuses this frame for every fusion member, so the

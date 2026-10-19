@@ -19,8 +19,8 @@ test:
 	$(PYTHON) -m pytest -q
 
 # Runs the complete pipeline on 25 query + 25 gallery images and validates all
-# three output files. The installed fusion bundle (including verifier) is
-# preferred; MODEL/VERIFIER select another stack explicitly. Without any local
+# three output files. The installed D082 bundle (including verifier) is
+# preferred over historical fusion; MODEL/VERIFIER select another stack explicitly. Without any local
 # model artifact this developer check reports SKIP; use smoke-strict for release.
 smoke:
 	$(PYTHON) -m reid.infer.smoke --data-root "$(DATA_ROOT)" --n-images 50 $(if $(MODEL),--model "$(MODEL)") $(if $(VERIFIER),--verifier "$(VERIFIER)")
