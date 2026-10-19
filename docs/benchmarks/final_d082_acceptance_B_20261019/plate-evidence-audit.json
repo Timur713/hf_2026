@@ -1,0 +1,30 @@
+{
+  "status": "PASS_EVIDENCE_BINDING_ONLY",
+  "report_sha256": "0aed65cef74d6010b93d4f7857c99bfc683caa077ecf9a4b64bdaef97dbc9b43",
+  "manifest_sha256": "94125e2665558df43fb6701f7f0ca6b5c1cf5289cbfd48c83c03d1ee0180305c",
+  "annotation_sha256": "29fc1ae03e9c5ea34e1f982320b27f9ed2457bc3545474a09dabb85ea5b3db2b",
+  "review_sha256": "16356dace77e9feb76b2337622b62f373b417912ec307be41884ac788363aaf5",
+  "analysis_script_sha256": "96c10d7fe434437e23d0c7f2495bf0fb46596d714f719528eb13d630d0816e33",
+  "verified_jpeg_count": 1268,
+  "annotation_count": 40,
+  "contrasts": 18,
+  "reported_c6_sets": 20,
+  "decision_changes": 0,
+  "selected_id_changes": 0,
+  "top10_change_observations": 53,
+  "max_abs_confidence_delta": 0.24681663513183594,
+  "human_attested": false,
+  "limitations": [
+    "All-data models were trained on these development identities/images: this is in-sample sensitivity, not OOF or independent quality evidence.",
+    "Frozen 8 queries and 32 annotated gallery images in folds3/4 only; full static galleries625/635 contain unannotated distractors.",
+    "Agent-reviewed coordinates, human_attested=false; masks cover some neighbouring body pixels and are not universal plate-independence proof.",
+    "Decision or ranking changes are reported observations, not automatic disqualification; section2.3 does not require exact decision invariance.",
+    "No D141, fit, threshold tuning, mask revision, new labels, test inference, fold2 evaluation, Docker/A5000 or final acceptance.",
+    "B verified hashes and arithmetic of supplied evidence, not a new GPU mask run.",
+    "C6 flags are A's reported observations; output files of mask runs are not independently replayed here.",
+    "Source-tree equivalence of runtime 04d30 and published 4f1bd6 is recorded separately.",
+    "No universal plate-independence, independent quality or final acceptance is established by this audit."
+  ],
+  "quality_recomputed": false,
+  "final_acceptance": false
+}

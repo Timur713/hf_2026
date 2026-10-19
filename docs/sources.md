@@ -1,15 +1,23 @@
 # Источники моделей и зависимостей
 
 
-Автор дообученных весов — DeepTech AI. Финальные файлы распространяются вместе
-в [публичном pair bundle](https://github.com/Timur713/hf_2026/releases/tag/fusion-pair-d065-20260927-rc1).
-SHA отдельных файлов:
+Автор дообученных весов и graph — DeepTech AI. Текущий кандидат D082:
+[фиксированный Release](https://github.com/Timur713/hf_2026/releases/tag/d082-candidate-20261019-r2).
+Архив идентичен A-пакету; новая версия выпуска обозначает перенос в этот репозиторий,
+а не новое обучение. До повторной GPU-приёмки статус NOT_ACCEPTED.
+
+Manifest SHA-256: `94125e2665558df43fb6701f7f0ca6b5c1cf5289cbfd48c83c03d1ee0180305c`.
+Общий размер весов: 788873516 байт.
 
 | Файл | SHA-256 |
 |---|---|
-| `hires392_all.safetensors` | `f69eb2283c03a2748ac44cb4e1a4902bbc6f3129440cf3799edafa0f0ea0aaeb` |
-| `div_clip_all.safetensors` | `6157e1eb862a0c88f637ed2a163bf6bbbe52459a88d41f3b623e83e69180548f` |
-| `v_fus_all_frz_input392.pt` | `aa254e396ac0be78d29f32641e83f8d18e165d76eb3345c18c1054d105b9abf5` |
+| `components/0/weights.safetensors` | `c96604025d1e5a8a4f0b2e7b8f05ea1039b466203eacb8d20f6851f895283463` |
+| `components/1/weights.safetensors` | `a694bd4509c91d13ee444d91e8ab5d734fed241c541b8bca3d329c99aad57c46` |
+| `head/weights.safetensors` | `895663d191822ab9ca0c17ff82e89e6d48d9b957c160597ec0fe50913cb34536` |
+| `verifier.pt` | `2017f6ce493800bfb60e5847a4b861f4b5f6d0e288e242c941e68f8c8345c659` |
+
+Архив содержит training receipts, точные конфиги и фактические folds.
+Исторический D065 сохранён в Release `fusion-pair-d065-20260927-rc1`.
 
 Исходные pretrained (Apache-2.0, timm conversion):
 

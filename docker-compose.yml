@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: fusion
+      target: final
     image: falcon-reid:local
     network_mode: none
     gpus: all
@@ -24,9 +24,5 @@ services:
       - ${GALLERY_CSV:-/data/test_gallery.csv}
       - --out
       - ${OUT_DIR:-/out}
-      - --model
-      - ${MODEL_DIR:-/app/artifacts/models/fusion}
-      - --verifier
-      - ${VERIFIER_PATH:-/app/artifacts/models/fusion/verifier.pt}
-      - --twins
-      - ${TWINS:-off}
+      - --device
+      - cuda

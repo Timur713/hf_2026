@@ -3,6 +3,7 @@
 Exit 1 means at least one blocked/missing check. The report contains paths and
 credential TYPES only, never credential values, matching lines or Git diffs.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -17,11 +18,16 @@ from scripts.audit_release import audit_submission, file_record
 
 TEXT_LIMIT = 2_000_000
 SECRET_PATTERNS = {
-    "private_key": re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----"),
-    "github_token": re.compile(r"\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,})\b"),
+    "private_key": re.compile(
+        r"-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----"
+    ),
+    "github_token": re.compile(
+        r"\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,})\b"
+    ),
     "huggingface_token": re.compile(r"\bhf_[A-Za-z0-9]{30,}\b"),
     "credential_assignment": re.compile(
-        r"(?:password|пароль)(?:[^\n:|]{0,40})[:=]\s*`[^`\s<>$]{6,}`", re.I),
+        r"(?:password|пароль)(?:[^\n:|]{0,40})[:=]\s*`[^`\s<>$]{6,}`", re.I
+    ),
 }
 
 
@@ -59,10 +65,16 @@ def scan_secrets(root: Path, history: bool) -> dict:
                 objects[oid] = name
         records = subprocess.run(
             ["git", "-C", str(root), "cat-file", "--batch-check"],
-            input="\n".join(objects) + "\n", text=True, capture_output=True, check=True,
+            input="\n".join(objects) + "\n",
+            text=True,
+            capture_output=True,
+            check=True,
         ).stdout.splitlines()
-        process = subprocess.Popen(["git", "-C", str(root), "cat-file", "--batch"],
-                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        process = subprocess.Popen(
+            ["git", "-C", str(root), "cat-file", "--batch"],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+        )
         try:
             for record in records:
                 oid, kind, length = record.split()
@@ -86,27 +98,84 @@ def scan_secrets(root: Path, history: bool) -> dict:
             if process.wait() != 0:
                 raise ValueError("Git object scan failed")
     return {
-        "findings": [{"scope": scope, "path": path, "type": kind}
-                     for scope, path, kind in sorted(findings)],
+        "findings": [
+            {"scope": scope, "path": path, "type": kind}
+            for scope, path, kind in sorted(findings)
+        ],
         "history_scanned": history,
         "skipped_paths": sorted(skipped),
         "scope": "heuristic tracked text scan; binaries, files >2MB, remote-only refs, "
-                 "release assets, untracked files and license permissions require separate review",
+        "release assets, untracked files and license permissions require separate review",
     }
 
 
 def docker_defaults(root: Path) -> dict:
     dockerfile = (root / "Dockerfile").read_text()
-    compose = yaml.safe_load((root / "docker-compose.yml").read_text())["services"]["reid"]
+    compose = yaml.safe_load((root / "docker-compose.yml").read_text())["services"][
+        "reid"
+    ]
     stages = re.findall(r"^FROM\s+.+?\s+AS\s+(\S+)\s*$", dockerfile, re.I | re.M)
     build = compose.get("build", {})
-    target = build.get("target", stages[-1] if stages else "unknown") if isinstance(build, dict) else stages[-1]
+    target = (
+        build.get("target", stages[-1] if stages else "unknown")
+        if isinstance(build, dict)
+        else stages[-1]
+    )
     command = compose.get("command", [])
     model = command[command.index("--model") + 1] if "--model" in command else None
-    return {"docker_last_stage": stages[-1] if stages else None,
-            "compose_target": target, "compose_model": model,
-            "offline": compose.get("network_mode") == "none",
-            "uses_fusion": target == "fusion" and model is not None and "/fusion" in model}
+    definitions = list(
+        re.finditer(
+            r"^FROM\s+(\S+)(?:[^\n]*?)\s+AS\s+(\S+)\s*$", dockerfile, re.I | re.M
+        )
+    )
+    parents = {match[2]: match[1] for match in definitions}
+    resolved, visited = target, set()
+    while (
+        resolved not in {"fusion", "legacy", "d082-production"}
+        and resolved in parents
+        and parents[resolved] in parents
+        and resolved not in visited
+    ):
+        visited.add(resolved)
+        resolved = parents[resolved]
+    body = ""
+    for index, match in enumerate(definitions):
+        if match[2] == resolved:
+            body = dockerfile[
+                match.end() : definitions[index + 1].start()
+                if index + 1 < len(definitions)
+                else len(dockerfile)
+            ]
+    # Recognition is structural only. It does not certify the model or provenance.
+    forbidden = {
+        "--model",
+        "--verifier",
+        "--d082-manifest-sha256",
+        "--d082-production-manifest-sha256",
+        "--verifier-gallery-cache",
+        "--candidate-threshold",
+        "--rerank-weight",
+        "--rerank-mode",
+    }
+    baked_entrypoint = 'ENTRYPOINT ["python3", "-m", "reid.infer.d082_entrypoint"]'
+    uses_d082 = (
+        resolved == "d082-production"
+        and baked_entrypoint in body
+        and "entrypoint" not in compose
+        and isinstance(command, list)
+        and not any(str(arg).split("=", 1)[0] in forbidden for arg in command)
+    )
+    return {
+        "docker_last_stage": stages[-1] if stages else None,
+        "compose_target": target,
+        "compose_model": model,
+        "resolved_stage": resolved,
+        "offline": compose.get("network_mode") == "none",
+        "uses_d082": uses_d082,
+        "uses_fusion": resolved == "fusion"
+        and model is not None
+        and "/fusion" in model,
+    }
 
 
 def upstream_provenance(bundle: Path) -> dict:
@@ -122,15 +191,27 @@ def upstream_provenance(bundle: Path) -> dict:
         source = cfg.get("pretrained", {})
         source = source if isinstance(source, dict) else {}
         missing = [key for key in ("url", "revision", "sha256") if not source.get(key)]
-        if source.get("sha256") and not re.fullmatch(r"[0-9a-fA-F]{64}", str(source["sha256"])):
+        if source.get("sha256") and not re.fullmatch(
+            r"[0-9a-fA-F]{64}", str(source["sha256"])
+        ):
             missing.append("valid_sha256")
         if source.get("revision") == "latest" or "latest" in str(source.get("url", "")):
             missing.append("immutable_revision")
-        components.append({"path": item["path"], "arch": cfg.get("arch"),
-                           "pool": cfg.get("pool"), "input_size": cfg.get("input_size"),
-                           "embed_dim": cfg.get("embed_dim"), "trained_on": cfg.get("train", {}).get("folds"),
-                           "missing_upstream_metadata": missing})
-    return {"components": components, "config": file_record(bundle / "fusion_config.json")}
+        components.append(
+            {
+                "path": item["path"],
+                "arch": cfg.get("arch"),
+                "pool": cfg.get("pool"),
+                "input_size": cfg.get("input_size"),
+                "embed_dim": cfg.get("embed_dim"),
+                "trained_on": cfg.get("train", {}).get("folds"),
+                "missing_upstream_metadata": missing,
+            }
+        )
+    return {
+        "components": components,
+        "config": file_record(bundle / "fusion_config.json"),
+    }
 
 
 def verifier_provenance(bundle: Path) -> dict:
@@ -140,10 +221,15 @@ def verifier_provenance(bundle: Path) -> dict:
     file integrity; audit_release weights still owns the all-data weight gate.
     """
     sidecar, checkpoint = bundle / "verifier.provenance.yaml", bundle / "verifier.pt"
-    result = {"sidecar": sidecar.name, "checkpoint": checkpoint.name,
-              "missing_upstream_metadata": [], "missing_artifact_metadata": [],
-              "checkpoint_sha256_matches": False, "all_data_training_declared": False,
-              "scope": "local metadata and checkpoint SHA binding only; not proof of training or online source verification"}
+    result = {
+        "sidecar": sidecar.name,
+        "checkpoint": checkpoint.name,
+        "missing_upstream_metadata": [],
+        "missing_artifact_metadata": [],
+        "checkpoint_sha256_matches": False,
+        "all_data_training_declared": False,
+        "scope": "local metadata and checkpoint SHA binding only; not proof of training or online source verification",
+    }
     missing = result["missing_artifact_metadata"]
     for path in (sidecar, checkpoint):
         if path.is_symlink() or not path.is_file():
@@ -166,12 +252,19 @@ def verifier_provenance(bundle: Path) -> dict:
     source = data.get("pretrained", {})
     source = source if isinstance(source, dict) else {}
     upstream_missing = result["missing_upstream_metadata"]
-    upstream_missing.extend(key for key in ("author", "url", "revision", "sha256")
-                            if not isinstance(source.get(key), str) or not source[key].strip())
-    if source.get("sha256") and not re.fullmatch(r"[0-9a-fA-F]{64}", str(source["sha256"])):
+    upstream_missing.extend(
+        key
+        for key in ("author", "url", "revision", "sha256")
+        if not isinstance(source.get(key), str) or not source[key].strip()
+    )
+    if source.get("sha256") and not re.fullmatch(
+        r"[0-9a-fA-F]{64}", str(source["sha256"])
+    ):
         upstream_missing.append("valid_sha256")
-    if (str(source.get("revision", "")).lower() == "latest" or
-            "latest" in str(source.get("url", "")).lower()):
+    if (
+        str(source.get("revision", "")).lower() == "latest"
+        or "latest" in str(source.get("url", "")).lower()
+    ):
         upstream_missing.append("immutable_revision")
     artifact = data.get("artifact", {})
     artifact = artifact if isinstance(artifact, dict) else {}
@@ -179,79 +272,173 @@ def verifier_provenance(bundle: Path) -> dict:
         missing.append("artifact_sha256")
     else:
         result["checkpoint_sha256_matches"] = (
-            artifact["sha256"].lower() == result["checkpoint_integrity"]["sha256"])
-    if not isinstance(artifact.get("release_url"), str) or not artifact["release_url"].strip():
+            artifact["sha256"].lower() == result["checkpoint_integrity"]["sha256"]
+        )
+    if (
+        not isinstance(artifact.get("release_url"), str)
+        or not artifact["release_url"].strip()
+    ):
         missing.append("artifact_release_url")
     elif "latest" in artifact["release_url"].lower():
         missing.append("immutable_artifact_release")
     train = data.get("train", {})
     train = train if isinstance(train, dict) else {}
     result["all_data_training_declared"] = (
-        train.get("folds") == "all" or train.get("data") == "all five train folds")
+        train.get("folds") == "all" or train.get("data") == "all five train folds"
+    )
     return result
 
 
-def build_report(root, *, query=None, gallery=None, submission_dir=None, expected_dim=None,
-                 acceptance_c6=None, bundle=None, scan_history=False):
+def build_report(
+    root,
+    *,
+    query=None,
+    gallery=None,
+    submission_dir=None,
+    expected_dim=None,
+    acceptance_c6=None,
+    bundle=None,
+    scan_history=False,
+):
     checks = []
 
     def add(name, status, evidence):
         checks.append({"id": name, "status": status, "evidence": evidence})
 
     defaults = docker_defaults(root)
-    add("default_runtime", "pass" if defaults["uses_fusion"] and defaults["offline"] else "blocked", defaults)
+    add(
+        "default_runtime",
+        "pass"
+        if (defaults["uses_fusion"] or defaults["uses_d082"]) and defaults["offline"]
+        else "blocked",
+        defaults,
+    )
     if query is not None and gallery is not None:
         actual = audit_submission(query, gallery, submission_dir or root / "submission")
-        dimension_ok = expected_dim is not None and actual["embedding_shape"][1] == expected_dim
-        add("submission_c6_and_dimension", "pass" if dimension_ok else "blocked",
-            {**actual, "expected_embedding_dim": expected_dim})
+        dimension_ok = (
+            expected_dim is not None and actual["embedding_shape"][1] == expected_dim
+        )
+        add(
+            "submission_c6_and_dimension",
+            "pass" if dimension_ok else "blocked",
+            {**actual, "expected_embedding_dim": expected_dim},
+        )
         if acceptance_c6 is not None:
             accepted = json.loads(acceptance_c6.read_text())
-            matches = (accepted.get("validated") is True and accepted.get("files") == actual["files"]
-                       and accepted.get("inputs") == actual["inputs"])
-            add("submission_matches_acceptance", "pass" if matches else "blocked",
-                {"acceptance_report": str(acceptance_c6), "report_integrity": file_record(acceptance_c6),
-                 "scope": "byte equality only; reviewer must link acceptance report to final image and model manifest"})
+            matches = (
+                accepted.get("validated") is True
+                and accepted.get("files") == actual["files"]
+                and accepted.get("inputs") == actual["inputs"]
+            )
+            add(
+                "submission_matches_acceptance",
+                "pass" if matches else "blocked",
+                {
+                    "acceptance_report": str(acceptance_c6),
+                    "report_integrity": file_record(acceptance_c6),
+                    "scope": "byte equality only; reviewer must link acceptance report to final image and model manifest",
+                },
+            )
         else:
-            add("submission_matches_acceptance", "missing", "Pass final full-run audit_release c6.json via --acceptance-c6")
+            add(
+                "submission_matches_acceptance",
+                "missing",
+                "Pass final full-run audit_release c6.json via --acceptance-c6",
+            )
     else:
-        add("submission_c6_and_dimension", "missing", "Need --query --gallery --expected-dim; mere presence of files is not acceptance")
-    if bundle is not None:
+        add(
+            "submission_c6_and_dimension",
+            "missing",
+            "Need --query --gallery --expected-dim; mere presence of files is not acceptance",
+        )
+    if defaults["uses_d082"]:
+        # This inspector historically understands only fusion metadata. Never let
+        # a fusion sidecar or historical A104 result certify a D082 candidate.
+        for name in (
+            "component_provenance",
+            "verifier_provenance",
+            "d082_graph_provenance",
+        ):
+            add(
+                name,
+                "blocked",
+                {
+                    "bundle": str(bundle) if bundle is not None else None,
+                    "scope": "D082 requires separate production manifest, exact asset hashes and all-data "
+                    "training provenance verification; fusion metadata is insufficient",
+                },
+            )
+    elif bundle is not None:
         provenance = upstream_provenance(bundle)
-        complete = all(not c["missing_upstream_metadata"] and c["trained_on"] == "all"
-                       for c in provenance["components"])
+        complete = all(
+            not c["missing_upstream_metadata"] and c["trained_on"] == "all"
+            for c in provenance["components"]
+        )
         add("component_provenance", "pass" if complete else "blocked", provenance)
         verifier = verifier_provenance(bundle)
-        complete = (not verifier["missing_upstream_metadata"] and
-                    not verifier["missing_artifact_metadata"] and
-                    verifier["checkpoint_sha256_matches"] and verifier["all_data_training_declared"])
+        complete = (
+            not verifier["missing_upstream_metadata"]
+            and not verifier["missing_artifact_metadata"]
+            and verifier["checkpoint_sha256_matches"]
+            and verifier["all_data_training_declared"]
+        )
         add("verifier_provenance", "pass" if complete else "blocked", verifier)
     else:
-        add("component_provenance", "missing", "Need --bundle; run audit_release weights --require-all-data separately")
-        add("verifier_provenance", "missing", "Need --bundle with verifier.pt and verifier.provenance.yaml")
+        add(
+            "component_provenance",
+            "missing",
+            "Need --bundle; run audit_release weights --require-all-data separately",
+        )
+        add(
+            "verifier_provenance",
+            "missing",
+            "Need --bundle with verifier.pt and verifier.provenance.yaml",
+        )
     for fold in (0, 1):
         path = root / f"docs/evidence/quality_fold{fold}.json"
         if not path.exists():
             add(f"a104_fold{fold}_evidence", "missing", str(path.relative_to(root)))
             continue
         report = json.loads(path.read_text())
-        add(f"a104_fold{fold}_evidence", "review", {
-            "report": str(path.relative_to(root)),
-            "dumps": report["dumps"], "logits": report["logits"],
-            "policy": report.get("policy"),
-            "training_provenance_verified": report.get("training_provenance_verified"),
-            "scope": "A104 matched C4 train-fold evidence for DINO392 + CLIP288; "
-                     "not an automated OOF training certificate or full-frame/GPU acceptance",
-        })
+        add(
+            f"a104_fold{fold}_evidence",
+            "review",
+            {
+                "report": str(path.relative_to(root)),
+                "dumps": report["dumps"],
+                "logits": report["logits"],
+                "policy": report.get("policy"),
+                "training_provenance_verified": report.get(
+                    "training_provenance_verified"
+                ),
+                "scope": "A104 matched C4 train-fold evidence for DINO392 + CLIP288; "
+                "not an automated OOF training certificate or full-frame/GPU acceptance",
+            },
+        )
     scan = scan_secrets(root, scan_history)
-    add("public_repo_credentials", "blocked" if scan["findings"] else ("review" if scan_history else "missing"), scan)
-    add("official_extractor", "review" if (root / "third_party/official/extractor.py").is_file() else "missing",
-        "Organizers must confirm official Extractor contract; file presence alone does not certify compatibility")
-    return {"kind": "delivery_evidence_check", "code_commit": git(root, "rev-parse", "HEAD").strip(),
-            "checks": checks, "automated_checks_pass": not any(c["status"] in ("blocked", "missing") for c in checks),
-            "final_acceptance": False,
-            "scope": "CPU integrity evidence only. No GPU measurements, OOF training verification, license/legal clearance, "
-                     "public access check, or human submission. See docs/results.md."}
+    add(
+        "public_repo_credentials",
+        "blocked" if scan["findings"] else ("review" if scan_history else "missing"),
+        scan,
+    )
+    add(
+        "official_extractor",
+        "review"
+        if (root / "third_party/official/extractor.py").is_file()
+        else "missing",
+        "Organizers must confirm official Extractor contract; file presence alone does not certify compatibility",
+    )
+    return {
+        "kind": "delivery_evidence_check",
+        "code_commit": git(root, "rev-parse", "HEAD").strip(),
+        "checks": checks,
+        "automated_checks_pass": not any(
+            c["status"] in ("blocked", "missing") for c in checks
+        ),
+        "final_acceptance": False,
+        "scope": "CPU integrity evidence only. No GPU measurements, OOF training verification, license/legal clearance, "
+        "public access check, or human submission. See docs/final_delivery_checklist.md.",
+    }
 
 
 def main():
@@ -264,9 +451,16 @@ def main():
     parser.add_argument("--report", type=Path, required=True)
     args = parser.parse_args()
     try:
-        report = build_report(args.root.resolve(), query=args.query, gallery=args.gallery,
-                              submission_dir=args.submission_dir, expected_dim=args.expected_dim,
-                              acceptance_c6=args.acceptance_c6, bundle=args.bundle, scan_history=args.scan_history)
+        report = build_report(
+            args.root.resolve(),
+            query=args.query,
+            gallery=args.gallery,
+            submission_dir=args.submission_dir,
+            expected_dim=args.expected_dim,
+            acceptance_c6=args.acceptance_c6,
+            bundle=args.bundle,
+            scan_history=args.scan_history,
+        )
         args.report.parent.mkdir(parents=True, exist_ok=True)
         with args.report.open("x") as handle:
             json.dump(report, handle, ensure_ascii=False, indent=2)

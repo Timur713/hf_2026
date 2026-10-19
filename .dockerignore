@@ -42,3 +42,6 @@ artifacts/models/verifier_f0/*
 # Documentation and presentation assets are not part of the runtime image.
 docs
 presentation
+
+# Optional SHA-verified cache for the D082 candidate.
+!artifacts/d082_production_bundle.tar.gz
