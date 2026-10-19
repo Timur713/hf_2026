@@ -1,0 +1,29 @@
+{
+  "code_review": "PASS_AFTER_FIXES",
+  "fixes": [
+    "Production profile requires explicit SHA and includes graph/fixed4",
+    "Separate QA Docker target installs Git for tests; production target unchanged"
+  ],
+  "python": "3.10.22",
+  "platform": "macOS ARM64 CPU",
+  "make_check": {
+    "exit_code": 0,
+    "pytest_passed": 699,
+    "skipped": 5,
+    "real_weight_synthetic_jpeg_smoke50": "PASS",
+    "c6": "PASS"
+  },
+  "final_pytest_after_last_added_regression": {
+    "passed": 700,
+    "skipped": 5,
+    "exit_code": 0
+  },
+  "style": "Ruff format and F/E9; git diff --check PASS",
+  "release_sizes_and_digests": "VERIFIED_WITH_GITHUB",
+  "inference_model_or_recipe_changes_in_review": false,
+  "new_linux_docker_build": false,
+  "new_a5000_measurement": false,
+  "historical_b_package_acceptance": "NOT_ACCEPTED",
+  "original_a5000_max_fps": 93.22783645075405,
+  "merge_authorization": "User requested merge after careful PR review and fixes; performance evidence remains documented; no new GPU acceptance claim"
+}

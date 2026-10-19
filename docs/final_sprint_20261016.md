@@ -14,7 +14,10 @@
 - [x] Production smoke выбирает D082, повреждённый пакет не заменяется старой моделью.
 - [x] Исторические результаты и ограничения отделены от текущего кандидата.
 - [x] Локальный Python3.10 make check:693PASS/5skip + real-weight synthetic smoke50/C6 PASS; итог в [local_validation.json](benchmarks/d082_integration_20261019/local_validation.json).
-- [x] Единый [draft PR #1](https://github.com/Timur713/hf_2026/pull/1), code commit `bbfb3d9`; автоматического merge нет.
+- [x] Единый [PR #1](https://github.com/Timur713/hf_2026/pull/1), исходный code commit `bbfb3d9`.
+- [x] Заключительное ревью: production-профиль защищён от пропуска graph, fixed4 сохранён; QA-target получает Git.
+- [x] Заключительные проверки: make check699PASS/5skip + real-weight synthetic smoke50/C6; итоговый pytest700PASS/5skip.
+- [ ] Слияние по поручению пользователя19.10 после проверки GitHub head; GPU-статусы ниже учитываются отдельно.
 - [ ] Повтор Linux/Python3.10 `make check` и настоящего GPU smoke на новом исходном snapshot.
 - [ ] Повтор A5000 C5: текущие93,23FPS ниже100. Нужен профиль JPEG/crop/encoder
       перед оптимизацией, а не изменение verifier ради C5.
@@ -22,8 +25,7 @@
 - [ ] Сгенерировать новые сдаваемые выходы кодом и обновить материалы защиты после принятия.
 
 Fold2 quality повторно не открывать. All-data веса не используются для заявления
-новых OOF-метрик. Кэш verifier/precast выключены. Main и сентябрьская сдача
-автоматически не обновляются. [Отчёт и команды](d082_acceptance.md).
+новых OOF-метрик. Кэш verifier/precast выключены. Новые сдаваемые выходы автоматически не генерируются. [Отчёт и команды](d082_acceptance.md).
 
 README: вступление описывает решение; скорость представлена нейтральными
 измерениями с явным разделением D065 (102,674FPS) и D082 (93,228FPS).

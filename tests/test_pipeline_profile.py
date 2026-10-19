@@ -152,3 +152,92 @@ def test_d082_profile_uses_raw_components_per_request_and_batch32(monkeypatch):
     batch = profile_batch32(extractor, [qrow], 2, lambda: None, component_mode=True)
     assert calls[4:] == [(32, 32)] * 3
     assert batch["n"] == 2 and "raw components" in batch["scope"]
+
+
+@pytest.mark.parametrize(
+    "marker",
+    ["d082_production.json", "ranker_runtime.json", "head", "development_ids.json"],
+)
+def test_graph_profile_cannot_silently_omit_graph(tmp_path, marker):
+    from scripts.bench_pipeline import load_profile_runtime
+
+    (tmp_path / marker).write_text("marker")
+    with pytest.raises(ValueError, match="explicit D082 manifest pin"):
+        load_profile_runtime(tmp_path, None, [], [])
+
+
+def test_profile_loads_pinned_production_runtime(tmp_path, monkeypatch):
+    from reid.infer import d082_production
+    from scripts.bench_pipeline import load_profile_runtime
+
+    calls = []
+    runtime = object()
+    monkeypatch.setattr(
+        d082_production,
+        "load_production_runtime",
+        lambda *args: calls.append(args) or runtime,
+    )
+    verifier = tmp_path / "verifier.pt"
+    assert (
+        load_profile_runtime(tmp_path, verifier, [], [], production_pin="a" * 64)
+        is runtime
+    )
+    assert calls == [(tmp_path, "a" * 64, verifier)]
+    with pytest.raises(ValueError, match="either"):
+        load_profile_runtime(tmp_path, verifier, [], [], "a" * 64, "b" * 64)
+
+
+def test_production_profile_run_constructs_fixed4_and_prepares_graph(
+    tmp_path, monkeypatch
+):
+    from types import SimpleNamespace
+    from scripts import bench_pipeline as bench
+
+    rows = [InputRow(f"g{i}", Path(f"g{i}.jpg"), (0, 0, 10, 10)) for i in range(12)]
+    blocks = (np.ones((12, 1), dtype=np.float32),) * 2
+    prepared = object()
+    runtime = SimpleNamespace(
+        identity={"kind": "production"}, verifier_path=tmp_path / "verifier.pt"
+    )
+    prepared_calls, constructed = [], []
+    runtime.prepare = lambda *args: prepared_calls.append(args) or prepared
+    monkeypatch.setattr(bench, "load_profile_runtime", lambda *args: runtime)
+    monkeypatch.setattr(bench, "read_inputs", lambda *args: rows)
+
+    class Extractor:
+        cfg = {"candidate_threshold": 6.6}
+
+        def __init__(self, model, device, **kwargs):
+            constructed.append(kwargs)
+
+    monkeypatch.setattr(bench, "Extractor", Extractor)
+    monkeypatch.setattr(bench, "PairVerifier", lambda *args: object())
+    from reid.infer import d082
+
+    monkeypatch.setattr(d082, "extract_component_rows", lambda *args: blocks)
+    monkeypatch.setattr(bench, "file_record", lambda path: {"path": str(path)})
+
+    def profile(extractor, gallery, *args, component_mode=False):
+        assert gallery is prepared and component_mode is True
+        return {"full": {"p50_ms": 1.0, "p95_ms": 1.0}}
+
+    monkeypatch.setattr(bench, "profile_requests", profile)
+    monkeypatch.setattr(bench, "profile_batch32", lambda *args, **kwargs: {})
+    args = SimpleNamespace(
+        out=tmp_path / "report.json",
+        device="cpu",
+        fold=0,
+        images=tmp_path,
+        query_limit=None,
+        gallery_limit=None,
+        model=tmp_path,
+        verifier=runtime.verifier_path,
+        gallery_batch_size=32,
+        warmup=0,
+        iterations=1,
+        batch32_iterations=1,
+    )
+    report = bench.run(args)
+    assert constructed == [{"fusion_internal_batch_size": 4}]
+    assert prepared_calls == [(blocks, rows)]
+    assert report["model"] == runtime.identity

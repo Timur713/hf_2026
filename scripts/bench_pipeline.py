@@ -146,6 +146,39 @@ def profile_batch32(extractor, rows, iterations, sync, component_mode=False):
     return result
 
 
+def load_profile_runtime(
+    model, verifier, rows, galleries, development_pin=None, production_pin=None
+):
+    """Select a pinned graph runtime; never profile a graph bundle as fusion."""
+    if development_pin is not None and production_pin is not None:
+        raise ValueError("choose either a development or a production D082 pin")
+    if production_pin is not None:
+        from reid.infer.d082_production import load_production_runtime
+
+        return load_production_runtime(model, production_pin, verifier)
+    if development_pin is not None:
+        from reid.infer.d082 import load_d082_runtime
+
+        return load_d082_runtime(
+            model,
+            development_pin,
+            [r.image_id for r in rows],
+            [r.image_id for r in galleries],
+            verifier,
+        )
+    if any(
+        (model / name).exists() or (model / name).is_symlink()
+        for name in (
+            "d082_production.json",
+            "ranker_runtime.json",
+            "head",
+            "development_ids.json",
+        )
+    ):
+        raise ValueError("graph profile requires an explicit D082 manifest pin")
+    return None
+
+
 def run(a):
     if a.out.exists():
         raise FileExistsError(a.out)
@@ -167,23 +200,25 @@ def run(a):
         grows = grows[: a.gallery_limit]
     if len(grows) < 10:
         raise ValueError("at least 10 gallery images required")
-    d082 = None
-    pin = getattr(a, "d082_manifest_sha256", None)
-    if pin is not None:
-        from reid.infer.d082 import load_d082_runtime
-
-        d082 = load_d082_runtime(
-            a.model,
-            pin,
-            [r.image_id for r in qrows],
-            [r.image_id for r in grows],
-            a.verifier,
-        )
-    elif (a.model / "ranker_runtime.json").exists():
-        raise ValueError("D082 benchmark requires --d082-manifest-sha256")
+    validation_start = perf_counter()
+    d082 = load_profile_runtime(
+        a.model,
+        a.verifier,
+        qrows,
+        grows,
+        getattr(a, "d082_manifest_sha256", None),
+        getattr(a, "d082_production_manifest_sha256", None),
+    )
+    validated = perf_counter()
     start = perf_counter()
-    extractor = Extractor(a.model, str(device))
-    verifier = PairVerifier(a.verifier, str(device))
+    extractor = (
+        Extractor(a.model, str(device))
+        if d082 is None
+        else Extractor(a.model, str(device), fusion_internal_batch_size=4)
+    )
+    verifier = PairVerifier(
+        a.verifier if d082 is None else d082.verifier_path, str(device)
+    )
     sync()
     loaded = perf_counter()
     if d082 is None:
@@ -247,6 +282,7 @@ def run(a):
         "warmup_requests": a.warmup,
         "warmup_batch32": 1,
         "startup_ms": {
+            "runtime_validation": (validated - validation_start) * 1000,
             "model_load": (loaded - start) * 1000,
             "gallery_extraction": (extracted - loaded) * 1000,
             "gallery_statistics": (ready - extracted) * 1000,
@@ -293,6 +329,10 @@ def main():
     p.add_argument(
         "--d082-manifest-sha256",
         help="opt-in D082 OOF development profile; not release acceptance",
+    )
+    p.add_argument(
+        "--d082-production-manifest-sha256",
+        help="all-data D082 profile with its pinned graph/verifier and fixed internal4",
     )
     a = p.parse_args()
     if (

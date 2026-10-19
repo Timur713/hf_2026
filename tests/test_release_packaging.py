@@ -74,3 +74,12 @@ def test_cuda_constraints_pin_all_direct_dependencies():
         assert req.specifier.contains(lock[canonicalize_name(req.name)])
     dockerfile = Path("Dockerfile").read_text()
     assert dockerfile.count("--constraint requirements-lock-cu121.txt") == 2
+
+
+def test_qa_git_dependency_does_not_change_production_default():
+    dockerfile = Path("Dockerfile").read_text()
+    qa = dockerfile.split("FROM d082-production AS qa", 1)[1].split(
+        "FROM d082-production AS final", 1
+    )[0]
+    assert "--no-install-recommends git" in qa
+    assert dockerfile.rstrip().endswith("FROM d082-production AS final")

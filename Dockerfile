@@ -121,8 +121,8 @@ ENV HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1
 ENTRYPOINT ["python3", "-m", "reid.infer.run"]
 CMD ["--images", "/data/images", "--query", "/data/test_query.csv", "--gallery", "/data/test_gallery.csv", "--out", "/out", "--model", "/app/artifacts/models/final", "--verifier", "/app/artifacts/models/verifier_f0/verifier.pt", "--twins", "off"]
 
-# Explicit candidate only. No placeholder weights, implicit OOF promotion or
-# default pins: A must supply the actual final all-data release first.
+# All-data D082 candidate, pinned to the immutable team release.
+# Installation verifies the manifest, provenance and exact weight budget.
 FROM runtime-base AS d082-production
 ARG D082_ARCHIVE_URL=https://github.com/Timur713/hf_2026/releases/download/d082-candidate-20261019-r2/falcon-D082-legacy66-base-bundle.tar.gz
 ARG D082_ARCHIVE_SHA256=0920e24524e9b32215323bbe3f8e47ae6e19d1f036b14eacfa596507b83d95d5
@@ -148,6 +148,13 @@ RUN --mount=type=bind,target=/build-context \
 ENV HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1
 ENTRYPOINT ["python3", "-m", "reid.infer.d082_entrypoint"]
 CMD ["--images", "/data/images", "--query", "/data/test_query.csv", "--gallery", "/data/test_gallery.csv", "--out", "/out", "--device", "cuda"]
+
+# Development tests create temporary Git repositories. Keep their Git dependency
+# in a dedicated QA target; inference remains independent of Git and network.
+FROM d082-production AS qa
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends git \
+    && rm -rf /var/lib/apt/lists/*
 
 # Return to the documented D082 gallery-z6.6 default after D141 rejection.
 # This selects a prepared candidate; actual A5000/Docker acceptance is separate.
