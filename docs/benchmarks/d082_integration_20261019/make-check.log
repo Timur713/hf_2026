@@ -15,7 +15,7 @@ VALID: built-in output fixture satisfies contract C6
 ..................................................                       [100%]
 693 passed, 5 skipped in 10.44s
 /Library/Developer/CommandLineTools/usr/bin/make smoke PYTHON="/private/tmp/falcon-pr-py310/bin/python" DATA_ROOT="/private/tmp/falcon-pr-smoke50"
-/private/tmp/falcon-pr-py310/bin/python -m reid.infer.smoke --data-root "/private/tmp/falcon-pr-smoke50" --n-images 50  
+/private/tmp/falcon-pr-py310/bin/python -m reid.infer.smoke --data-root "/private/tmp/falcon-pr-smoke50" --n-images 50
 2026-10-19 09:48:51,994 INFO reid.infer.run stage_done stage=read_inputs elapsed_s=0.000804
 2026-10-19 09:48:51,994 INFO reid.infer.run inputs query_count=25 gallery_count=25
 2026-10-19 09:48:52,292 INFO reid.infer.run stage_done stage=load_d082_runtime elapsed_s=0.297732
