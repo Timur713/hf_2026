@@ -14,7 +14,7 @@
 - [x] Production smoke выбирает D082, повреждённый пакет не заменяется старой моделью.
 - [x] Исторические результаты и ограничения отделены от текущего кандидата.
 - [x] Локальный Python3.10 make check:693PASS/5skip + real-weight synthetic smoke50/C6 PASS; итог в [local_validation.json](benchmarks/d082_integration_20261019/local_validation.json).
-- [ ] Единый draft PR, без автоматического merge.
+- [x] Единый [draft PR #1](https://github.com/Timur713/hf_2026/pull/1), code commit `bbfb3d9`; автоматического merge нет.
 - [ ] Повтор Linux/Python3.10 `make check` и настоящего GPU smoke на новом исходном snapshot.
 - [ ] Повтор A5000 C5: текущие93,23FPS ниже100. Нужен профиль JPEG/crop/encoder
       перед оптимизацией, а не изменение verifier ради C5.
