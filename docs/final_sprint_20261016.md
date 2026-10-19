@@ -17,7 +17,7 @@
 - [x] Единый [PR #1](https://github.com/Timur713/hf_2026/pull/1), исходный code commit `bbfb3d9`.
 - [x] Заключительное ревью: production-профиль защищён от пропуска graph, fixed4 сохранён; QA-target получает Git.
 - [x] Заключительные проверки: make check699PASS/5skip + real-weight synthetic smoke50/C6; итоговый pytest700PASS/5skip.
-- [ ] Слияние по поручению пользователя19.10 после проверки GitHub head; GPU-статусы ниже учитываются отдельно.
+- [x] PR готов к слиянию по поручению пользователя19.10 после ревью и проверок; результат слияния — в [PR #1](https://github.com/Timur713/hf_2026/pull/1). GPU-статусы ниже учитываются отдельно.
 - [ ] Повтор Linux/Python3.10 `make check` и настоящего GPU smoke на новом исходном snapshot.
 - [ ] Повтор A5000 C5: текущие93,23FPS ниже100. Нужен профиль JPEG/crop/encoder
       перед оптимизацией, а не изменение verifier ради C5.
