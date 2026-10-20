@@ -1,0 +1,379 @@
+{
+  "kind": "final_hf_2026_integration",
+  "device_scope": "H100 engineering, not A5000 scoring",
+  "commands": [
+    {
+      "label": "smoke-strict",
+      "argv": [
+        "make",
+        "smoke-strict",
+        "PYTHON=/opt/ml-platform/tisanbirdin/falcon-speed-20261019/venv/bin/python",
+        "DATA_ROOT=/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/smoke-fixture"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "reference",
+      "argv": [
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/venv/bin/python",
+        "-c",
+        "import torch;torch.use_deterministic_algorithms(True);torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False;from reid.infer.run import main;raise SystemExit(main())",
+        "--images",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/images",
+        "--query",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/query.csv",
+        "--gallery",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/gallery.csv",
+        "--out",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/reference",
+        "--model",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/artifacts/d082/bundle",
+        "--verifier",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/artifacts/d082/bundle/verifier.pt",
+        "--d082-production-manifest-sha256",
+        "94125e2665558df43fb6701f7f0ca6b5c1cf5289cbfd48c83c03d1ee0180305c",
+        "--device",
+        "cuda"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "stock",
+      "argv": [
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/venv/bin/python",
+        "-m",
+        "reid.infer.d082_entrypoint",
+        "--images",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/images",
+        "--query",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/query.csv",
+        "--gallery",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/gallery.csv",
+        "--out",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/stock",
+        "--device",
+        "cuda"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "stock-c6",
+      "argv": [
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/venv/bin/python",
+        "-m",
+        "reid.eval.validate_outputs",
+        "--query",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/query.csv",
+        "--gallery",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/gallery.csv",
+        "--submission",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/stock/submission.csv",
+        "--embeddings",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/stock/embeddings.npy",
+        "--candidates",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/stock/candidates.csv"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "repeat",
+      "argv": [
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/venv/bin/python",
+        "-m",
+        "reid.infer.d082_entrypoint",
+        "--images",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/images",
+        "--query",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/query.csv",
+        "--gallery",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/gallery.csv",
+        "--out",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/repeat",
+        "--device",
+        "cuda"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "repeat-c6",
+      "argv": [
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/venv/bin/python",
+        "-m",
+        "reid.eval.validate_outputs",
+        "--query",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/query.csv",
+        "--gallery",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/gallery.csv",
+        "--submission",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/repeat/submission.csv",
+        "--embeddings",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/repeat/embeddings.npy",
+        "--candidates",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/repeat/candidates.csv"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "reverse",
+      "argv": [
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/venv/bin/python",
+        "-m",
+        "reid.infer.d082_entrypoint",
+        "--images",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/images",
+        "--query",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/query-reversed.csv",
+        "--gallery",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/gallery.csv",
+        "--out",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/reverse",
+        "--device",
+        "cuda"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "reverse-c6",
+      "argv": [
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/venv/bin/python",
+        "-m",
+        "reid.eval.validate_outputs",
+        "--query",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/query-reversed.csv",
+        "--gallery",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/gallery.csv",
+        "--submission",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/reverse/submission.csv",
+        "--embeddings",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/reverse/embeddings.npy",
+        "--candidates",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/reverse/candidates.csv"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "accepted-singleton",
+      "argv": [
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/venv/bin/python",
+        "-m",
+        "reid.infer.d082_entrypoint",
+        "--images",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/images",
+        "--query",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/query-accepted-singleton.csv",
+        "--gallery",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/gallery.csv",
+        "--out",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/accepted-singleton",
+        "--device",
+        "cuda"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "accepted-singleton-c6",
+      "argv": [
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/venv/bin/python",
+        "-m",
+        "reid.eval.validate_outputs",
+        "--query",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/query-accepted-singleton.csv",
+        "--gallery",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/gallery.csv",
+        "--submission",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/accepted-singleton/submission.csv",
+        "--embeddings",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/accepted-singleton/embeddings.npy",
+        "--candidates",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/accepted-singleton/candidates.csv"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "singleton",
+      "argv": [
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/venv/bin/python",
+        "-m",
+        "reid.infer.d082_entrypoint",
+        "--images",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/images",
+        "--query",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/query-singleton.csv",
+        "--gallery",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/gallery.csv",
+        "--out",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/singleton",
+        "--device",
+        "cuda"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "singleton-c6",
+      "argv": [
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/venv/bin/python",
+        "-m",
+        "reid.eval.validate_outputs",
+        "--query",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/query-singleton.csv",
+        "--gallery",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/gallery.csv",
+        "--submission",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/singleton/submission.csv",
+        "--embeddings",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/singleton/embeddings.npy",
+        "--candidates",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/singleton/candidates.csv"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "changed-neighbours",
+      "argv": [
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/venv/bin/python",
+        "-m",
+        "reid.infer.d082_entrypoint",
+        "--images",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/images",
+        "--query",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/query-accepted-neighbours.csv",
+        "--gallery",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/gallery.csv",
+        "--out",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/changed-neighbours",
+        "--device",
+        "cuda"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "changed-neighbours-c6",
+      "argv": [
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/venv/bin/python",
+        "-m",
+        "reid.eval.validate_outputs",
+        "--query",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/query-accepted-neighbours.csv",
+        "--gallery",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/engineering625/gallery.csv",
+        "--submission",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/changed-neighbours/submission.csv",
+        "--embeddings",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/changed-neighbours/embeddings.npy",
+        "--candidates",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/changed-neighbours/candidates.csv"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "production-benchmark",
+      "argv": [
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/venv/bin/python",
+        "scripts/bench_final_candidate.py",
+        "--images",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/train128/images",
+        "--csv",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/train128/train.csv",
+        "--run-label",
+        "hf-d082-singleton-integration-h100",
+        "--json-out",
+        "/opt/ml-platform/tisanbirdin/falcon-speed-20261019/delivery/results/production-c5-h100.json"
+      ],
+      "exit": 0
+    }
+  ],
+  "checks": {
+    "targeted_tests": "76 passed in prior targeted.log",
+    "server_full_suite_limitation": "671 passed/5 skipped/3 failures/48 fixture errors: server filesystem rejects RENAME_NOREPLACE in development bundle publisher; full suite is checked separately on local Python3.10",
+    "three_files_exact": {
+      "reference": {
+        "submission.csv": "a6ed12be4b3bec54b23efb49affbc1bf6cc67a007fdb52c0a7a5d79b3f2641be",
+        "embeddings.npy": "54aea4fd824608c437d9897ccfbd936edb75a5c264f159e5fc1628049737adf2",
+        "candidates.csv": "706aace5502ed009b90e50c747dc1d532cf1062cdf88d9fc2f8a2f4e4ecc02d3"
+      },
+      "stock": {
+        "submission.csv": "a6ed12be4b3bec54b23efb49affbc1bf6cc67a007fdb52c0a7a5d79b3f2641be",
+        "embeddings.npy": "54aea4fd824608c437d9897ccfbd936edb75a5c264f159e5fc1628049737adf2",
+        "candidates.csv": "706aace5502ed009b90e50c747dc1d532cf1062cdf88d9fc2f8a2f4e4ecc02d3"
+      },
+      "repeat": {
+        "submission.csv": "a6ed12be4b3bec54b23efb49affbc1bf6cc67a007fdb52c0a7a5d79b3f2641be",
+        "embeddings.npy": "54aea4fd824608c437d9897ccfbd936edb75a5c264f159e5fc1628049737adf2",
+        "candidates.csv": "706aace5502ed009b90e50c747dc1d532cf1062cdf88d9fc2f8a2f4e4ecc02d3"
+      }
+    },
+    "stock": {
+      "query_count": 32,
+      "exact": true,
+      "accepted": 7
+    },
+    "repeat": {
+      "query_count": 32,
+      "exact": true,
+      "accepted": 7
+    },
+    "reverse": {
+      "query_count": 32,
+      "exact": true,
+      "accepted": 7
+    },
+    "accepted-singleton": {
+      "query_count": 1,
+      "exact": true,
+      "accepted": 1
+    },
+    "singleton": {
+      "query_count": 1,
+      "exact": true,
+      "accepted": 0
+    },
+    "changed-neighbours": {
+      "query_count": 4,
+      "exact": true,
+      "accepted": 2
+    },
+    "source_sha256": {
+      "reid/__init__.py": "c11117afad82d01197d80a72ec82de27e9bd2deffe32d31cae6c63ecc75edef6",
+      "reid/infer/d082_extractor.py": "2b1e009ed8e1b237f93ac59744aa552713efb90c3506a362a5c296d498e58dc7",
+      "reid/infer/list_ranker.py": "a5fe9fd109a4301961a0d831c352222667ba0a37355445b01bf9c931bbd69f26",
+      "reid/infer/verifier_cache.py": "ba01f3c1c892795e71baa2a5c4cf7fa405ff59b29d9a3b14f5dc8a0606ce4b39",
+      "reid/infer/fusion.py": "c7fa9c7813d43898012d31536391c4af20c54f5b50a80482235cd6276f746ad3",
+      "reid/infer/run.py": "4b18ae91a7b30ed3547795f9f80fc29df7da191d394549d05351a14b7c8e6204",
+      "reid/infer/__init__.py": "e7952ff33c6253be8c5869fefb70aa9a63a2eb9a837b3506e07c1a28f4f1ca0d",
+      "reid/infer/observability.py": "e5bbc3c64c0227c88feee9f2d4b834ab8b870abc283fabbba100981389088767",
+      "reid/infer/plate_mask.py": "503bfe70843814f5124abb19a530c00330e9a55f719cabfcd85ccf0243b8b791",
+      "reid/infer/d082_production.py": "578c93f18e37ffb0308e271df0b82bd8e6f35bae208b54c92f56bf056dd82b98",
+      "reid/infer/extractor.py": "3b2d7a39a798d303a72ad861a75f56b5a32f9d4b81627c24d6853e23c3c086c3",
+      "reid/infer/d082.py": "b3a79ede6f319538fedb5862e1fb67e662bb0b609abe4a329d7566bc9ac797bc",
+      "reid/infer/smoke.py": "19fa3f7f3607122340744c7dc8a81b9b53e192353a2121c0200c7bdd4e9fc1fe",
+      "reid/infer/verifier.py": "5ae5c868b5c104e60ae7761dc81e90a911cdf15161e0d8b0deac27a3910e4665",
+      "reid/infer/d082_entrypoint.py": "7ea3473d451d5c0b033aede11a0120ae27733806f852916551112d5d74b6b9e2",
+      "reid/post/pipeline.py": "0f5c9dbcdb8775c1775616ed49b7a54b75f414408bec6fba5cbd030f689d6380",
+      "reid/post/__init__.py": "d06e08aa1e3ab6a2ed77d7c03afeea3231f184285bf41d1acb32274c33f6b624",
+      "reid/post/search.py": "2a4859605b5c3ce7b00a93005218b095a6e095b75c255d47c7e946eba2eecc6d",
+      "reid/post/gallery_policy.py": "c42cb69610db235895e09bede4d194fd0a23726b23d595d5e2c779735f6babce",
+      "reid/post/ranker.py": "1312b86a501f7c28e8ea34907e4d061dce96c9059e700872c206d787c7576a07",
+      "reid/post/policy.py": "60e7f50fedc2f210fb045f0e1234adca6eb66d249da3ddaed4545cc7f165cc47",
+      "reid/post/verifier.py": "3217988fe811236a989d8f7b1c84f6aa7f62db69bb95e6cdc2b4a84a2e8b6100",
+      "reid/eval/validate_outputs.py": "7582dde1bd6dce1c9b3390603cdc3dad4111394bd8e565c120ab5415185ad690",
+      "reid/eval/__init__.py": "21606e5f75d5840be65fbae8b6aad4d42c132a4766602402ed3c513b0938e384",
+      "reid/eval/eval_local.py": "444454de2bfcdd46c63de74a580ef1f2bf353e1d13a1b48ea6cfa352f4d226be",
+      "reid/model/list_ranker.py": "e1d4eea8c01c30767fe3f3a87157bdad3705f69bb332e6d6b968eb441286eb3b",
+      "reid/model/interpret.py": "3961b1e0a3e623f77a1b39e14aec577db84ddb3a1e7ee58427ccc6dca4ced11c",
+      "reid/model/__init__.py": "c041a1e671cfb4214d73a8da528198303a50d4fd4195b15e64ee807678482848",
+      "reid/model/losses.py": "244498f3926939047c91f9e7a512e112215c6879076e950c85d579b62cf6269c",
+      "reid/model/corr_verifier.py": "15b12211ccfbb24ba75549bd42a0b97f4e3e6533b509a964e4b7feb04c4a9a11",
+      "reid/model/reranker.py": "12671954251681b092f470f048732811659bfc7bfa0a1c4589819f6290a4b423",
+      "reid/model/verifier.py": "0e6c87a0d4c0ce5d40dd14be700869e77c27383624d53819ad981892b87951fd",
+      "reid/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reid/data/sampler.py": "6ed644454edf044cb2ac15af4b742da8bf502d208842e0620ce2c359f61c823d",
+      "reid/data/dataset.py": "28f89cdc8946809d26a1c3698580316548bb29db7d9c10c8671dc663e8cde8fd",
+      "reid/data/external.py": "4558bfefc61d2084296cd2a286c78aab4b48b03389d8b9562bc765ab6987c463",
+      "reid/data/augment.py": "15dd10f780273db981c390204457e2922349f8d842e248b68912db4779de53f0",
+      "reid/data/crop_cache.py": "c5f5c89ee8cf3442d63124f85c7b26460cf699c92fd05e06e22c106ad65296b2",
+      "reid/data/vehicleid.py": "5a12159477d2c407538ee9915ed1856770bf85283f992604c85d7adb32b227c6",
+      "reid/data/preprocess.py": "2e33c981ed842b76d73ed5f0916519ed96277a78502cdbdae14796d5a85c8777"
+    }
+  },
+  "status": "PASS"
+}

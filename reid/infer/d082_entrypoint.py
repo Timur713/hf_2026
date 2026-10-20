@@ -1,12 +1,15 @@
 """Docker-only D082 entrypoint: immutable baked pin, cache off, no legacy fallback."""
 
+import logging
 from pathlib import Path
 import sys
 
 from reid.infer import run
 from reid.infer.d082_production import digest
 
-ROOT = Path("/app/artifacts/models/d082")
+LOGGER = logging.getLogger(__name__)
+
+ROOT = Path(__file__).resolve().parents[2] / "artifacts/models/d082"
 FORBIDDEN = {
     "--model",
     "--verifier",
@@ -22,12 +25,12 @@ FORBIDDEN = {
 def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
     if any(arg.split("=", 1)[0] in FORBIDDEN for arg in argv):
-        print("D082 image forbids model/pin/recipe/cache overrides", file=sys.stderr)
+        LOGGER.error("D082 image forbids model/pin/recipe/cache overrides")
         return 2
     try:
         pin = digest((ROOT / "manifest.sha256").read_text().strip())
     except (OSError, ValueError) as exc:
-        print(f"D082 baked manifest pin unavailable: {exc}", file=sys.stderr)
+        LOGGER.error("D082 baked manifest pin unavailable: %s", exc)
         return 1
     return run.main(
         [

@@ -1,0 +1,21 @@
+{
+  "kind": "local_python310_integration",
+  "python": "3.10.22",
+  "platform": "macOS ARM64",
+  "command": "OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 PYTHONPATH=. make check PYTHON=python3 DATA_ROOT=SMOKE_DATA",
+  "exit_code": 0,
+  "pytest": {
+    "passed": 715,
+    "skipped": 12
+  },
+  "smoke": {
+    "images": 50,
+    "query": 25,
+    "gallery": 25,
+    "real_d082_weights": true,
+    "synthetic_jpeg": true,
+    "c6": "PASS"
+  },
+  "log_sha256": "ad7d31cf71af9169fd26b56a852bc548518d3cbf01e3c50f6094eddf0891681e",
+  "limitation": "Local CPU regression and smoke, not A5000 speed or Docker build"
+}

@@ -187,10 +187,15 @@ def run(a):
         if not torch.cuda.is_available():
             raise RuntimeError("CUDA requested but unavailable")
         torch.cuda.reset_peak_memory_stats(device)
-        sync = lambda: torch.cuda.synchronize(device)
+
+        def sync():
+            torch.cuda.synchronize(device)
     else:
         device = torch.device("cpu")
-        sync = lambda: None
+
+        def sync():
+            return None
+
     qcsv = Path(f"splits/fold{a.fold}_query.csv")
     gcsv = Path(f"splits/fold{a.fold}_gallery.csv")
     qrows, grows = read_inputs(qcsv, a.images), read_inputs(gcsv, a.images)
@@ -211,11 +216,17 @@ def run(a):
     )
     validated = perf_counter()
     start = perf_counter()
-    extractor = (
-        Extractor(a.model, str(device))
-        if d082 is None
-        else Extractor(a.model, str(device), fusion_internal_batch_size=4)
-    )
+    if getattr(a, "d082_production_manifest_sha256", None) is not None:
+        from reid.infer.d082_extractor import D082Extractor
+
+        extractor = D082Extractor(a.model, str(device))
+    else:
+        extractor = (
+            Extractor(a.model, str(device))
+            if d082 is None
+            else Extractor(a.model, str(device), fusion_internal_batch_size=4)
+        )
+
     verifier = PairVerifier(
         a.verifier if d082 is None else d082.verifier_path, str(device)
     )

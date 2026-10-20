@@ -1,0 +1,20 @@
+{
+  "exact": true,
+  "sha256": {
+    "submission.csv": {
+      "native": "158976921f5dc13cae920f3c6466d6ebcc745ebdc416b3d456ca68bd92d4f242",
+      "full1": "158976921f5dc13cae920f3c6466d6ebcc745ebdc416b3d456ca68bd92d4f242",
+      "full2": "158976921f5dc13cae920f3c6466d6ebcc745ebdc416b3d456ca68bd92d4f242"
+    },
+    "candidates.csv": {
+      "native": "dade8c766c856dbf7dd7962e05f81b2a83fe481617216134b03957780711d295",
+      "full1": "dade8c766c856dbf7dd7962e05f81b2a83fe481617216134b03957780711d295",
+      "full2": "dade8c766c856dbf7dd7962e05f81b2a83fe481617216134b03957780711d295"
+    },
+    "embeddings.npy": {
+      "native": "e1d48337bb84930aea703b4a7aa0c797bc263af58556184397ef26169279052a",
+      "full1": "e1d48337bb84930aea703b4a7aa0c797bc263af58556184397ef26169279052a",
+      "full2": "e1d48337bb84930aea703b4a7aa0c797bc263af58556184397ef26169279052a"
+    }
+  }
+}

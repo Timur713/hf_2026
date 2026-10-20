@@ -279,6 +279,10 @@ def run_pipeline(
             active_extractor = PlateMaskedExtractor(
                 model_dir, device, fusion_internal_batch_size=4
             )
+        elif d082_production_manifest_sha256 is not None:
+            from reid.infer.d082_extractor import D082Extractor
+
+            active_extractor = D082Extractor(model_dir, device)
         else:
             active_extractor = extractor or (
                 Extractor(model_dir, device)
@@ -301,6 +305,7 @@ def run_pipeline(
         "verifier_gallery_cache": verifier_gallery_cache,
         "device": device,
         "batch_size": batch_size,
+        "extraction_runtime": type(active_extractor).__name__,
         "fusion_internal_batch_size": getattr(
             active_extractor, "fusion_internal_batch_size", None
         ),

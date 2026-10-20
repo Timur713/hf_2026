@@ -128,8 +128,9 @@ ARG D082_ARCHIVE_URL=https://github.com/Timur713/hf_2026/releases/download/d082-
 ARG D082_ARCHIVE_SHA256=0920e24524e9b32215323bbe3f8e47ae6e19d1f036b14eacfa596507b83d95d5
 ARG D082_MANIFEST_SHA256=94125e2665558df43fb6701f7f0ca6b5c1cf5289cbfd48c83c03d1ee0180305c
 ARG D082_RELEASE_URL=https://github.com/Timur713/hf_2026/releases/tag/d082-candidate-20261019-r2
-LABEL ai.deeptech.artifact.kind="d082_production_candidate" \
-      ai.deeptech.artifact.final_acceptance="false" \
+LABEL ai.deeptech.artifact.kind="d082_production" \
+      ai.deeptech.artifact.a5000_measurement="source-prototype-20261020" \
+      ai.deeptech.extraction.runtime="fixed4-member-graphs-singleton-h2d" \
       ai.deeptech.d082.source_release="${D082_RELEASE_URL}" \
       ai.deeptech.d082.archive_url="${D082_ARCHIVE_URL}" \
       ai.deeptech.d082.archive_sha256="${D082_ARCHIVE_SHA256}" \
@@ -145,7 +146,8 @@ RUN --mount=type=bind,target=/build-context \
       --archive-sha256 "${D082_ARCHIVE_SHA256}" \
       --manifest-sha256 "${D082_MANIFEST_SHA256}" \
       --source-release-url "${D082_RELEASE_URL}"
-ENV HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1
+ENV HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+    OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUBLAS_WORKSPACE_CONFIG=:4096:8
 ENTRYPOINT ["python3", "-m", "reid.infer.d082_entrypoint"]
 CMD ["--images", "/data/images", "--query", "/data/test_query.csv", "--gallery", "/data/test_gallery.csv", "--out", "/out", "--device", "cuda"]
 
@@ -156,6 +158,7 @@ RUN apt-get update \
     && apt-get install --yes --no-install-recommends git \
     && rm -rf /var/lib/apt/lists/*
 
-# Return to the documented D082 gallery-z6.6 default after D141 rejection.
-# This selects a prepared candidate; actual A5000/Docker acceptance is separate.
+# Default submission: frozen D082 recipe and the output-preserving extractor.
+# Measured A5000 source prototype and final integration checks are documented
+# separately in docs/d082_acceptance.md.
 FROM d082-production AS final

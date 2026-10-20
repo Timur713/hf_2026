@@ -1,0 +1,51 @@
+{
+  "source_repository": "Timur713/hack_falcon_2026",
+  "source_commit": "bf11495f05308fa7ccbe179ea2c89c0380a1663d",
+  "runtime_commit": "57734078b52b783efd9c546dd0704e66343e74ac",
+  "reports_copied_without_modification": {
+    "full-c5-baseline-before.json": {
+      "sha256": "4eaaee5b953eacfc38b644d70f184cd46df201e4ae59b4d401e6e4d8e349f761",
+      "bytes": 9563
+    },
+    "full-c5-baseline-after.json": {
+      "sha256": "b9f67da6b0fa1daa325a1a1f7598e28d9ffa3b5a535883f4db0deed4e0704b0a",
+      "bytes": 9562
+    },
+    "full-c5-singleton-1.json": {
+      "sha256": "340a4469bf54efe5a4e2676f5057cf8515a31c6b346f11782e54ee3db551164b",
+      "bytes": 9565
+    },
+    "full-c5-singleton-2.json": {
+      "sha256": "19a9f2c68a3f321de763c5e7d2834a2fee7ef895d121dcb87acdf9c610da82c7",
+      "bytes": 9561
+    },
+    "full-c5-singleton-3.json": {
+      "sha256": "3bff9e9ea909083934c99d3987be2c4fa26ba7b8a5a7355b24f752f00a051ea5",
+      "bytes": 9564
+    },
+    "original-c5-singleton-1.json": {
+      "sha256": "d53d9cf66a68f9ad60e4885a7c1995430f59abaa95b49c91e9d5a56b7fa3352a",
+      "bytes": 9563
+    },
+    "original-c5-singleton-2.json": {
+      "sha256": "a19e986ce6d369ef25274e34b1c3bda7e0dbea0f834ee356fa50cd6394e75e19",
+      "bytes": 9563
+    },
+    "original-c5-singleton-3.json": {
+      "sha256": "f8eaf3eb9ce0216f946d614fc538d988468dab79718feb9f8a850c403fa0e79c",
+      "bytes": 9563
+    },
+    "singleton.json": {
+      "sha256": "cfb3596282e4742b49d61d3e6a132203b5a90a43c9e3afeb0ce3b1a0df77f75d",
+      "bytes": 63178
+    },
+    "engineering.json": {
+      "sha256": "bab9e77b35595c0a761898196eccc2d31eb913fc1a5a0362c1775921f73e603e",
+      "bytes": 25576
+    },
+    "stock-cli-parity.json": {
+      "sha256": "e74c1206e2f6eecb1671bcb1ad2e84cbabd786689de7918cef746483e1764320",
+      "bytes": 878
+    }
+  }
+}

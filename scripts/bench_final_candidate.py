@@ -11,12 +11,13 @@ from pathlib import Path
 import sys
 import tempfile
 import time
-from types import SimpleNamespace
 
-APP = Path("/app")
+APP = Path(__file__).resolve().parents[1]
 BAKED = APP / "artifacts/models/d082"
-RUNTIME_REVISION = "hf_2026-d082-integration-r2"
+RUNTIME_REVISION = "hf_2026-d082-singleton-r3"
 EXPECTED_SOURCE = {
+    "Dockerfile": "0fdc13f14a0d3f6f940cd670c70eda5458049d5f3f56e7c645361b26dc2d068d",
+    "docker-compose.yml": "5b3598a5106d71c96713d3598a2f0a0b1f81f7722d98d24900de4c4ece7a2be4",
     "reid/__init__.py": "c11117afad82d01197d80a72ec82de27e9bd2deffe32d31cae6c63ecc75edef6",
     "reid/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "reid/data/augment.py": "15dd10f780273db981c390204457e2922349f8d842e248b68912db4779de53f0",
@@ -31,14 +32,15 @@ EXPECTED_SOURCE = {
     "reid/eval/validate_outputs.py": "7582dde1bd6dce1c9b3390603cdc3dad4111394bd8e565c120ab5415185ad690",
     "reid/infer/__init__.py": "e7952ff33c6253be8c5869fefb70aa9a63a2eb9a837b3506e07c1a28f4f1ca0d",
     "reid/infer/d082.py": "b3a79ede6f319538fedb5862e1fb67e662bb0b609abe4a329d7566bc9ac797bc",
-    "reid/infer/d082_entrypoint.py": "b98312d7f99b42a04235d81668af2253a46e5365a6e914cd4fd1f647f6fd9d91",
+    "reid/infer/d082_entrypoint.py": "7ea3473d451d5c0b033aede11a0120ae27733806f852916551112d5d74b6b9e2",
+    "reid/infer/d082_extractor.py": "2b1e009ed8e1b237f93ac59744aa552713efb90c3506a362a5c296d498e58dc7",
     "reid/infer/d082_production.py": "578c93f18e37ffb0308e271df0b82bd8e6f35bae208b54c92f56bf056dd82b98",
     "reid/infer/extractor.py": "3b2d7a39a798d303a72ad861a75f56b5a32f9d4b81627c24d6853e23c3c086c3",
     "reid/infer/fusion.py": "c7fa9c7813d43898012d31536391c4af20c54f5b50a80482235cd6276f746ad3",
     "reid/infer/list_ranker.py": "a5fe9fd109a4301961a0d831c352222667ba0a37355445b01bf9c931bbd69f26",
     "reid/infer/observability.py": "e5bbc3c64c0227c88feee9f2d4b834ab8b870abc283fabbba100981389088767",
     "reid/infer/plate_mask.py": "503bfe70843814f5124abb19a530c00330e9a55f719cabfcd85ccf0243b8b791",
-    "reid/infer/run.py": "42ad301dbb0811c7a26d366731a92ba53cbe9bd75b6e9029da5ad9a50d819208",
+    "reid/infer/run.py": "4b18ae91a7b30ed3547795f9f80fc29df7da191d394549d05351a14b7c8e6204",
     "reid/infer/smoke.py": "19fa3f7f3607122340744c7dc8a81b9b53e192353a2121c0200c7bdd4e9fc1fe",
     "reid/infer/verifier.py": "5ae5c868b5c104e60ae7761dc81e90a911cdf15161e0d8b0deac27a3910e4665",
     "reid/infer/verifier_cache.py": "ba01f3c1c892795e71baa2a5c4cf7fa405ff59b29d9a3b14f5dc8a0606ce4b39",
@@ -56,9 +58,10 @@ EXPECTED_SOURCE = {
     "reid/post/ranker.py": "1312b86a501f7c28e8ea34907e4d061dce96c9059e700872c206d787c7576a07",
     "reid/post/search.py": "2a4859605b5c3ce7b00a93005218b095a6e095b75c255d47c7e946eba2eecc6d",
     "reid/post/verifier.py": "3217988fe811236a989d8f7b1c84f6aa7f62db69bb95e6cdc2b4a84a2e8b6100",
-    "scripts/bench_extract.py": "addd99fcc7b80f018d400cad7ceab37ba4a906670dbadfa7718d29667b30a20e",
-    "requirements.txt": "60a6fde9fe47e049b7cd90fbbafe8c9cc494d2450b87be23e2f7c371d46a91d9",
     "requirements-lock-cu121.txt": "3a23bae7b7e0297b79896a455b70c7ee2dd970bf0f98477a772301b8973ce288",
+    "requirements.txt": "60a6fde9fe47e049b7cd90fbbafe8c9cc494d2450b87be23e2f7c371d46a91d9",
+    "scripts/bench_extract.py": "addd99fcc7b80f018d400cad7ceab37ba4a906670dbadfa7718d29667b30a20e",
+    "scripts/bench_pipeline.py": "cf5b4c693c16b3268f37f6fc7ec0d64b6a24a9bfbdc31691dbb870618095ca42",
 }
 BATCH_SIZES = (1, 8, 16, 32)
 
@@ -98,46 +101,11 @@ def baked_validation(root, loader):
     return pin, loaded
 
 
-def production_extractor_type(base, component_rows, fuse, scales, row_type):
-    """Keep the original timed functions while executing production normalization."""
-    reference = math.sqrt(min(scales))
-    fusion = SimpleNamespace(
-        coefficients=tuple(reference / math.sqrt(s) for s in scales)
-    )
-
-    class ProductionExtractor(base):
-        def __init__(
-            self, model_dir, device, preprocess_workers=None, precast_projections=False
-        ):
-            if Path(model_dir) != BAKED / "bundle" or precast_projections:
-                raise ValueError("benchmark forbids model/precast overrides")
-            super().__init__(
-                model_dir,
-                device,
-                preprocess_workers=preprocess_workers,
-                precast_projections=False,
-                fusion_internal_batch_size=4,
-            )
-            if tuple(c["similarity_std"] for c in self.cfg["components"]) != tuple(
-                scales
-            ):
-                raise ValueError(
-                    "loaded fusion scales differ from baked production manifest"
-                )
-
-        def extract_batch(self, items):
-            rows = [
-                row_type(Path(path).stem, Path(path), tuple(bbox))
-                for path, bbox in items
-            ]
-            blocks = component_rows(self, rows, len(rows))
-            return fuse(fusion, blocks)
-
-    return ProductionExtractor
-
-
 def target_gate(report):
-    latency = float(report["latency_batch1"]["mean_ms"])
+    latency_report = report["latency_batch1"]
+    if latency_report["warmup"] < 50 or latency_report["iterations"] < 300:
+        raise ValueError("latency requires at least 50 warmups and 300 measurements")
+    latency = float(latency_report["p50_ms"])
     measured = report["throughput"]
     if len(measured) != len(BATCH_SIZES) or [r["batch_size"] for r in measured] != list(
         BATCH_SIZES
@@ -147,6 +115,8 @@ def target_gate(report):
         raise ValueError("invalid measured latency")
     if any(not math.isfinite(float(r["fps"])) or r["fps"] <= 0 for r in measured):
         raise ValueError("invalid measured throughput")
+    if any(r["seconds"] < 10 for r in measured):
+        raise ValueError("throughput requires at least 10 seconds per batch size")
     fastest = max(measured, key=lambda r: r["fps"])
     name = report["device"]["name"]
     actual_a5000 = name in ("NVIDIA RTX A5000", "RTX A5000")
@@ -155,7 +125,7 @@ def target_gate(report):
         hardware_required="RTX A5000",
         measured_device_name=name,
         actual_a5000=actual_a5000,
-        latency_statistic="mean_ms at external batch1",
+        latency_statistic="p50_ms at external batch1",
         latency_limit_ms=40.0,
         latency_pass=latency_ok,
         throughput_statistic="maximum measured FPS over fixed external batches1,8,16,32",
@@ -177,8 +147,8 @@ def parser():
     p.add_argument("--iterations", type=int, default=300)
     p.add_argument("--throughput-seconds", type=float, default=10.0)
     p.add_argument("--run-label", required=True)
-    p.add_argument("--torch-threads", type=int)
-    p.add_argument("--preprocess-workers", type=int)
+    p.add_argument("--torch-threads", type=int, default=8)
+    p.add_argument("--preprocess-workers", type=int, default=8)
     p.add_argument("--json-out", type=Path, required=True)
     return p
 
@@ -193,28 +163,19 @@ def main(argv=None):
     import torch
     from scripts import bench_extract as original
     from reid.infer.d082_production import load_production_runtime, inspect_bundle
-    from reid.infer.d082 import extract_component_rows
-    from reid.post.ranker import PreparedRankerGallery
+    from reid.infer.d082_extractor import D082Extractor
 
     # Always validate actual baked bytes on CPU, before allocating neural CUDA models.
     started = time.perf_counter()
     pin, loaded = baked_validation(BAKED, load_production_runtime)
     cpu_identity = loaded.identity
     cpu_validation_seconds = time.perf_counter() - started
-    scales = tuple(cpu_identity["scales"])
     del loaded
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
         raise RuntimeError(
             "one visible CUDA GPU is required; CPU benchmark is forbidden"
         )
 
-    fixed = production_extractor_type(
-        original.Extractor,
-        extract_component_rows,
-        PreparedRankerGallery._fuse,
-        scales,
-        original.InputRow,
-    )
     arguments = [
         "--model",
         str(BAKED / "bundle"),
@@ -243,7 +204,7 @@ def main(argv=None):
     args.json_out.parent.mkdir(parents=True, exist_ok=True)
     previous = original.Extractor
     try:
-        original.Extractor = fixed
+        original.Extractor = D082Extractor
         with tempfile.TemporaryDirectory(
             prefix="fixed4-bench-", dir=args.json_out.parent
         ) as tmp:

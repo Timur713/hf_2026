@@ -1,0 +1,639 @@
+{
+  "status": "PASS",
+  "variants": {
+    "full1": {
+      "c6": {
+        "audit": "submission_format_and_integrity",
+        "validated": true,
+        "query_count": 1138,
+        "gallery_count": 636,
+        "candidate_rows": 2745,
+        "answered_queries": 915,
+        "rejected_queries": 223,
+        "embedding_shape": [
+          1774,
+          3072
+        ],
+        "embedding_dtype": "float32",
+        "files": {
+          "submission.csv": {
+            "bytes": 414232,
+            "sha256": "158976921f5dc13cae920f3c6466d6ebcc745ebdc416b3d456ca68bd92d4f242"
+          },
+          "embeddings.npy": {
+            "bytes": 21799040,
+            "sha256": "e1d48337bb84930aea703b4a7aa0c797bc263af58556184397ef26169279052a"
+          },
+          "candidates.csv": {
+            "bytes": 214784,
+            "sha256": "dade8c766c856dbf7dd7962e05f81b2a83fe481617216134b03957780711d295"
+          }
+        },
+        "inputs": {
+          "query": {
+            "bytes": 55710,
+            "sha256": "8670a17e5c235d26adfba91dadbb050df6c43bafb3dd61cf7921e1d37796bde8"
+          },
+          "gallery": {
+            "bytes": 31137,
+            "sha256": "66d1f7da17494c67ce03d7277915744756baa574aea1111dc302d21d41ab365c"
+          }
+        },
+        "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified"
+      },
+      "comparison": {
+        "passed": true,
+        "strict_byte_equivalence": true,
+        "strict_byte_equivalence_scope": "query-ID-aligned ranking/candidate fields; not raw file order or embeddings",
+        "semantic_ranked_ids_equal": true,
+        "semantic_candidate_ids_equal": true,
+        "semantic_acceptance_equal": true,
+        "compared_queries": 1138,
+        "changed_top10_query_ids": [],
+        "changed_candidate_rows_query_ids": [],
+        "changed_candidate_ids_or_acceptance_query_ids": [],
+        "changed_acceptance_query_ids": [],
+        "max_abs_embedding_drift": 0.0,
+        "max_abs_confidence_drift_for_same_candidates": 0.0,
+        "criterion": "exact top10 and candidate rows by query ID; embedding equality is not required",
+        "interpretation": "Confidence-only ULP drift can result from FP16 batch-shape rounding; a strict failure alone is not evidence of prohibited query statistics"
+      },
+      "gallery_exact": true,
+      "query_embeddings_exact": true,
+      "sha256": {
+        "submission.csv": "158976921f5dc13cae920f3c6466d6ebcc745ebdc416b3d456ca68bd92d4f242",
+        "candidates.csv": "dade8c766c856dbf7dd7962e05f81b2a83fe481617216134b03957780711d295",
+        "embeddings.npy": "e1d48337bb84930aea703b4a7aa0c797bc263af58556184397ef26169279052a"
+      }
+    },
+    "full2": {
+      "c6": {
+        "audit": "submission_format_and_integrity",
+        "validated": true,
+        "query_count": 1138,
+        "gallery_count": 636,
+        "candidate_rows": 2745,
+        "answered_queries": 915,
+        "rejected_queries": 223,
+        "embedding_shape": [
+          1774,
+          3072
+        ],
+        "embedding_dtype": "float32",
+        "files": {
+          "submission.csv": {
+            "bytes": 414232,
+            "sha256": "158976921f5dc13cae920f3c6466d6ebcc745ebdc416b3d456ca68bd92d4f242"
+          },
+          "embeddings.npy": {
+            "bytes": 21799040,
+            "sha256": "e1d48337bb84930aea703b4a7aa0c797bc263af58556184397ef26169279052a"
+          },
+          "candidates.csv": {
+            "bytes": 214784,
+            "sha256": "dade8c766c856dbf7dd7962e05f81b2a83fe481617216134b03957780711d295"
+          }
+        },
+        "inputs": {
+          "query": {
+            "bytes": 55710,
+            "sha256": "8670a17e5c235d26adfba91dadbb050df6c43bafb3dd61cf7921e1d37796bde8"
+          },
+          "gallery": {
+            "bytes": 31137,
+            "sha256": "66d1f7da17494c67ce03d7277915744756baa574aea1111dc302d21d41ab365c"
+          }
+        },
+        "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified"
+      },
+      "comparison": {
+        "passed": true,
+        "strict_byte_equivalence": true,
+        "strict_byte_equivalence_scope": "query-ID-aligned ranking/candidate fields; not raw file order or embeddings",
+        "semantic_ranked_ids_equal": true,
+        "semantic_candidate_ids_equal": true,
+        "semantic_acceptance_equal": true,
+        "compared_queries": 1138,
+        "changed_top10_query_ids": [],
+        "changed_candidate_rows_query_ids": [],
+        "changed_candidate_ids_or_acceptance_query_ids": [],
+        "changed_acceptance_query_ids": [],
+        "max_abs_embedding_drift": 0.0,
+        "max_abs_confidence_drift_for_same_candidates": 0.0,
+        "criterion": "exact top10 and candidate rows by query ID; embedding equality is not required",
+        "interpretation": "Confidence-only ULP drift can result from FP16 batch-shape rounding; a strict failure alone is not evidence of prohibited query statistics"
+      },
+      "gallery_exact": true,
+      "query_embeddings_exact": true,
+      "sha256": {
+        "submission.csv": "158976921f5dc13cae920f3c6466d6ebcc745ebdc416b3d456ca68bd92d4f242",
+        "candidates.csv": "dade8c766c856dbf7dd7962e05f81b2a83fe481617216134b03957780711d295",
+        "embeddings.npy": "e1d48337bb84930aea703b4a7aa0c797bc263af58556184397ef26169279052a"
+      }
+    },
+    "reversed": {
+      "c6": {
+        "audit": "submission_format_and_integrity",
+        "validated": true,
+        "query_count": 1138,
+        "gallery_count": 636,
+        "candidate_rows": 2745,
+        "answered_queries": 915,
+        "rejected_queries": 223,
+        "embedding_shape": [
+          1774,
+          3072
+        ],
+        "embedding_dtype": "float32",
+        "files": {
+          "submission.csv": {
+            "bytes": 414232,
+            "sha256": "32d2a434ba55402520171d4003fc4e66c58df8176c91826e66e678d7020e3849"
+          },
+          "embeddings.npy": {
+            "bytes": 21799040,
+            "sha256": "48836a4e22fa24a18f8c3da5233d510cf6ae415114329726d28212de15e6b65a"
+          },
+          "candidates.csv": {
+            "bytes": 214784,
+            "sha256": "cd54ebca496634e928b7fe74072fa93d0e6b053967eaffd23ad112bb3fa7f034"
+          }
+        },
+        "inputs": {
+          "query": {
+            "bytes": 56849,
+            "sha256": "2b01e844c0aa481af27ba99523c11b8e3542fad7cda4960d302bfda226f9c508"
+          },
+          "gallery": {
+            "bytes": 31137,
+            "sha256": "66d1f7da17494c67ce03d7277915744756baa574aea1111dc302d21d41ab365c"
+          }
+        },
+        "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified"
+      },
+      "comparison": {
+        "passed": true,
+        "strict_byte_equivalence": true,
+        "strict_byte_equivalence_scope": "query-ID-aligned ranking/candidate fields; not raw file order or embeddings",
+        "semantic_ranked_ids_equal": true,
+        "semantic_candidate_ids_equal": true,
+        "semantic_acceptance_equal": true,
+        "compared_queries": 1138,
+        "changed_top10_query_ids": [],
+        "changed_candidate_rows_query_ids": [],
+        "changed_candidate_ids_or_acceptance_query_ids": [],
+        "changed_acceptance_query_ids": [],
+        "max_abs_embedding_drift": 0.0,
+        "max_abs_confidence_drift_for_same_candidates": 0.0,
+        "criterion": "exact top10 and candidate rows by query ID; embedding equality is not required",
+        "interpretation": "Confidence-only ULP drift can result from FP16 batch-shape rounding; a strict failure alone is not evidence of prohibited query statistics"
+      },
+      "gallery_exact": true,
+      "query_embeddings_exact": true,
+      "sha256": {
+        "submission.csv": "32d2a434ba55402520171d4003fc4e66c58df8176c91826e66e678d7020e3849",
+        "candidates.csv": "cd54ebca496634e928b7fe74072fa93d0e6b053967eaffd23ad112bb3fa7f034",
+        "embeddings.npy": "48836a4e22fa24a18f8c3da5233d510cf6ae415114329726d28212de15e6b65a"
+      }
+    },
+    "accepted_singleton": {
+      "c6": {
+        "audit": "submission_format_and_integrity",
+        "validated": true,
+        "query_count": 1,
+        "gallery_count": 636,
+        "candidate_rows": 3,
+        "answered_queries": 1,
+        "rejected_queries": 0,
+        "embedding_shape": [
+          637,
+          3072
+        ],
+        "embedding_dtype": "float32",
+        "files": {
+          "submission.csv": {
+            "bytes": 364,
+            "sha256": "274f3bdf7d55a1c031bb43a63fac47f4dd0bcad4a6de64a828f58fa14e3cd528"
+          },
+          "embeddings.npy": {
+            "bytes": 7827584,
+            "sha256": "a5be51d730ef57ba01df15df6c04cda2436af9315784c6df8f619e22354b3912"
+          },
+          "candidates.csv": {
+            "bytes": 266,
+            "sha256": "77fc416d11bf2aa32c5b770bc1bffb323d4b02e708374660db21f8fac45fd8ae"
+          }
+        },
+        "inputs": {
+          "query": {
+            "bytes": 68,
+            "sha256": "77b21578f155f0dc1d5ea329f43b2defdaaaaa8921f0a44188b56c01e647cb3a"
+          },
+          "gallery": {
+            "bytes": 31137,
+            "sha256": "66d1f7da17494c67ce03d7277915744756baa574aea1111dc302d21d41ab365c"
+          }
+        },
+        "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified"
+      },
+      "comparison": {
+        "passed": true,
+        "strict_byte_equivalence": true,
+        "strict_byte_equivalence_scope": "query-ID-aligned ranking/candidate fields; not raw file order or embeddings",
+        "semantic_ranked_ids_equal": true,
+        "semantic_candidate_ids_equal": true,
+        "semantic_acceptance_equal": true,
+        "compared_queries": 1,
+        "changed_top10_query_ids": [],
+        "changed_candidate_rows_query_ids": [],
+        "changed_candidate_ids_or_acceptance_query_ids": [],
+        "changed_acceptance_query_ids": [],
+        "max_abs_embedding_drift": 0.0,
+        "max_abs_confidence_drift_for_same_candidates": 0.0,
+        "criterion": "exact top10 and candidate rows by query ID; embedding equality is not required",
+        "interpretation": "Confidence-only ULP drift can result from FP16 batch-shape rounding; a strict failure alone is not evidence of prohibited query statistics"
+      },
+      "gallery_exact": true,
+      "query_embeddings_exact": true,
+      "sha256": {
+        "submission.csv": "274f3bdf7d55a1c031bb43a63fac47f4dd0bcad4a6de64a828f58fa14e3cd528",
+        "candidates.csv": "77fc416d11bf2aa32c5b770bc1bffb323d4b02e708374660db21f8fac45fd8ae",
+        "embeddings.npy": "a5be51d730ef57ba01df15df6c04cda2436af9315784c6df8f619e22354b3912"
+      }
+    },
+    "accepted_neighbours": {
+      "c6": {
+        "audit": "submission_format_and_integrity",
+        "validated": true,
+        "query_count": 4,
+        "gallery_count": 636,
+        "candidate_rows": 12,
+        "answered_queries": 4,
+        "rejected_queries": 0,
+        "embedding_shape": [
+          640,
+          3072
+        ],
+        "embedding_dtype": "float32",
+        "files": {
+          "submission.csv": {
+            "bytes": 1456,
+            "sha256": "fd3a33838ea2a29d1a91e8eb45814550aac8177ebb557a87fbebcf59ce4ba56c"
+          },
+          "embeddings.npy": {
+            "bytes": 7864448,
+            "sha256": "814c0b81d8d16a3c727d310ba7a0829846d1a34b4ce07c151fd91d95bca5a29e"
+          },
+          "candidates.csv": {
+            "bytes": 968,
+            "sha256": "328546a3f83cec474a8950ddc4c17eaafe6bb12a7b6615d8d9cbad594039bb32"
+          }
+        },
+        "inputs": {
+          "query": {
+            "bytes": 218,
+            "sha256": "01c3474cd4de8236449f550019eba0e6e9ac6ee92f3037c110ae12ffded3917b"
+          },
+          "gallery": {
+            "bytes": 31137,
+            "sha256": "66d1f7da17494c67ce03d7277915744756baa574aea1111dc302d21d41ab365c"
+          }
+        },
+        "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified"
+      },
+      "comparison": {
+        "passed": true,
+        "strict_byte_equivalence": true,
+        "strict_byte_equivalence_scope": "query-ID-aligned ranking/candidate fields; not raw file order or embeddings",
+        "semantic_ranked_ids_equal": true,
+        "semantic_candidate_ids_equal": true,
+        "semantic_acceptance_equal": true,
+        "compared_queries": 4,
+        "changed_top10_query_ids": [],
+        "changed_candidate_rows_query_ids": [],
+        "changed_candidate_ids_or_acceptance_query_ids": [],
+        "changed_acceptance_query_ids": [],
+        "max_abs_embedding_drift": 0.0,
+        "max_abs_confidence_drift_for_same_candidates": 0.0,
+        "criterion": "exact top10 and candidate rows by query ID; embedding equality is not required",
+        "interpretation": "Confidence-only ULP drift can result from FP16 batch-shape rounding; a strict failure alone is not evidence of prohibited query statistics"
+      },
+      "gallery_exact": true,
+      "query_embeddings_exact": true,
+      "sha256": {
+        "submission.csv": "fd3a33838ea2a29d1a91e8eb45814550aac8177ebb557a87fbebcf59ce4ba56c",
+        "candidates.csv": "328546a3f83cec474a8950ddc4c17eaafe6bb12a7b6615d8d9cbad594039bb32",
+        "embeddings.npy": "814c0b81d8d16a3c727d310ba7a0829846d1a34b4ce07c151fd91d95bca5a29e"
+      }
+    },
+    "accepted_permuted": {
+      "c6": {
+        "audit": "submission_format_and_integrity",
+        "validated": true,
+        "query_count": 4,
+        "gallery_count": 636,
+        "candidate_rows": 12,
+        "answered_queries": 4,
+        "rejected_queries": 0,
+        "embedding_shape": [
+          640,
+          3072
+        ],
+        "embedding_dtype": "float32",
+        "files": {
+          "submission.csv": {
+            "bytes": 1456,
+            "sha256": "efb7c946992b45abe40fc9d9dd5fe5d20e74e67338415d7d973e22dde9319468"
+          },
+          "embeddings.npy": {
+            "bytes": 7864448,
+            "sha256": "2f0ceed817a5a40eb1c10c1871b3bbb57c63e3dea39473a23cb3bf5aa64ece40"
+          },
+          "candidates.csv": {
+            "bytes": 968,
+            "sha256": "6456966a57f0a19306f00206cb94c55f433cac578633984690dcd52d886573cb"
+          }
+        },
+        "inputs": {
+          "query": {
+            "bytes": 218,
+            "sha256": "23f9ffaf159f7889a5e8fe99bc89cfed711fb4663ad6de48d22475eff2a7a8b5"
+          },
+          "gallery": {
+            "bytes": 31137,
+            "sha256": "66d1f7da17494c67ce03d7277915744756baa574aea1111dc302d21d41ab365c"
+          }
+        },
+        "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified"
+      },
+      "comparison": {
+        "passed": true,
+        "strict_byte_equivalence": true,
+        "strict_byte_equivalence_scope": "query-ID-aligned ranking/candidate fields; not raw file order or embeddings",
+        "semantic_ranked_ids_equal": true,
+        "semantic_candidate_ids_equal": true,
+        "semantic_acceptance_equal": true,
+        "compared_queries": 4,
+        "changed_top10_query_ids": [],
+        "changed_candidate_rows_query_ids": [],
+        "changed_candidate_ids_or_acceptance_query_ids": [],
+        "changed_acceptance_query_ids": [],
+        "max_abs_embedding_drift": 0.0,
+        "max_abs_confidence_drift_for_same_candidates": 0.0,
+        "criterion": "exact top10 and candidate rows by query ID; embedding equality is not required",
+        "interpretation": "Confidence-only ULP drift can result from FP16 batch-shape rounding; a strict failure alone is not evidence of prohibited query statistics"
+      },
+      "gallery_exact": true,
+      "query_embeddings_exact": true,
+      "sha256": {
+        "submission.csv": "efb7c946992b45abe40fc9d9dd5fe5d20e74e67338415d7d973e22dde9319468",
+        "candidates.csv": "6456966a57f0a19306f00206cb94c55f433cac578633984690dcd52d886573cb",
+        "embeddings.npy": "2f0ceed817a5a40eb1c10c1871b3bbb57c63e3dea39473a23cb3bf5aa64ece40"
+      }
+    },
+    "refused_singleton": {
+      "c6": {
+        "audit": "submission_format_and_integrity",
+        "validated": true,
+        "query_count": 1,
+        "gallery_count": 636,
+        "candidate_rows": 0,
+        "answered_queries": 0,
+        "rejected_queries": 1,
+        "embedding_shape": [
+          637,
+          3072
+        ],
+        "embedding_dtype": "float32",
+        "files": {
+          "submission.csv": {
+            "bytes": 364,
+            "sha256": "84f48a40a0ca739995749dff863a7f70a65719bfa066150de13caa18e22e975b"
+          },
+          "embeddings.npy": {
+            "bytes": 7827584,
+            "sha256": "6255daeda4f49944e64619e5137ac4a730f02f89dc21dc99ec9a2419ff968eb7"
+          },
+          "candidates.csv": {
+            "bytes": 32,
+            "sha256": "cecb6dc74336be741a2f3f191ed8d713b8f86c22a8d4b12e8629f4e6d9662ffe"
+          }
+        },
+        "inputs": {
+          "query": {
+            "bytes": 69,
+            "sha256": "fd174f3ac8bf681a65f450bfefab5e86016bd6d0e3987f175ca833aca039b8e3"
+          },
+          "gallery": {
+            "bytes": 31137,
+            "sha256": "66d1f7da17494c67ce03d7277915744756baa574aea1111dc302d21d41ab365c"
+          }
+        },
+        "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified"
+      },
+      "comparison": {
+        "passed": true,
+        "strict_byte_equivalence": true,
+        "strict_byte_equivalence_scope": "query-ID-aligned ranking/candidate fields; not raw file order or embeddings",
+        "semantic_ranked_ids_equal": true,
+        "semantic_candidate_ids_equal": true,
+        "semantic_acceptance_equal": true,
+        "compared_queries": 1,
+        "changed_top10_query_ids": [],
+        "changed_candidate_rows_query_ids": [],
+        "changed_candidate_ids_or_acceptance_query_ids": [],
+        "changed_acceptance_query_ids": [],
+        "max_abs_embedding_drift": 0.0,
+        "max_abs_confidence_drift_for_same_candidates": 0.0,
+        "criterion": "exact top10 and candidate rows by query ID; embedding equality is not required",
+        "interpretation": "Confidence-only ULP drift can result from FP16 batch-shape rounding; a strict failure alone is not evidence of prohibited query statistics"
+      },
+      "gallery_exact": true,
+      "query_embeddings_exact": true,
+      "sha256": {
+        "submission.csv": "84f48a40a0ca739995749dff863a7f70a65719bfa066150de13caa18e22e975b",
+        "candidates.csv": "cecb6dc74336be741a2f3f191ed8d713b8f86c22a8d4b12e8629f4e6d9662ffe",
+        "embeddings.npy": "6255daeda4f49944e64619e5137ac4a730f02f89dc21dc99ec9a2419ff968eb7"
+      }
+    },
+    "refused_neighbours": {
+      "c6": {
+        "audit": "submission_format_and_integrity",
+        "validated": true,
+        "query_count": 4,
+        "gallery_count": 636,
+        "candidate_rows": 9,
+        "answered_queries": 3,
+        "rejected_queries": 1,
+        "embedding_shape": [
+          640,
+          3072
+        ],
+        "embedding_dtype": "float32",
+        "files": {
+          "submission.csv": {
+            "bytes": 1456,
+            "sha256": "7d8199361f701dfa0a6382d8d8ea3864510b31f0877348a7d472e294bc6956a7"
+          },
+          "embeddings.npy": {
+            "bytes": 7864448,
+            "sha256": "2c73906f60d56e7fc7936109d1d700df028e2550ce3995a747dabb73323fc000"
+          },
+          "candidates.csv": {
+            "bytes": 734,
+            "sha256": "6340ff310476ea6d3e7486cecbe397c3a97d4c769cfb708bc3bd9e47310b0b0a"
+          }
+        },
+        "inputs": {
+          "query": {
+            "bytes": 219,
+            "sha256": "552cfb64ad8072ba8e256d3e0c04ebaab93b5bd9fc57bf1973419429daf6e8c5"
+          },
+          "gallery": {
+            "bytes": 31137,
+            "sha256": "66d1f7da17494c67ce03d7277915744756baa574aea1111dc302d21d41ab365c"
+          }
+        },
+        "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified"
+      },
+      "comparison": {
+        "passed": true,
+        "strict_byte_equivalence": true,
+        "strict_byte_equivalence_scope": "query-ID-aligned ranking/candidate fields; not raw file order or embeddings",
+        "semantic_ranked_ids_equal": true,
+        "semantic_candidate_ids_equal": true,
+        "semantic_acceptance_equal": true,
+        "compared_queries": 4,
+        "changed_top10_query_ids": [],
+        "changed_candidate_rows_query_ids": [],
+        "changed_candidate_ids_or_acceptance_query_ids": [],
+        "changed_acceptance_query_ids": [],
+        "max_abs_embedding_drift": 0.0,
+        "max_abs_confidence_drift_for_same_candidates": 0.0,
+        "criterion": "exact top10 and candidate rows by query ID; embedding equality is not required",
+        "interpretation": "Confidence-only ULP drift can result from FP16 batch-shape rounding; a strict failure alone is not evidence of prohibited query statistics"
+      },
+      "gallery_exact": true,
+      "query_embeddings_exact": true,
+      "sha256": {
+        "submission.csv": "7d8199361f701dfa0a6382d8d8ea3864510b31f0877348a7d472e294bc6956a7",
+        "candidates.csv": "6340ff310476ea6d3e7486cecbe397c3a97d4c769cfb708bc3bd9e47310b0b0a",
+        "embeddings.npy": "2c73906f60d56e7fc7936109d1d700df028e2550ce3995a747dabb73323fc000"
+      }
+    },
+    "refused_permuted": {
+      "c6": {
+        "audit": "submission_format_and_integrity",
+        "validated": true,
+        "query_count": 4,
+        "gallery_count": 636,
+        "candidate_rows": 9,
+        "answered_queries": 3,
+        "rejected_queries": 1,
+        "embedding_shape": [
+          640,
+          3072
+        ],
+        "embedding_dtype": "float32",
+        "files": {
+          "submission.csv": {
+            "bytes": 1456,
+            "sha256": "bd9f4a3f7fa02655267e7a66c4da5e9c114bffb219f54681cfaf32fa88bb06a8"
+          },
+          "embeddings.npy": {
+            "bytes": 7864448,
+            "sha256": "fcfbcde19a57ca22b55175fb6c5efb0bf2d7390381bb4fbf0afa341db3e8eb64"
+          },
+          "candidates.csv": {
+            "bytes": 734,
+            "sha256": "e7c6de5072819d187f0f0aaf8fbf4ce8249f72841bfd30e37faf0dfab988dd6b"
+          }
+        },
+        "inputs": {
+          "query": {
+            "bytes": 219,
+            "sha256": "f5d023912b19fb7243a195b3f44e2761f9f9f8e624e64ca401fc99e2ffdae230"
+          },
+          "gallery": {
+            "bytes": 31137,
+            "sha256": "66d1f7da17494c67ce03d7277915744756baa574aea1111dc302d21d41ab365c"
+          }
+        },
+        "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified"
+      },
+      "comparison": {
+        "passed": true,
+        "strict_byte_equivalence": true,
+        "strict_byte_equivalence_scope": "query-ID-aligned ranking/candidate fields; not raw file order or embeddings",
+        "semantic_ranked_ids_equal": true,
+        "semantic_candidate_ids_equal": true,
+        "semantic_acceptance_equal": true,
+        "compared_queries": 4,
+        "changed_top10_query_ids": [],
+        "changed_candidate_rows_query_ids": [],
+        "changed_candidate_ids_or_acceptance_query_ids": [],
+        "changed_acceptance_query_ids": [],
+        "max_abs_embedding_drift": 0.0,
+        "max_abs_confidence_drift_for_same_candidates": 0.0,
+        "criterion": "exact top10 and candidate rows by query ID; embedding equality is not required",
+        "interpretation": "Confidence-only ULP drift can result from FP16 batch-shape rounding; a strict failure alone is not evidence of prohibited query statistics"
+      },
+      "gallery_exact": true,
+      "query_embeddings_exact": true,
+      "sha256": {
+        "submission.csv": "bd9f4a3f7fa02655267e7a66c4da5e9c114bffb219f54681cfaf32fa88bb06a8",
+        "candidates.csv": "e7c6de5072819d187f0f0aaf8fbf4ce8249f72841bfd30e37faf0dfab988dd6b",
+        "embeddings.npy": "fcfbcde19a57ca22b55175fb6c5efb0bf2d7390381bb4fbf0afa341db3e8eb64"
+      }
+    }
+  },
+  "smoke50": {
+    "audit": "submission_format_and_integrity",
+    "validated": true,
+    "query_count": 25,
+    "gallery_count": 25,
+    "candidate_rows": 0,
+    "answered_queries": 0,
+    "rejected_queries": 25,
+    "embedding_shape": [
+      50,
+      3072
+    ],
+    "embedding_dtype": "float32",
+    "files": {
+      "submission.csv": {
+        "bytes": 9100,
+        "sha256": "d6953d3f01062a22fe494ce3342c0a5dc2de898c11668b0635a66881be9401a7"
+      },
+      "embeddings.npy": {
+        "bytes": 614528,
+        "sha256": "7ef8174281012fb02ff8d0db9136db90384cb226fed2140d01b03c368955f65d"
+      },
+      "candidates.csv": {
+        "bytes": 32,
+        "sha256": "cecb6dc74336be741a2f3f191ed8d713b8f86c22a8d4b12e8629f4e6d9662ffe"
+      }
+    },
+    "inputs": {
+      "query": {
+        "bytes": 1263,
+        "sha256": "ad04028f1d5dd303511b81093614b47dd8b124013c278580b0fa230e3cdc4ff9"
+      },
+      "gallery": {
+        "bytes": 1259,
+        "sha256": "0d387a18855ae78d78a006522676dd8b807c415012add13d6a505decd0804cf0"
+      }
+    },
+    "scope": "C6 validation only; model provenance, row semantics and GPU reproduction not verified"
+  },
+  "manifest_sha256": "94125e2665558df43fb6701f7f0ca6b5c1cf5289cbfd48c83c03d1ee0180305c",
+  "repeat_three_files_exact": true,
+  "anchors": {
+    "accepted": "ab2ff23a2775424ab6d6da282956e28b",
+    "refused": "dceea955fdad4d9c9b816acecf3485e5"
+  },
+  "scope": "All 1138 queries reverse-order plus one accepted/one refused singleton/changed-neighbour/permuted anchor; not exhaustive possible inputs",
+  "quality_computed": false,
+  "fold2_accessed": false,
+  "final_acceptance": false
+}
